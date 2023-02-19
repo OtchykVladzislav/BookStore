@@ -313,6 +313,7 @@ a{
   font-weight: 700;
 }
 
+/*Account*/
 
 .accountPicture{
   overflow: hidden;
@@ -330,4 +331,25 @@ a{
 .accountPicture img {
   width: 3.5rem;
   fill: currentColor;
+}
+
+.account button{
+  margin: 10px;
+}
+
+.accountPassword{
+  display: flex;
+  flex-direction: column;
+  font-family: "Arial";
+  background: white;
+  border: 4px solid #7cdacc;
+  box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.accountPassword input{
+  margin: 10px 0 10px 0;
 }
