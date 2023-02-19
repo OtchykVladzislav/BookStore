@@ -1,0 +1,26 @@
+.header{
+    width: 100vw;
+    background: rgba(24, 20, 20, 0.987);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px;
+}
+
+.logo{
+    font-size: 50px;
+}
+
+.title{
+  --text-stroke-color: rgba(255,255,255,0.6);
+  --fs-size: 2em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-size: var(--fs-size);
+  font-family: "Arial";
+  position: relative;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
