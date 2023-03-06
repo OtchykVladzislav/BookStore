@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter, Link} from 'react-router-dom'
 import './App.css'
 import Login from './form/login'
@@ -16,13 +16,14 @@ function App() {
   const token = useSelector(state => state.token)
   const [modalReg, setModalEditReg] = useState(false)
   const [modalLogin, setModalLogin] = useState(false)
+
   return (
     <>
       <BrowserRouter>
         <MyHeader>
           {token?
             <Link to={'/account'}><div className="headerPicture">
-              <img src="icon.svg"/>
+              <img src="../icon.svg"/>
             </div></Link>
             :
             <div>

@@ -230,10 +230,6 @@ a{
 
 
 /*Post*/
-.post div, .account div{
-  margin: 10px;
-}
-
 .postTitle, .accountTitle{
   --text-stroke-color: rgb(0, 0, 0);
   --fs-size: 2.5em;
@@ -293,6 +289,7 @@ a{
   font-size: 15px;
   font-weight: 700;
   width: 70vw;
+  margin: 10px;
 }
 
 .postDescription span, .accountOrders span{
@@ -326,6 +323,14 @@ a{
   justify-content: center;
   align-items: center;
   background: white;
+}
+
+.accountInfo{
+  margin: 10px;
+}
+
+.accountInfo div{
+  margin: 10px;
 }
 
 .accountPicture img {

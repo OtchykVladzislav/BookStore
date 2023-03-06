@@ -19,7 +19,10 @@ const Account = () => {
         }
     }
 
-    const logout = () => dispatch({type: 'DELETE_TOKEN'})
+    const logout = () => {
+        localStorage.setItem('user', 0)
+        dispatch({type: 'DELETE_TOKEN'})
+    }
 
     return(
         <article className="account">

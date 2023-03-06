@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import './forms.css'
 
 const Login = ({...props}) => {
     const [values, setValues] = useState({firstValue: '', secondValue: ''})
+    const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWQiOiIxIiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiRG9lIiwibnVtYmVyIjoiKzM3NTQ0NTc2NTA2NSIsImVtYWlsIjoidmxhZG90Y2hpay0yNjVAbWFpbC5ydSIsInVzZXJuYW1lIjoiQmlnRGpvIiwicGFzc3dvcmQiOiIxMjM0NTYiLCJpYXQiOjE1MTYyMzkwMjJ9.oNeMWi04G0afOufBeSLfGGhrHHblax2er42bcaHtETQ'
+    const dispatch = useDispatch()
+
+    const send = () => {
+        localStorage.setItem('user', userToken)
+        dispatch({type: 'ADD_TOKEN', payload: userToken})
+        props.setVisible(false)
+    }
 
     useEffect(() => setValues({firstValue: '', secondValue: ''}), [props.visible])
 
@@ -17,7 +26,7 @@ const Login = ({...props}) => {
                 <label>Пароль</label>
             </div>
             <center>
-                <a href="#">
+                <a href="#" onClick={send}>
                     Войти
                     <span></span>
                 </a>
