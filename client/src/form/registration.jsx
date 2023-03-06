@@ -4,7 +4,11 @@ import './forms.css'
 const Registration = ({...props}) => {
     const [values, setValues] = useState({firstName: '', secondName: '', username: '', phone: '', email: '', password: ''})
 
-    useEffect(() => setValues({firstName: '', secondName: '', username: '', phone: '', email: '', password: ''}), [props.visible])
+    const send = () => {
+        console.log('reg')
+    }
+
+    useEffect(() => {setValues({firstName: '', secondName: '', username: '', phone: '', email: '', password: ''})}, [props.visible])
 
     return(
         <div className="change-box" onClick={(e => e.stopPropagation())}>
@@ -33,7 +37,7 @@ const Registration = ({...props}) => {
                 <label>Пароль</label>
             </div>
             <center>
-                <a href="#">
+                <a href="#" onClick={send}>
                     Регистрация
                     <span></span>
                 </a>

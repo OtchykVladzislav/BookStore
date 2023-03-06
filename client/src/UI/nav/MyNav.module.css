@@ -6,3 +6,8 @@
     width: 50vw;
     padding: 20px;
 }
+
+.nav a{
+    height: max-content;
+    width: max-content;
+}

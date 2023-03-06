@@ -14,9 +14,8 @@ import AppRouter from './utils/AppRouter'
 
 function App() {
   const token = useSelector(state => state.token)
-  const [modalReg, setModalEditReg] = useState(false)
-  const [modalLogin, setModalLogin] = useState(false)
-
+  const [modal, setModal] = useState(false)
+  const [reg, setReg] = useState(false)
   return (
     <>
       <BrowserRouter>
@@ -27,14 +26,19 @@ function App() {
             </div></Link>
             :
             <div>
-              <MyButton onClick={() => setModalLogin(true)}>Войти</MyButton>
-              <MyButton onClick={() => setModalEditReg(true)}>Регистрация</MyButton>
+              <MyButton onClick={() => {setModal(true); setReg(false)}}>Войти</MyButton>
+              <MyButton onClick={() => {setModal(true); setReg(true)}}>Регистрация</MyButton>
             </div>
           }
         </MyHeader>
-        <MyNav/>
-        <MyModal visible={modalLogin} setVisible={setModalLogin}><Login visible={modalLogin} setVisible={setModalLogin}/></MyModal>
-        <MyModal visible={modalReg} setVisible={setModalEditReg}><Registration visible={modalLogin} setVisible={setModalLogin}/></MyModal>
+        <MyNav isAuth={token}/>
+        <MyModal visible={modal} setVisible={setModal}>
+          {!reg?
+            <Login visible={modal} setVisible={setModal}/>
+            :
+            <Registration visible={modal} setVisible={setModal}/>
+          }
+        </MyModal>
         <AppRouter isAuth={token}/>
         <MyFooter/>
       </BrowserRouter>

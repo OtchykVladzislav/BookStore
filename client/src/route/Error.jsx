@@ -1,6 +1,6 @@
 const ErrorPage = () => {
     return(
-        <article style={{fontSize:"45px", fontWeight: "700", fontFamily: "Arial", color: "#00A97F"}}>Нет такой страницы или страница не работает</article>
+        <article className="warning">Нет такой страницы или страница не доступна без авторизации</article>
     )
 }
 

@@ -2,7 +2,7 @@ import { Route, Routes,Navigate } from "react-router-dom"
 import { privateRoutes, publicRoutes } from "../routes/index"
 
 
-export default function AppRouter(isAuth){
+export default function AppRouter({isAuth}){
     return(
         <Routes>
             {publicRoutes.map(route =>

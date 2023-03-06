@@ -20,3 +20,11 @@ export const useQuery = (posts, sort, query) =>{
     }, [query, sorted])
     return sortedAnDquery;
 }
+
+export const useSortGenre = (posts, genre) => {
+  const sortedArray = useMemo(() => {
+    if(genre == '') return posts
+    return [...posts].filter(e => e['genre'] == genre)
+  }, [genre, posts]);
+  return sortedArray;
+}
