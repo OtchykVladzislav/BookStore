@@ -47,7 +47,7 @@ a{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 95vh;
+    width: 70vw;
     flex-wrap: wrap;
 }
 
