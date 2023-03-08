@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from 'redis/redis.module';
 import { AuthModule } from 'auth/auth.module';
 import { UsersModule } from 'users/users.module';
@@ -10,21 +10,19 @@ import { RolesModule } from 'roles/roles.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule.forRoot({
-        envFilePath: `.${process.env.NODE_ENV}.env`,
-      })],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        username: configService.get('POSTGRES_USER'),
-        password: configService.get('POSTGRES_PASSWORD'),
-        port: +configService.get('POSTGRES_PORT'),
-        database: configService.get('POSTGRES_DB'),
-        host: configService.get('POSTGRES_HOST'),
-        entities: [],
-        autoLoadEntities: true
-      })
+    ConfigModule.forRoot({
+      envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      port: +process.env.POSTGRES_PORT,
+      database: process.env.POSTGRES_DB,
+      host: process.env.POSTGRES_HOST,
+      entities: [],
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     AppModule,
     RedisModule,
