@@ -23,8 +23,8 @@ export const useQuery = (posts, sort, query) =>{
 
 export const useSortGenre = (posts, genre) => {
   const sortedArray = useMemo(() => {
-    if(genre == '') return posts
-    return [...posts].filter(e => e['genre'] == genre)
+    if(genre === '(все)') return posts
+    return [...posts].filter(e => e['genre'] === genre)
   }, [genre, posts]);
   return sortedArray;
 }

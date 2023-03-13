@@ -9,7 +9,7 @@ import PostGenre from "../utils/Post/PostGenre";
 
 export default function Posts(){
     const [posts, setPosts] = useState([{id: 1, title: 'Book1', genre: 'Horror', price: 25}, {id: 2, title: 'Book2', genre: 'Battle', price: 35}, {id: 3, title: 'Book3', genre: 'Genetic', price: 44}, {id: 4, title: 'Book1', genre: 'Horror', price: 25}, {id: 5, title: 'Book2', genre: 'Battle', price: 35}, {id: 6, title: 'Book3', genre: 'Genetic', price: 44}, {id: 7, title: 'Book1', genre: 'Horror', price: 25}, {id: 8, title: 'Book2', genre: 'Battle', price: 35}, {id: 9, title: 'Book3', genre: 'Genetic', price: 44}, {id: 10, title: 'Book3', genre: 'Genetic', price: 70}])
-    const [genres, setGenres] = useState(['Battle', 'Horror', 'Genetic'])
+    const [genres, setGenres] = useState(['(все)', 'Battle', 'Horror', 'Genetic'])
     const [genre, setGenre] = useState('')
     const [filter, setFilter] = useState({sort: '', query: ''});
     const sortedByGenre = useSortGenre(posts, genre)

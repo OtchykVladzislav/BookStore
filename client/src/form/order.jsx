@@ -35,7 +35,7 @@ const Order = () => {
                 </div>
             </div>
             <button className="purchase--btn">Checkout</button>
-            <span className="little">После оплаты начисляться баллы в размере 3% от суммы.</span>
+            <span className="little">После оплаты начислятся баллы в размере 3% от суммы.</span>
         </div>
     )
 }
