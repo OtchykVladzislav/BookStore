@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FormComment from "../form/comments";
+import NewPassword from "../form/new_password";
 import MyButton from "../UI/button/MyButton"
 import MyModal from "../UI/modal/MyModal";
 import OrderItem from "../utils/Orders/OrderItem";
@@ -15,6 +16,7 @@ const Account = () => {
     const dispatch = useDispatch()
     const decodedToken = jwtDecode(token);
     const [visible, setVisible] = useState(false)
+    const [isForm, setIsForm] = useState(false)
     let comment = {}
 
     const change = () => {
@@ -32,11 +34,18 @@ const Account = () => {
     const createComment = (obj) => {
         comment = obj
         setVisible(true)
+        setIsForm(false)
     }  
 
     return(
         <article className="account">
-            <MyModal visible={visible} setVisible={setVisible}><FormComment visible={visible} setVisible={setVisible}/></MyModal>
+            <MyModal visible={visible} setVisible={setVisible}>
+                {isForm?
+                    <NewPassword visible={visible} setVisible={setVisible}/>
+                    :
+                    <FormComment visible={visible} setVisible={setVisible}/>
+                }
+            </MyModal>
             <div className="accountTitle">Информация о пользователе</div>
             <div className="accountInfo">
                 <div className="accountText">
@@ -55,13 +64,7 @@ const Account = () => {
                 <div>Количество бонусов: {0} баллов.</div>
                 <span style={{fontSize:"10px"}}>С каждой покупки 3%. 1 балл = 1 рублю</span>
             </div>
-            <div className="accountPassword">
-                <label>Новый пароль</label>
-                <input value={password.one} onInput={e => setPassword({...password, one: e.target.value})} type="password" />
-                <label>Повторить пароль</label>
-                <input value={password.two} onInput={e => setPassword({...password, two: e.target.value})} type="password" />
-                <MyButton onClick={change}>Поменять</MyButton>
-            </div>
+            <MyButton onClick={() => {setVisible(true); setIsForm(true)}}>Сменить пароль</MyButton>
             <Link to='/'><MyButton onClick={logout}>Выйти</MyButton></Link>
             <div className="accountOrders">
                 <span>История заказов</span>
