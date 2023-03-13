@@ -6,7 +6,6 @@ const PostGenre = ({array, genre, setGenre}) => {
             <MySelect
                 value={genre}
                 onChange={selectedSort => setGenre(selectedSort)}
-                defaultValue = "Жанры"
                 options={array.map(e => {return {value: e, name: e}})}/> 
         </>
     )

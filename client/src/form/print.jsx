@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Select from 'react-select'
 import MyButtonTwo from "../UI/buttonTwo/MyButtonTwo"
 import MySelect from "../UI/select/MySelect"
 
 const Print = ({array, ...props}) => {
-    const [whiteBlack, setWhiteBlack] = useState(true)
+    const [color, setColor] = useState(null)
+    const [format, setFormat] = useState(null)
     const [pages, setPages] = useState('')
     const [countCopies, setCountCopies] = useState(1)
 
@@ -16,26 +16,31 @@ const Print = ({array, ...props}) => {
 
     return(
         <div className='print'>
-            <label>Книга</label>
-            <Select styles={{
-                    control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        width: '20vw'
-                        }),
-                    }}
-                    options={array.map(e => {return {value: e.id, label: e.title}})}
-            />
             <label>Тип печати</label>
             <MySelect
-                value={whiteBlack}
-                onChange={selectedSort => setWhiteBlack(selectedSort)}
-                defaultValue = "Черно-белая печать"
+                value={color}
+                onChange={selectedSort => setColor(selectedSort)}
                 options={[
-                    {value: true, name: 'Да'},
-                    {value: false, name: 'Нет'}
+                    {value: 'Черно-белая печать', name: 'Черно-белая печать'},
+                    {value: 'Черно-белая матовая', name: 'Черно-белая матовая'},
+                    {value: 'Черно-белая глянцевая', name: 'Черно-белая глянцевая'},
+                    {value: 'Цветная', name: 'Цветная'},
+                    {value: 'Цветная матовая', name: 'Цветная матовая'},
+                    {value: 'Цветная глянцевая', name: 'Цветная глянцевая'}
             ]}/>
-            <label>Страницы(необязательно)</label>
-            <input type="text" value={pages} onChange={e => setPages(e.target.value)} style={{width:'20vw', height:'30px'}} placeholder={'Формат начало-конец'}/>
+            <label>Формат</label>
+            <MySelect
+                value={format}
+                onChange={selectedSort => setFormat(selectedSort)}
+                options={[
+                    {value: 'A1', name: 'A1'},
+                    {value: 'A2', name: 'A2'},
+                    {value: 'A3', name: 'A3'},
+                    {value: 'A4', name: 'A4'},
+                    {value: 'A5', name: 'A5'}
+                ]}/>
+            <label>Ориентировочное количество страниц</label>
+            <input type="text" value={pages} onChange={e => setPages(e.target.value)} style={{width:'7vw', height:'30px'}}/>
             <label>Тираж</label>
             <input type="number" value={countCopies} onChange={e => validate(e.target.value)} style={{width:'5vw', height:'30px'}} min={1} max={20}/>
             <MyButtonTwo onClick={props.func}>Запрос</MyButtonTwo>
