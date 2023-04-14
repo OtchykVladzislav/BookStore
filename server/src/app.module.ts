@@ -7,6 +7,7 @@ import { RedisModule } from 'redis/redis.module';
 import { AuthModule } from 'auth/auth.module';
 import { UsersModule } from 'users/users.module';
 import { RolesModule } from 'roles/roles.module';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -25,10 +26,11 @@ import { RolesModule } from 'roles/roles.module';
       synchronize: true,
     }),
     AppModule,
-    RedisModule,
-    AuthModule,
+    //RedisModule,
+    //AuthModule,
     UsersModule,
-    RolesModule
+    BooksModule,
+    //RolesModule
   ],
   controllers: [AppController],
   providers: [AppService],

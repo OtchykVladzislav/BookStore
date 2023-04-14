@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   async registration(userDto: CreateUserDto) {
-    const candidate = await this.usersService.getUserByLogin(userDto.login);
+    const candidate = await this.usersService.getUserByLogin(userDto.username);
     if (candidate) {
       throw new HttpException(
         'There is already such a user',
@@ -44,8 +44,7 @@ export class AuthService {
       {
         ...userDto,
         password: hashPassword,
-      },
-      role,
+      }
     );
     return this.generateTokens(user);
   }
@@ -75,9 +74,8 @@ export class AuthService {
 
   private async generateTokens(user: User) {
     const payload = {
-      login: user.login,
+      username: user.username,
       id: user.id,
-      roleName: user.role.roleName,
     };
     const refresh_token = uuidv4();
     await this.cacheManager.set(refresh_token, user.id, {});

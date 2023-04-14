@@ -1,20 +1,18 @@
 /* eslint-disable prettier/prettier */
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { Role } from 'roles/roles.model';
+import { Book } from 'books/books.model';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true, nullable: false })
-  login: string;
+  @Column({unique: true,nullable: false})
+  username: string;
 
   @Column({ nullable: false })
   password: string;
-
-  @Column({nullable: false})
-  username: string;
 
   @Column({ default: "firstName" })
   firstName: string;
@@ -22,30 +20,12 @@ export class User {
   @Column({ default: "lastName" })
   lastName: string;
 
-  @Column()
-  phone: string;
+  @Column({ default: "+375445798236" })
+  phone_number: string;
 
-  @Column({default: false})
-  phoneConfirmed: boolean;
-
-  @Column()
+  @Column({ default: "vlad@mail.ru" })
   email: string;
 
-  @Column({default: false})
-  emailConfirmed: boolean;
-
-  @Column({default: false})
-  twoFactorEnabled: boolean;
-
-  @Column()
-  lockoutEnd: Date;
-
-  @Column({default: true})
-  lockoutEnabled: boolean;
-
-  @Column({default: 0})
-  accessFailedCount: number;
-
-  @ManyToOne(() => Role, (role) => role.users)
-  role: Role;
+  @OneToMany(() => Book, (book) => book.user)
+  books: Book[]
 }

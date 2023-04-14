@@ -16,31 +16,23 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) { }
 
-  async createUser(dto: CreateUserDto, role: Role) {
+  async createUser(dto: CreateUserDto) {
     const user = await this.usersRepository.create({
-      ...dto,
-      role
+      ...dto
     });
-     await this.usersRepository.save(user)
+    await this.usersRepository.save(user)
     return user;
   }
 
   async getAllUsers() {
-    const users = await this.usersRepository.find({
-      relations: {
-        role: true
-      }
-    });
+    const users = await this.usersRepository.find();
     return users;
   }
 
-  async getUserByLogin(login: string) {
+  async getUserByLogin(username: string) {
     const user = await this.usersRepository.findOne({
       where: {
-        login: login
-      },
-      relations: {
-        role: true
+        username
       }
     })
     return user;
@@ -50,9 +42,6 @@ export class UsersService {
     const user = await this.usersRepository.findOne({
       where: {
         id: id
-      },
-      relations: {
-        role: true
       }
     })
     return user;
