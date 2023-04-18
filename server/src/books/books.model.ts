@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Comment } from 'comment/comment.model';
+import { Genre } from 'genre/genre.model';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { User } from 'users/users.model';
 
 @Entity('books')
@@ -24,4 +26,11 @@ export class Book {
 
   @ManyToOne(() => User, (user) => user.books)
   user: User
+
+  @ManyToMany(() => Genre)
+  @JoinTable()
+  genres: Genre[]
+
+  @OneToMany(() => Comment, (comment) => comment.book)
+  comments: Comment[]
 }

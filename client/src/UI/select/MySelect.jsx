@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from './MySelect.module.css';
 
-const MySelect = ({options, defaultValue, value, onChange}) =>{
+const MySelect = ({options, defaultValue, value, onChange, ...props}) =>{
     return(
-        <select value={value} onChange={event => onChange(event.target.value)} className={classes.select}>
+        <select value={value} onChange={event => onChange(event.target.value)} className={classes.select} >
             <option disabled value="">{defaultValue}</option>
             {options.map(option =>
                 <option key={option.value} value={option.value}>

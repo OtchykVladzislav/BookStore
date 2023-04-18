@@ -1,6 +1,6 @@
 .textInputWrapper {
     position: relative;
-    width: 50vw;
+    width: 35vw;
     margin: 12px 5px;
     --accent-color: #a3e583;
   }
@@ -88,4 +88,18 @@
   
   .textInputWrapper:focus-within .textInput::placeholder {
     opacity: 0;
+  }
+
+  .textCross{
+    position: absolute;
+    right: 5%;
+    font-size: 25px;
+    color: #a3e583;
+    top: 5%;
+    text-shadow: none;
+    cursor: pointer;
+  }
+
+  .textCross:hover{
+    text-shadow: 0.5px 0.5px 0.5px white;
   }

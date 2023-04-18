@@ -2,6 +2,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { Role } from 'roles/roles.model';
 import { Book } from 'books/books.model';
+import { Comment } from 'comment/comment.model';
 
 @Entity('users')
 export class User {
@@ -28,4 +29,7 @@ export class User {
 
   @OneToMany(() => Book, (book) => book.user)
   books: Book[]
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[]
 }

@@ -1,5 +1,5 @@
 import { Route, Routes,Navigate } from "react-router-dom"
-import { privateRoutes, publicRoutes } from "../routes/index"
+import { privateRoutes, publicRoutes } from "../router/index"
 
 
 export default function AppRouter({isAuth}){

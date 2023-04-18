@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateGenreDto } from './dto/create-book.dto';
+import { CreateGenreDto } from './dto/create-genre.dto';
 import { Genre } from './genre.model';
 
 @Injectable()

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'users/users.model';
 import { Book } from './books.model';
-import { CreateBookDto } from './genre/dto/create-book.dto';
+import { CreateBookDto } from './dto/create-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -11,12 +11,22 @@ export class BooksService {
         @InjectRepository(Book)
         private booksRepository: Repository<Book>
     ) {}
+    
+    sortArr(str: string, array: Book[]): Book[]{
+      switch(str){
+        case 'titleIncrease': return [...array].sort((a,b) => a["name"].localeCompare(b["name"]))
+        case 'titleDecrease': return [...array].sort((a,b) => b["name"].localeCompare(a["name"]))
+        case 'priceIncrease': return [...array].sort((a,b) => a["price"] - b["price"])
+        case 'priceDecrease': return [...array].sort((a,b) => b["price"] - a["price"])
+        default : return array
+      }
+    }
 
     async findAll(limit: string, page: string): Promise<[Book[], number]> {
         const skip = (Number(limit) * Number(page)) - Number(limit);
         const [data, count] = await this.booksRepository.findAndCount({
           relations: {
-            user: true,
+            genres: true,
           },
           take: Number(limit),
           skip: skip,
@@ -24,16 +34,14 @@ export class BooksService {
         return [data, count];
     }
 
-    async searchItems(query: string , limit: string, page: string): Promise<[Book[], number]> {
-      const skip = (Number(limit) * Number(page)) - Number(limit);
+    async filterItems(query: string, sort: string,limit: string, page: string): Promise<[Book[], number]> {
+      const skip = Number(limit) * Number(page);
       const data = await this.booksRepository.find({
         relations: {
-          user: true,
-        },
-        take: Number(limit),
-        skip: skip,
+          genres: true,
+        }
       })
-      const arr = [...data.filter(e => e.name.includes(query))]
+      const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]/*.slice(skip, skip + Number(limit))*/
       return [arr, arr.length != 0 ? arr.length : 1 ];
   }
 
@@ -43,7 +51,8 @@ export class BooksService {
           id
         },
         relations: {
-          user: true,
+          genres: true,
+          comments: true
         },
       });
       return data;
@@ -66,6 +75,7 @@ export class BooksService {
           id: userId,
         },
         relations: {
+          genres: true,
           user: true,
         },
       });
@@ -78,10 +88,7 @@ export class BooksService {
       const dataId = await this.booksRepository.findOne({
         where: {
           id: id,
-        },
-        relations: {
-          user: true,
-        },
+        }
       });
       await this.booksRepository.delete(id);
       return true;

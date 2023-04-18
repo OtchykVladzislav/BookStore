@@ -1,10 +1,10 @@
-import Authors from "../route/Authors"
-import ErrorPage from "../route/Error"
-import Posts from "../route/Posts"
-import Home from "../route/Home"
-import Post from "../route/Post"
-import Account from "../route/Account"
-import PrintBook from "../route/PrintBook"
+import Authors from "../pages/Authors"
+import ErrorPage from "../pages/Error"
+import Posts from "../pages/Posts"
+import Home from "../pages/Home"
+import Post from "../pages/Post"
+import Account from "../pages/Account"
+import PrintBook from "../pages/PrintBook"
 
 export const privateRoutes = [
     {path: '/account', component: Account, exact: true},

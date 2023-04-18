@@ -3,11 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { RedisModule } from 'redis/redis.module';
-import { AuthModule } from 'auth/auth.module';
 import { UsersModule } from 'users/users.module';
-import { RolesModule } from 'roles/roles.module';
 import { BooksModule } from './books/books.module';
+import { GenreModule } from 'genre/genre.module';
+import { CommentsModule } from 'comment/comment.module';
 
 @Module({
   imports: [
@@ -30,6 +29,8 @@ import { BooksModule } from './books/books.module';
     //AuthModule,
     UsersModule,
     BooksModule,
+    GenreModule,
+    CommentsModule
     //RolesModule
   ],
   controllers: [AppController],

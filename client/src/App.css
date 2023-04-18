@@ -77,11 +77,12 @@ a{
     align-items: center;
     justify-content: center;
     border-radius: 0 0 5px 5px;;
+    text-align: center;
 }
 
 .title{
     font-weight: 500;
-    font-size: 20px;
+    font-size: 15px;
     margin: 5px;
 }
 
@@ -285,7 +286,7 @@ a{
   border-radius: 5px;
   font-size: 15px;
   font-weight: 700;
-  width: 70vw;
+  width: 45vw;
   margin: 10px;
 }
 

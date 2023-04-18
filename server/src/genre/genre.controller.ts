@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { GenresService} from './genre.service';
 import { Body, Controller, Get, Post, Delete, Param} from '@nestjs/common';
-import { CreateGenreDto } from './dto/create-book.dto';
+import { CreateGenreDto } from './dto/create-genre.dto';
 
 
 @Controller('genres')

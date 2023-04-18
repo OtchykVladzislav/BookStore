@@ -15,6 +15,5 @@ import { GenresService } from './genre.service';
   ],
   controllers: [GenresController],
 })
-export class UsersModule {
 
-}
+export class GenreModule {}

@@ -6,8 +6,9 @@ const PostFilter = ({filter, setFilter}) =>{
     return(
         <>
             <MyInput 
+                type='text'
                 value={filter.query} 
-                onChange = {e => setFilter({...filter, query: e.target.value})} 
+                func={text => setFilter({...filter, query: text})} 
                 placeholder="Поиск по заголовку..."/>
             <MySelect
                 value={filter.sort}
