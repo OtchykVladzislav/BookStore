@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Comment } from 'comment/comment.model';
 import { Genre } from 'genre/genre.model';
+import { Request } from 'requests/requests.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { User } from 'users/users.model';
 
@@ -33,4 +34,7 @@ export class Book {
 
   @OneToMany(() => Comment, (comment) => comment.book)
   comments: Comment[]
+
+  @OneToMany(() => Request, (request) => request.book )
+  requests: Request[]
 }

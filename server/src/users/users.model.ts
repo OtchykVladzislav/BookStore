@@ -3,6 +3,9 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMan
 import { Role } from 'roles/roles.model';
 import { Book } from 'books/books.model';
 import { Comment } from 'comment/comment.model';
+import { Type } from 'types/types.model';
+import { Format } from 'format/format.model';
+import { Request } from 'requests/requests.model';
 
 @Entity('users')
 export class User {
@@ -32,4 +35,13 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[]
+
+  @OneToMany(() => Type, (type) => type.user)
+  types: Type[]
+
+  @OneToMany(() => Format, (format) => format.user)
+  formats: Format[]
+
+  @OneToMany(() => Request, (request) => request.user)
+  requests: Request[]
 }

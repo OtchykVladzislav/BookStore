@@ -7,6 +7,10 @@ import { UsersModule } from 'users/users.module';
 import { BooksModule } from './books/books.module';
 import { GenreModule } from 'genre/genre.module';
 import { CommentsModule } from 'comment/comment.module';
+import { TypesModule } from './types/types.module';
+import { FormatModule } from './format/format.module';
+import { RequestsModule } from './requests/requests.module';
+import { StatusRequestsModule } from './status_requests/status_requests.module';
 
 @Module({
   imports: [
@@ -30,7 +34,11 @@ import { CommentsModule } from 'comment/comment.module';
     UsersModule,
     BooksModule,
     GenreModule,
-    CommentsModule
+    CommentsModule,
+    TypesModule,
+    FormatModule,
+    RequestsModule,
+    StatusRequestsModule
     //RolesModule
   ],
   controllers: [AppController],
