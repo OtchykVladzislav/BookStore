@@ -9,7 +9,9 @@ import { Role } from 'roles/roles.model';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Role]),
+    forwardRef(() => AuthModule),
+
   ],
   providers: [UsersService],
   exports: [

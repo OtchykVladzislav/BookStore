@@ -14,7 +14,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { RefreshTokenDto } from 'users/dto/refresh-token.dto';
 import { LoginUserDto } from 'users/dto/login-user.dto';
 import { RolesService } from 'roles/roles.service';
-import { Roles } from 'roles/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -39,7 +38,7 @@ export class AuthService {
     }
 
     const hashPassword = await bcrypt.hash(userDto.password, 5);
-    const role = await this.rolesService.getRoleByName(Roles.USER);
+    const role = await this.rolesService.getRoleByName('user');
     const user = await this.usersService.createUser(
       {
         ...userDto,

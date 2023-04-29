@@ -30,6 +30,9 @@ export class User {
   @Column({ default: "vlad@mail.ru" })
   email: string;
 
+  @Column({default: 0})
+  bonus: number;
+
   @OneToMany(() => Book, (book) => book.user)
   books: Book[]
 
@@ -44,4 +47,7 @@ export class User {
 
   @OneToMany(() => Request, (request) => request.user)
   requests: Request[]
+
+  @ManyToOne(() => Role, (role) => role.users)
+  role: Role
 }

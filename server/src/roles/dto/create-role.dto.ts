@@ -1,5 +1,5 @@
 export class CreateRoleDto {
-  readonly id: number;
-
-  readonly roleName: string;
+  readonly name: string;
+  readonly description: string;
+  readonly weight: number;
 }

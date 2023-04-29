@@ -9,6 +9,7 @@ import { StatusRequestsService } from './status_requests.service';
     TypeOrmModule.forFeature([Status_Request])
   ],
   controllers: [StatusRequestsController],
-  providers: [StatusRequestsService]
+  providers: [StatusRequestsService],
+  exports: [StatusRequestsService]
 })
 export class StatusRequestsModule {}

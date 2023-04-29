@@ -4,9 +4,8 @@ import { Type } from "types/types.model";
 import { User } from "users/users.model";
 
 export class CreateRequestDto {
-    readonly name: string;
     readonly pages: string; 
-    readonly count_pages: string; 
+    readonly count_pages: number; 
     readonly createdAt: Date; 
     readonly user: User;
     readonly format: Format;

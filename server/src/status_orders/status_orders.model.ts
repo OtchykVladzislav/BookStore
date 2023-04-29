@@ -1,8 +1,8 @@
 import { Request } from 'requests/requests.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn} from 'typeorm';
 
-@Entity('status_request')
-export class Status_Request {
+@Entity('status_order')
+export class Status_Order {
   @PrimaryGeneratedColumn()
   id: number;
 

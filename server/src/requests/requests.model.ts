@@ -15,7 +15,7 @@ export class Request {
   pages: string; 
 
   @Column({nullable: false})
-  count_pages: string; 
+  count_pages: number; 
 
   @Column({nullable: false})
   createdAt: Date; 
@@ -34,5 +34,5 @@ export class Request {
 
   @OneToOne(() => Status_Request)
   @JoinColumn()
-  profile: Status_Request
+  status: Status_Request
 }

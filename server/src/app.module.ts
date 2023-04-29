@@ -11,6 +11,12 @@ import { TypesModule } from './types/types.module';
 import { FormatModule } from './format/format.module';
 import { RequestsModule } from './requests/requests.module';
 import { StatusRequestsModule } from './status_requests/status_requests.module';
+import { StatusOrdersModule } from 'status_orders/status_orders.module';
+import { OrdersModule } from './orders/orders.module';
+import { PayMethodModule } from './pay_method/pay_method.module';
+import { AuthModule } from 'auth/auth.module';
+import { RedisModule } from 'redis/redis.module';
+import { RolesModule } from 'roles/roles.module';
 
 @Module({
   imports: [
@@ -29,8 +35,8 @@ import { StatusRequestsModule } from './status_requests/status_requests.module';
       synchronize: true,
     }),
     AppModule,
-    //RedisModule,
-    //AuthModule,
+    RedisModule,
+    AuthModule,
     UsersModule,
     BooksModule,
     GenreModule,
@@ -38,8 +44,11 @@ import { StatusRequestsModule } from './status_requests/status_requests.module';
     TypesModule,
     FormatModule,
     RequestsModule,
-    StatusRequestsModule
-    //RolesModule
+    StatusRequestsModule,
+    StatusOrdersModule,
+    OrdersModule,
+    PayMethodModule,
+    RolesModule
   ],
   controllers: [AppController],
   providers: [AppService],
