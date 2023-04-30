@@ -12,12 +12,12 @@ export class FormatController {
     }
 
     @Post()
-    addGenre(@Body() dto: CreateFormatDto){
+    add(@Body() dto: CreateFormatDto){
         return this.formatsService.createFormat(dto)
     }
 
     @Delete('/:id')
-    deleteGenre(@Param('id') id: number){
+    delete(@Param('id') id: number){
         return this.formatsService.removeFormat(id)
     }
 }

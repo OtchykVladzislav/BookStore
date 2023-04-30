@@ -43,6 +43,7 @@ export class AuthService {
       {
         ...userDto,
         password: hashPassword,
+        role
       }
     );
     return this.generateTokens(user);
@@ -75,6 +76,8 @@ export class AuthService {
     const payload = {
       username: user.username,
       id: user.id,
+      roleWeight: user.role.weight,
+      roleName: user.role.name,
     };
     const refresh_token = uuidv4();
     await this.cacheManager.set(refresh_token, user.id, {});
@@ -86,7 +89,7 @@ export class AuthService {
   }
 
   private async validateUser(userDto: LoginUserDto) {
-    const user = await this.usersService.getUserByLogin(userDto.login);
+    const user = await this.usersService.getUserByLogin(userDto.username);
     const passwordEquals = await bcrypt.compare(
       userDto.password,
       user.password,

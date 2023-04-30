@@ -3,6 +3,8 @@ import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { JwtAuthGuard } from 'auth/jwt.auth.guard';
 import { UseGuards } from '@nestjs/common/decorators';
+import { RolesGuard } from 'roles/roles.guards';
+import { Roles } from 'roles/roles.decorator';
 
 
 @Controller('books')
@@ -40,8 +42,8 @@ export class BooksController {
         return this.booksService.edit(id, dto);
     }
     
-    //@UseGuards(RolesGuard)
-    //@Roles('user')
+    @UseGuards(RolesGuard)
+    @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Post()
     add(@Body() dto: CreateBookDto) {

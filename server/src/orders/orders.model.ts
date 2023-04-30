@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Book } from 'books/books.model';
+import { City } from 'city/city.model';
 import { Pay_Method } from 'pay_method/pay_method.model';
 import { Status_Order } from 'status_orders/status_orders.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable} from 'typeorm';
@@ -25,6 +26,9 @@ export class Order {
   @ManyToMany(() => Book)
   @JoinTable()
   books: Book[]
+
+  @ManyToOne(() => City, (city) => city.orders)
+  city: City;
 
   @OneToOne(() => Status_Order)
   @JoinColumn()

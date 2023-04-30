@@ -6,6 +6,7 @@ import { Comment } from 'comment/comment.model';
 import { Type } from 'types/types.model';
 import { Format } from 'format/format.model';
 import { Request } from 'requests/requests.model';
+import { City } from 'city/city.model';
 
 @Entity('users')
 export class User {
@@ -50,4 +51,7 @@ export class User {
 
   @ManyToOne(() => Role, (role) => role.users)
   role: Role
+
+  @OneToMany(() => City, (city) => city.user)
+  cities: City[]
 }

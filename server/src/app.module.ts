@@ -17,6 +17,7 @@ import { PayMethodModule } from './pay_method/pay_method.module';
 import { AuthModule } from 'auth/auth.module';
 import { RedisModule } from 'redis/redis.module';
 import { RolesModule } from 'roles/roles.module';
+import { CityModule } from './city/city.module';
 
 @Module({
   imports: [
@@ -48,7 +49,8 @@ import { RolesModule } from 'roles/roles.module';
     StatusOrdersModule,
     OrdersModule,
     PayMethodModule,
-    RolesModule
+    RolesModule,
+    CityModule
   ],
   controllers: [AppController],
   providers: [AppService],

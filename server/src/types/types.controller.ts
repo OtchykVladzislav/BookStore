@@ -13,12 +13,12 @@ export class TypesController {
     }
 
     @Post()
-    addGenre(@Body() dto: CreateTypeDto){
+    add(@Body() dto: CreateTypeDto){
         return this.typesService.createType(dto)
     }
 
     @Delete('/:id')
-    deleteGenre(@Param('id') id: number){
+    delete(@Param('id') id: number){
         return this.typesService.removeType(id)
     }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Book } from 'books/books.model';
+import { City } from 'city/city.model';
 import { Format } from 'format/format.model';
 import { Status_Request } from 'status_requests/status_requests.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn} from 'typeorm';
@@ -31,6 +32,9 @@ export class Request {
 
   @ManyToOne(() => Book, (book) => book.requests)
   book: Book
+
+  @ManyToOne(() => City, (city) => city.requests)
+  city: City;
 
   @OneToOne(() => Status_Request)
   @JoinColumn()
