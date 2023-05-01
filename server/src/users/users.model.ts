@@ -7,6 +7,7 @@ import { Type } from 'types/types.model';
 import { Format } from 'format/format.model';
 import { Request } from 'requests/requests.model';
 import { City } from 'city/city.model';
+import { Order } from 'orders/orders.model';
 
 @Entity('users')
 export class User {
@@ -48,6 +49,9 @@ export class User {
 
   @OneToMany(() => Request, (request) => request.user)
   requests: Request[]
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[]
 
   @ManyToOne(() => Role, (role) => role.users)
   role: Role

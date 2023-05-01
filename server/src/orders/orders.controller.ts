@@ -1,31 +1,41 @@
-import { Controller, Get, Param, Delete, Put, Req, Body, Post } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Put, Req, Body, Post, UseGuards } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersService } from './orders.service';
+import { JwtAuthGuard } from 'auth/jwt.auth.guard';
+import { RolesGuard } from 'roles/roles.guards';
+import { Roles } from 'roles/roles.decorator';
 
 @Controller('orders')
 export class OrdersController {
     constructor(private ordersService: OrdersService) { }
 
-    //@UseGuards(RolesGuard)
-    //@Roles('admin')
-    //@UseGuards(JwtAuthGuard)
+    @UseGuards(RolesGuard)
+    @Roles(3)
+    @UseGuards(JwtAuthGuard)
     @Get('/')
     getAll() {
         return this.ordersService.findAll();
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(3)
+    @UseGuards(JwtAuthGuard)
     @Get('/:id')
     getOne(@Param('id') id: number) {
         return this.ordersService.findOne(id);
     }
 
-    //@UseGuards(JwtAuthGuard)
+    @UseGuards(RolesGuard)
+    @Roles(3)
+    @UseGuards(JwtAuthGuard)
     @Delete('/:id')
     remove(@Param('id') id: number) {
         return this.ordersService.remove(id);
     }
 
-    //@UseGuards(JwtAuthGuard)
+    @UseGuards(RolesGuard)
+    @Roles(3)
+    @UseGuards(JwtAuthGuard)
     @Put('/:id')
     edit(
         @Req() req: any,
@@ -34,9 +44,9 @@ export class OrdersController {
     ) {
         return this.ordersService.edit(id, dto);
     }
-    //@UseGuards(RolesGuard)
-    //@Roles('user')
-    //@UseGuards(JwtAuthGuard)
+
+
+    @UseGuards(JwtAuthGuard)
     @Post()
     add(@Body() dto: CreateOrderDto) {
         return this.ordersService.add(dto);

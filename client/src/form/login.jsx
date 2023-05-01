@@ -1,28 +1,37 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import './forms.css'
+import RequestList from '../API/RequestList'
+import { useFetching } from '../hooks/useFetching'
 
 const Login = ({...props}) => {
-    const [values, setValues] = useState({firstValue: '', secondValue: ''})
-    const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWQiOiIxIiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiRG9lIiwibnVtYmVyIjoiKzM3NTQ0NTc1NzA1NyIsImVtYWlsIjoiam9obl9kb2UtMjY1QG1haWwucnUiLCJ1c2VybmFtZSI6IkJpZ0RqbyIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNTE2MjM5MDIyfQ.eTqN6o5K6xOI-93hGb03jM5KsR-yuolUGe1Z4BarQg4'
+    const [values, setValues] = useState({username: '', password: ''})
     const dispatch = useDispatch()
 
+    const [fetchLogin, isLoginLoading, loginError] = useFetching(async () => {
+        const obj = await RequestList.login(values);
+        if(obj.data.acsess_token){
+            localStorage.setItem('user', obj.data.acsess_token)
+            dispatch({type: 'ADD_TOKEN', payload: obj.data.acsess_token})
+            props.setVisible(false)
+        }
+    })
+
     const send = () => {
-        localStorage.setItem('user', userToken)
-        dispatch({type: 'ADD_TOKEN', payload: userToken})
-        props.setVisible(false)
+        fetchLogin()
+        console.log(loginError)
     }
 
-    useEffect(() => setValues({firstValue: '', secondValue: ''}), [props.visible])
+    useEffect(() => setValues({username: '', password: ''}), [props.visible])
 
     return(
         <div className="change-box" onClick={(e => e.stopPropagation())}>
             <div className="password-box">
-                <input value={values.firstValue} onInput={e => setValues({...values, firstValue: e.target.value})} type="email" required/>
-                <label>Почта</label>
+                <input value={values.username} onInput={e => setValues({...values, username: e.target.value})} type="text" required/>
+                <label>Никнейм</label>
             </div>
             <div className="password-box">
-                <input value={values.secondValue} onInput={e => setValues({...values, secondValue: e.target.value})} type="password" required/>
+                <input value={values.password} onInput={e => setValues({...values, password: e.target.value})} type="password" required/>
                 <label>Пароль</label>
             </div>
             <center>

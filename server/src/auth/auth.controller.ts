@@ -3,6 +3,7 @@ import { CreateUserDto } from 'users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from 'users/dto/login-user.dto';
 import { RefreshTokenDto } from 'users/dto/refresh-token.dto';
+import { JwtAuthGuard } from './jwt.auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -18,11 +19,14 @@ export class AuthController {
     return this.authService.registration(userDto);
   }
 
+
   @Post('/refresh-token')
   getRefreshedTokens(@Body() refreshTokenDto: RefreshTokenDto) {
     return this.authService.getRefreshedTokens(refreshTokenDto);
   }
 
+
+  @UseGuards(JwtAuthGuard)
   @Get('/logout')
   logout(@Req() req: any) {
     const id = req.user.id;

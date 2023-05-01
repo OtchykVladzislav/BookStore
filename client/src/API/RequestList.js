@@ -1,5 +1,13 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 const link = 'http://localhost:4000'
+
+const headers = { 
+    headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('user')
+    }  
+}
+
 
 export default class RequestList {
     static async getAll(str, limit, page) {
@@ -52,5 +60,15 @@ export default class RequestList {
     static async getComments(id) {
         const response = await axios.get(`${link}/comments/book/` + id)
         return response;
+    }
+
+    static async login(data){
+        const response = await axios.post(`${link}/auth/login`, data)
+        return response
+    }
+
+    static async profile(id){
+        const response = await axios.get(`${link}/users/` + id, headers);
+        return response
     }
 }

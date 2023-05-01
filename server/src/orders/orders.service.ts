@@ -20,7 +20,8 @@ export class OrdersService {
                 pay_method: true,
                 books: true,
                 user: true,
-                status: true
+                status: true,
+                city: true
             }
         })
         return data;
@@ -35,7 +36,8 @@ export class OrdersService {
             pay_method: true,
             books: true,
             user: true,
-            status: true
+            status: true,
+            city: true
         }
       });
       return data;

@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FormComment from "../form/comments";
@@ -7,17 +7,29 @@ import NewPassword from "../form/new_password";
 import MyButton from "../UI/button/MyButton"
 import MyModal from "../UI/modal/MyModal";
 import OrderItem from "../utils/Orders/OrderItem";
-
+import { useFetching } from "../hooks/useFetching";
+import RequestList from "../API/RequestList";
+import Loader from "../UI/loader/MyLoader"
 
 const Account = () => {
     const [ password, setPassword ] = useState({one:'', two: ''})
-    const [ orders, setOrders] = useState([{book: {title: 'Book 1', price: 25}, createAt: '2021-02-01', id: 1}])
+    const [ user, setUser ] = useState({})
     const token = useSelector(state => state.token)
     const dispatch = useDispatch()
-    const decodedToken = jwtDecode(token);
+    const decode = jwtDecode(token)
     const [visible, setVisible] = useState(false)
     const [isForm, setIsForm] = useState(false)
     let comment = {}
+
+    const [fetchProfile, isProfileLoading, profileError] = useFetching(async () => {
+        const obj = await RequestList.profile(decode.id);
+        console.log(obj)
+        setUser({...obj.data})
+    })
+
+    useEffect(() => {
+        fetchProfile()
+    }, [])
 
     const change = () => {
         if(password.one === password.two && password.one && password.two){
@@ -46,30 +58,36 @@ const Account = () => {
                     <FormComment visible={visible} setVisible={setVisible}/>
                 }
             </MyModal>
-            <div className="accountTitle">Информация о пользователе</div>
-            <div className="accountInfo">
-                <div className="accountText">
-                    <div>Никнейм: {decodedToken.username}</div>
-                    <div>Имя: {decodedToken.firstName}</div>
-                    <div>Фамилия: {decodedToken.lastName}</div>
-                    <div>Номер телефона: {decodedToken.number}</div>
-                    <div>Почта: {decodedToken.email}</div>
-                </div>
-                <div className="accountPicture">
-                    <img src="icon.svg"/>
-                </div>
-            </div>
-            <div className="accountBonus">
-                <span>Бонусная программа</span>
-                <div>Количество бонусов: {0} баллов.</div>
-                <span style={{fontSize:"10px"}}>С каждой покупки 3%. 1 балл = 1 рублю</span>
-            </div>
-            <MyButton onClick={() => {setVisible(true); setIsForm(true)}}>Сменить пароль</MyButton>
-            <Link to='/'><MyButton onClick={logout}>Выйти</MyButton></Link>
-            <div className="accountOrders">
-                <span>История заказов</span>
-                {!orders.length? "Нет заказов": orders.map((e,i) => <OrderItem key={i} obj={e} func={createComment}/>)}
-            </div>
+            {isProfileLoading?
+                <Loader />
+                :
+                <>
+                    <div className="accountTitle">Информация о пользователе</div>
+                    <div className="accountInfo">
+                        <div className="accountText">
+                            <div>Никнейм: {user.username}</div>
+                            <div>Имя: {user.firstName}</div>
+                            <div>Фамилия: {user.lastName}</div>
+                            <div>Номер телефона: {user.phone_number}</div>
+                            <div>Почта: {user.email}</div>
+                        </div>
+                        <div className="accountPicture">
+                            <img src="icon.svg"/>
+                        </div>
+                    </div>
+                    <div className="accountBonus">
+                        <span>Бонусная программа</span>
+                        <div>Количество бонусов: {user.bonus} баллов.</div>
+                        <span style={{fontSize:"10px"}}>С каждой покупки 3%. 1 балл = 1 рублю</span>
+                    </div>
+                    <MyButton onClick={() => {setVisible(true); setIsForm(true)}}>Сменить пароль</MyButton>
+                    <Link to='/'><MyButton onClick={logout}>Выйти</MyButton></Link>
+                    <div className="accountOrders">
+                        <span>История заказов</span>
+                        {!user.orders.length? "Нет заказов": user.orders.map((e,i) => <OrderItem key={i} obj={e} func={createComment}/>)}
+                    </div>
+                </>
+            }
         </article>
     )
 }

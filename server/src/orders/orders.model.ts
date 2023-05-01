@@ -17,7 +17,7 @@ export class Order {
   @Column({nullable: false})
   date: Date; 
 
-  @ManyToOne(() => User, (user) => user.requests)
+  @ManyToOne(() => User, (user) => user.orders)
   user: User
 
   @ManyToOne(() => Pay_Method, (pay_method) => pay_method.orders)
@@ -30,7 +30,8 @@ export class Order {
   @ManyToOne(() => City, (city) => city.orders)
   city: City;
 
-  @OneToOne(() => Status_Order)
+  @OneToOne(type => Status_Order, status => status.order, 
+    { eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   status: Status_Order
 }

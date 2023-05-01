@@ -77,7 +77,6 @@ export class AuthService {
       username: user.username,
       id: user.id,
       roleWeight: user.role.weight,
-      roleName: user.role.name,
     };
     const refresh_token = uuidv4();
     await this.cacheManager.set(refresh_token, user.id, {});

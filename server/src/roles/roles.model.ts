@@ -13,8 +13,8 @@ export class Role {
   @Column()
   description: string;
 
-  @Column({default: 0})
-  @Min(0)
+  @Column({default: 1})
+  @Min(1)
   @Max(3)
   weight: number;
 

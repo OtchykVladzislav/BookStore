@@ -1,3 +1,4 @@
+import { Order } from 'orders/orders.model';
 import { Request } from 'requests/requests.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn} from 'typeorm';
 
@@ -8,4 +9,7 @@ export class Status_Order {
 
   @Column({nullable: false})
   status: boolean; 
+
+  @OneToOne(type => Order, order => order.status, { onDelete: "CASCADE" })
+  order: Order;
 }

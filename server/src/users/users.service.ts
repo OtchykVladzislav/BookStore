@@ -15,7 +15,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private rolesService: RolesService
+    private rolesService: RolesService,
   ) { }
 
   async createUser(dto: CreateUserDto) {
@@ -54,12 +54,13 @@ export class UsersService {
   async getUserById(id: number) {
     const user = await this.usersRepository.findOne({
       relations: {
-        role:true
+          orders: true,
+          comments: true
       },
       where: {
         id: id
       }
     })
-    return user;
+    return {...user, password: 'hidden'};
   }
 }

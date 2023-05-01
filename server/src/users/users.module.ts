@@ -10,14 +10,12 @@ import { RolesModule } from 'roles/roles.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Role]),
     forwardRef(() => AuthModule),
+    TypeOrmModule.forFeature([User]),
     RolesModule
   ],
+  exports: [UsersService],
   providers: [UsersService],
-  exports: [
-    UsersService,
-  ],
   controllers: [UsersController],
 })
 export class UsersModule {

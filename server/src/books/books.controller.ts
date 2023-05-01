@@ -26,12 +26,16 @@ export class BooksController {
         return this.booksService.findOne(id);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Delete('/:id')
     remove(@Param('id') id: number) {
         return this.booksService.remove(id);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Put('/:id')
     edit(
