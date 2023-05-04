@@ -26,10 +26,13 @@ export class GenresService {
     return genres;
   }
 
-  async getGenreByName(name: string) {
+  async getGenreById(id: number) {
     const genre = await this.genresRepository.findOne({
       where: {
-        name
+        id
+      },
+      relations: {
+        books: true
       }
     })
     return genre;

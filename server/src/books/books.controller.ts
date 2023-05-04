@@ -11,6 +11,11 @@ import { Roles } from 'roles/roles.decorator';
 export class BooksController {
     constructor(private booksService: BooksService) { }
 
+    @Get('/without_property')
+    getBooks() {
+        return this.booksService.bookWithoutProperties();
+    }
+
     @Get()
     getAll(@Query('limit') limit: string, @Query('page') page: string) {
         return this.booksService.findAll(limit, page);
@@ -19,6 +24,16 @@ export class BooksController {
     @Get('/search')
     filterItems(@Query('query') query: string, @Query('sort') sort: string, @Query('limit') limit: string, @Query('page') page: string) {
         return this.booksService.filterItems(query, sort, limit, page);
+    }
+
+    @Get('/genre/:id')
+    getAllByGenre(@Param('id') id: number, @Query('limit') limit: string, @Query('page') page: string) {
+        return this.booksService.findAllBooksByGenre(id, limit, page);
+    }
+
+    @Get('/genre/:id/search')
+    filterItemsByGenre(@Param('id') id: number, @Query('query') query: string, @Query('sort') sort: string, @Query('limit') limit: string, @Query('page') page: string) {
+        return this.booksService.filterAllBooksByGenre(id, query, sort, limit, page);
     }
 
     @Get('/:id')

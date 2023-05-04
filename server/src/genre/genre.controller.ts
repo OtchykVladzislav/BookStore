@@ -17,6 +17,11 @@ export class GenresController {
         return this.genresService.getAllGenres()
     }
 
+    @Get('/:id')
+    getOne(@Param('id') id: number){
+        return this.genresService.getGenreById(id)
+    }
+
     @UseGuards(RolesGuard)
     @Roles(3)
     @UseGuards(JwtAuthGuard)

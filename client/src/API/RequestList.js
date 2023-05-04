@@ -21,7 +21,6 @@ export default class RequestList {
     }
 
     static async filterItems(str, query, sort, limit, page) {
-        console.log(sort, query)
         const response = await axios.get(`${link}/${str}/search`, {
             params: {
                 query: query,
@@ -53,7 +52,7 @@ export default class RequestList {
     }
 
     static async addElem(str, data){
-        const response = await axios.post(`${link}/${str}`, data)
+        const response = await axios.post(`${link}/${str}`, data, headers)
         return response;
     }
 
@@ -64,6 +63,21 @@ export default class RequestList {
 
     static async login(data){
         const response = await axios.post(`${link}/auth/login`, data)
+        return response
+    }
+
+    static async logout(){
+        const response = await axios.get(`${link}/auth/logout`, headers)
+        return response
+    }
+
+    static async newPassword(data){
+        const response = await axios.post(`${link}/auth/new_password`, data, headers)
+        return response
+    }
+
+    static async registration(data){
+        const response = await axios.post(`${link}/auth/registration`, data, headers)
         return response
     }
 

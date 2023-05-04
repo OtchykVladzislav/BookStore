@@ -41,6 +41,7 @@ export class CommentsService {
       const userId = 1
       const data = await this.commentRepository.create({
         ...dto,
+        created: new Date().toISOString(),
         user: { id: userId } as User,
       });
       await this.commentRepository.save(data);

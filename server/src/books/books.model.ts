@@ -28,7 +28,7 @@ export class Book {
   @ManyToOne(() => User, (user) => user.books)
   user: User
 
-  @ManyToMany(() => Genre)
+  @ManyToMany(() => Genre, (genre) => genre.books)
   @JoinTable()
   genres: Genre[]
 

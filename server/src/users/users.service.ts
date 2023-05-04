@@ -63,4 +63,10 @@ export class UsersService {
     })
     return {...user, password: 'hidden'};
   }
+
+  async updatePassword(password : string){
+    const userId = 1;
+    await this.usersRepository.update({ id: userId }, { password });
+    return true
+  }
 }

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from 'users/users.model';
 import { Book } from './books.model';
 import { CreateBookDto } from './dto/create-book.dto';
+import { Genre } from 'genre/genre.model';
 
 @Injectable()
 export class BooksService {
@@ -20,6 +21,11 @@ export class BooksService {
         case 'priceDecrease': return [...array].sort((a,b) => b["price"] - a["price"])
         default : return array
       }
+    }
+
+    async bookWithoutProperties(): Promise<Book[]>{
+      const data = await this.booksRepository.find()
+      return data
     }
 
     async findAll(limit: string, page: string): Promise<[Book[], number]> {
@@ -57,6 +63,32 @@ export class BooksService {
       });
       return data;
   }
+
+  async findAllBooksByGenre(id: number, limit: string, page: string): Promise<[Book[], number]> {
+    const skip = (Number(limit) * Number(page)) - Number(limit);
+    const [data, count] = await this.booksRepository.findAndCount({
+      relations: ['genres'],
+      where: {
+        genres: {id}
+      },
+      take: Number(limit),
+      skip: skip,
+    })
+    return [data, count];
+  }
+
+  
+    async filterAllBooksByGenre(id: number, query: string, sort: string,limit: string, page: string): Promise<[Book[], number]>{
+      const skip = Number(limit) * Number(page);
+      const data = await this.booksRepository.find({
+        relations: ['genres'],
+        where: {
+          genres: {id}
+        },
+      })
+      const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]/*.slice(skip, skip + Number(limit))*/
+      return [arr, arr.length != 0 ? arr.length : 1 ];
+    }
 
     async add(dto: CreateBookDto): Promise<Book> {
       const userId = 1

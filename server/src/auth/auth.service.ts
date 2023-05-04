@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { RefreshTokenDto } from 'users/dto/refresh-token.dto';
 import { LoginUserDto } from 'users/dto/login-user.dto';
 import { RolesService } from 'roles/roles.service';
+import { NewPasswordDto } from 'users/dto/new-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,12 @@ export class AuthService {
   async login(userDto: LoginUserDto) {
     const user = await this.validateUser(userDto);
     return this.generateTokens(user);
+  }
+
+  async change_password(passwordDto: NewPasswordDto) {
+    const hashPassword = await bcrypt.hash(passwordDto.password, 5);
+    await this.usersService.updatePassword(hashPassword);
+    return this.deleteRefreshToken(1);
   }
 
   async registration(userDto: CreateUserDto) {

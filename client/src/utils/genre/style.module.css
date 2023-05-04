@@ -1,0 +1,22 @@
+.block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 200px;
+    outline: none;
+    border: 2px solid black;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.block p{
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+
+.block:hover{
+    box-shadow: 2px 2px 2px black;
+}

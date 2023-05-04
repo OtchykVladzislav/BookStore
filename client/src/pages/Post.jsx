@@ -4,10 +4,12 @@ import MyButton from "../UI/button/MyButton"
 import { useSelector } from "react-redux";
 import MyModal from "../UI/modal/MyModal";
 import Order from "../form/order";
-import CommentItem from "../utils/Comments/CommentItem";
+import CommentItem from "../utils/comment";
 import { useFetching } from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
 import MyLoader from "../UI/loader/MyLoader";
+import CreateComment from "../form/create-comment";
+import jwtDecode from "jwt-decode";
 
 
 const Post = () => {
@@ -15,6 +17,7 @@ const Post = () => {
     const [post, setPost] = useState({})
     const [comments, setComments] = useState([])
     const token = useSelector(state => state.token)
+    const decode = jwtDecode(token)
     const [modal, setModal] = useState(false)
 
     const [fetchPost, isPostLoading, postError] = useFetching(async () => {
@@ -27,7 +30,16 @@ const Post = () => {
         setComments([...list.data])
     })
 
+    const [fetchAddComment, isAddCommentLoading, addCommentError] = useFetching(async (comment) => {
+        const obj = await RequestList.addElem('comments', comment);
+        obj.data.user.username = decode.username
+        setComments([...comments, obj.data])
+    })
 
+    const add = (obj) => {
+        const comment = {description: obj.description, rating: obj.rating, book: post, created: new Date().toLocaleDateString()}
+        fetchAddComment(comment)
+    }
 
     useEffect(() => {
         fetchComment()
@@ -55,6 +67,7 @@ const Post = () => {
                         {post.description}
                     </div>
                     <div className="postComments">
+                        <CreateComment callback={add}/>
                         {!comments.length? "Нет отзывов": comments.map((e,i) => <CommentItem key={i} obj={e}/>)}
                     </div>
                 </>

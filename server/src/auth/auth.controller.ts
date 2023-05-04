@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { LoginUserDto } from 'users/dto/login-user.dto';
 import { RefreshTokenDto } from 'users/dto/refresh-token.dto';
 import { JwtAuthGuard } from './jwt.auth.guard';
+import { NewPasswordDto } from 'users/dto/new-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -19,12 +20,16 @@ export class AuthController {
     return this.authService.registration(userDto);
   }
 
-
   @Post('/refresh-token')
   getRefreshedTokens(@Body() refreshTokenDto: RefreshTokenDto) {
     return this.authService.getRefreshedTokens(refreshTokenDto);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('/new_password')
+  change_password(@Body() NewPasswordDto: NewPasswordDto) {
+    return this.authService.change_password(NewPasswordDto);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('/logout')
