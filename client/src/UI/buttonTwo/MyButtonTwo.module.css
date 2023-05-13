@@ -1,4 +1,4 @@
-.btn {
+.btn, .disabled {
     padding: 0.5em 1.5em;
     font-size: 18px;
     text-transform: uppercase;
@@ -23,4 +23,8 @@
 
 .btn:active {
     transform: translateY(-1px);
+}
+
+.disabled{
+    color: rgb(150, 144, 144);
 }

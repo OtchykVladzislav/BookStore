@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { Genre } from './genre.model';
+import { ImageGenreService } from 'image_genre/image_genre.service';
 
 @Injectable()
 export class GenresService {
@@ -11,18 +12,25 @@ export class GenresService {
   constructor(
     @InjectRepository(Genre)
     private genresRepository: Repository<Genre>,
+    private imageGenreService: ImageGenreService
   ) { }
 
-  async createGenre(dto: CreateGenreDto) {
-    const genre = await this.genresRepository.create({
+  async createGenre(dto: CreateGenreDto): Promise<Genre>{
+    const image = await this.imageGenreService.add(dto.image)
+    const genre = this.genresRepository.create({
       ...dto
     });
+    genre.image = image
     await this.genresRepository.save(genre)
     return genre;
   }
 
   async getAllGenres() {
-    const genres = await this.genresRepository.find();
+    const genres = await this.genresRepository.find({
+      relations: {
+        image: true
+      }
+    });
     return genres;
   }
 
@@ -32,7 +40,8 @@ export class GenresService {
         id
       },
       relations: {
-        books: true
+        books: true,
+        image: true
       }
     })
     return genre;

@@ -125,4 +125,17 @@ export class BooksService {
       await this.booksRepository.delete(id);
       return true;
     }
+
+    async filterByIDArray(array: any): Promise<Book[]>{
+      const data = await this.booksRepository.find()
+      const arr = []
+      for(let i = 0; i < array.length; i++){
+        for(let j = 0; j < data.length; j++){
+          if(array[i] == data[j].id){
+            arr.push(data[j])
+          }
+        }
+      }
+      return arr;
+    }
 }

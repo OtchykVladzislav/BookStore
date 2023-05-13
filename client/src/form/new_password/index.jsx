@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import MyButton from "../../UI/button/MyButton"
 import classes from './style.module.css'
+import PasswordInput from "../../UI/password_input"
 
 const NewPassword = ({...props}) => {
     const [password, setPassword] = useState({one: '', two: ''})
@@ -15,9 +16,9 @@ const NewPassword = ({...props}) => {
     return(
         <div className={classes.account_password} onClick={e => e.stopPropagation()}>
             <label>Новый пароль</label>
-            <input value={password.one} onInput={e => setPassword({...password, one: e.target.value})} type="password" />
+            <PasswordInput value={password.one} onChange={e => setPassword({...password, one: e})} />
             <label>Повторить пароль</label>
-            <input value={password.two} onInput={e => setPassword({...password, two: e.target.value})} type="password" />
+            <PasswordInput value={password.two} onChange={e => setPassword({...password, two: e})} />
             <MyButton onClick={change}>Поменять</MyButton>
         </div>
     )

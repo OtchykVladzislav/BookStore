@@ -37,9 +37,8 @@ export class CommentsService {
       return data;
   }
 
-    async add(dto: CreateCommentDto): Promise<Comment> {
-      const userId = 1
-      const data = await this.commentRepository.create({
+    async add(dto: CreateCommentDto, userId: number): Promise<Comment> {
+      const data = this.commentRepository.create({
         ...dto,
         created: new Date().toISOString(),
         user: { id: userId } as User,
@@ -48,8 +47,7 @@ export class CommentsService {
       return data;
     }
 
-    async edit(id: number, dto: CreateCommentDto): Promise<boolean> {
-      const userId = 1;
+    async edit(id: number, dto: CreateCommentDto, userId: number): Promise<boolean> {
       const newsId = await this.commentRepository.findOne({
         where: {
           id: userId,
@@ -62,8 +60,7 @@ export class CommentsService {
       return true;
     }
 
-    async remove(id: number): Promise<boolean> {
-      const userId = 1;
+    async remove(id: number, userId: number): Promise<boolean> {
       const dataId = await this.commentRepository.findOne({
         where: {
           id: id,

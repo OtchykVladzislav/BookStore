@@ -41,6 +41,12 @@ export class BooksController {
         return this.booksService.findOne(id);
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Post('/array')
+    filterByArr(@Body() array: any) {
+        return this.booksService.filterByIDArray(array);
+    }
+
     @UseGuards(RolesGuard)
     @Roles(3)
     @UseGuards(JwtAuthGuard)

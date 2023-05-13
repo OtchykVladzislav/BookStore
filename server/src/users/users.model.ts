@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable, JoinColumn, OneToOne } from 'typeorm';
 import { Role } from 'roles/roles.model';
 import { Book } from 'books/books.model';
 import { Comment } from 'comment/comment.model';
@@ -8,6 +8,7 @@ import { Format } from 'format/format.model';
 import { Request } from 'requests/requests.model';
 import { City } from 'city/city.model';
 import { Order } from 'orders/orders.model';
+import { Image_User } from 'image_user/image_user.model';
 
 @Entity('users')
 export class User {
@@ -26,10 +27,10 @@ export class User {
   @Column({ default: "lastName" })
   lastName: string;
 
-  @Column({ default: "+375445798236" })
+  @Column({unique: true, default: "+375445798236" })
   phone_number: string;
 
-  @Column({ default: "vlad@mail.ru" })
+  @Column({unique: true, default: "vlad@mail.ru" })
   email: string;
 
   @Column({default: 0})
@@ -58,4 +59,9 @@ export class User {
 
   @OneToMany(() => City, (city) => city.user)
   cities: City[]
+
+  @OneToOne(() => Image_User, image => image.user, 
+    { eager: true, onDelete: 'CASCADE' })
+  @JoinColumn()
+  image: Image_User
 }

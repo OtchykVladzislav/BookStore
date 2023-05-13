@@ -3,7 +3,7 @@ import { Book } from 'books/books.model';
 import { City } from 'city/city.model';
 import { Format } from 'format/format.model';
 import { Status_Request } from 'status_requests/status_requests.model';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, CreateDateColumn} from 'typeorm';
 import { Type } from 'types/types.model';
 import { User } from 'users/users.model';
 
@@ -16,9 +16,9 @@ export class Request {
   pages: string; 
 
   @Column({nullable: false})
-  count_pages: number; 
+  count_copies: number; 
 
-  @Column({nullable: false})
+  @CreateDateColumn()
   createdAt: Date; 
 
   @ManyToOne(() => User, (user) => user.requests)

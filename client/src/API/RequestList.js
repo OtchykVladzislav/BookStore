@@ -1,12 +1,5 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 const link = 'http://localhost:4000'
-
-const headers = { 
-    headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('user')
-    }  
-}
 
 
 export default class RequestList {
@@ -52,7 +45,7 @@ export default class RequestList {
     }
 
     static async addElem(str, data){
-        const response = await axios.post(`${link}/${str}`, data, headers)
+        const response = await axios.post(`${link}/${str}`, data, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response;
     }
 
@@ -67,22 +60,22 @@ export default class RequestList {
     }
 
     static async logout(){
-        const response = await axios.get(`${link}/auth/logout`, headers)
+        const response = await axios.get(`${link}/auth/logout`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response
     }
 
     static async newPassword(data){
-        const response = await axios.post(`${link}/auth/new_password`, data, headers)
+        const response = await axios.post(`${link}/auth/new_password`, data, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response
     }
 
     static async registration(data){
-        const response = await axios.post(`${link}/auth/registration`, data, headers)
+        const response = await axios.post(`${link}/auth/registration`, data, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response
     }
 
-    static async profile(id){
-        const response = await axios.get(`${link}/users/` + id, headers);
+    static async profile(){
+        const response = await axios.get(`${link}/users/about`, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  });
         return response
     }
 }

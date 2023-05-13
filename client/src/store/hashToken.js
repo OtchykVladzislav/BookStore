@@ -1,10 +1,8 @@
-import { createStore } from "redux"
-
 const defaultState = {
     token: localStorage.getItem('user')
 }
 
-const reducer = (state = defaultState, action) => {
+export const tokenReducer = (state = defaultState, action) => {
     switch(action.type){
         case 'ADD_TOKEN':
             return {...state, token: action.payload}
@@ -14,7 +12,3 @@ const reducer = (state = defaultState, action) => {
             return state
     }
 }
-
-const store = createStore(reducer)
-
-export default store

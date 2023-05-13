@@ -7,10 +7,12 @@ import Account from "../pages/Account"
 import PrintBook from "../pages/PrintBook"
 import Genres from "../pages/Genres"
 import Genre from "../pages/Genre"
+import Cart from "../pages/Cart"
 
 export const privateRoutes = [
     {path: '/account', component: Account, exact: true},
-    {path: '/printbook', component: PrintBook, exact: true}
+    {path: '/printbook', component: PrintBook, exact: true},
+    {path: '/cart', component: Cart, exact: true},
 ]
 
 export const publicRoutes = [

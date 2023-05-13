@@ -21,8 +21,11 @@ export class CommentsController {
     
     @UseGuards(JwtAuthGuard)
     @Delete('/:id')
-    remove(@Param('id') id: number) {
-        return this.commentsService.remove(id);
+    remove(
+        @Param('id') id: number,
+        @Req() req: any
+    ) {
+        return this.commentsService.remove(id, req.user.id);
     }
 
     
@@ -33,14 +36,17 @@ export class CommentsController {
         @Param('id') id: number,
         @Body() dto: CreateCommentDto,
     ) {
-        return this.commentsService.edit(id, dto);
+        return this.commentsService.edit(id, dto, req.user.id);
     }
     
     
     
     @UseGuards(JwtAuthGuard)
     @Post()
-    add(@Body() dto: CreateCommentDto) {
-        return this.commentsService.add(dto);
+    add(
+        @Body() dto: CreateCommentDto,
+        @Req() req: any
+    ) {
+        return this.commentsService.add(dto, req.user.id);
     }
 }

@@ -48,7 +48,7 @@ export class RequestsController {
     
     @UseGuards(JwtAuthGuard)
     @Post()
-    add(@Body() dto: CreateRequestDto) {
-        return this.requestsService.add(dto);
+    add(@Req() req: any, @Body() dto: CreateRequestDto) {
+        return this.requestsService.add(dto, req.user.id);
     }
 }

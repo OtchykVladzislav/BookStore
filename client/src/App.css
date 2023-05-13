@@ -3,6 +3,27 @@ a{
   color: black;
 }
 
+.stepsCart{
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  border: 1.5px solid black;
+  box-shadow: 2px 3px 5px black;
+  width: 800px;
+  height: max-content;
+  margin-bottom: 10px;
+}
+
+.bookItem{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 2px 2px 2px 2px black;
+  font-size: 18px;
+  padding: 0 10px 0 10px;
+}
+
 /*Header*/
 .headerPicture{
   overflow: hidden;
@@ -25,20 +46,21 @@ a{
 
 /*Home*/
 .welcome, .warning{
-  --text-stroke-color: rgb(0, 0, 0);
+  --text-stroke-color: white;
   --fs-size: 9em;
   letter-spacing: 3px;
   text-decoration: none;
   font-size: var(--fs-size);
   font-family: "Arial";
   text-transform: uppercase;
-  color: transparent;
+  color: black;
   -webkit-text-stroke: 4px var(--text-stroke-color);
   text-align: center;
 }
 
 .warning{
-  font-size: 45px;
+  font-size: 40px;
+  margin-top: 5%;
   -webkit-text-stroke: 3px rgb(0, 0, 0);
 }
 
@@ -229,20 +251,20 @@ a{
 
 /*Post*/
 .postTitle, .accountTitle{
-  --text-stroke-color: rgb(0, 0, 0);
+  --text-stroke-color: white;
   --fs-size: 2.5em;
   letter-spacing: 3px;
   text-decoration: none;
   font-size: var(--fs-size);
   font-family: "Arial";
   text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 4px var(--text-stroke-color);
+  color: black;
+  -webkit-text-stroke: 1.5px var(--text-stroke-color);
   text-align: center;
   font-weight: 1000;
 }
 
-.postInfo, .accountInfo, .print{
+.postInfo, .accountInfo{
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -362,5 +384,27 @@ a{
 .orderItem .description{
   width: 10vw;
   word-wrap: break-word;
+}
+
+/*admin tables*/
+.tableFuel{
+  margin: 20px;
+  font-size: 20px;
+  background: white;
+}
+
+.tableFuel th{
+  padding: 10px;
+  background: #B99274;
+  color: white;
+}
+
+.tableFuel td{
+  padding: 15px;
+}
+
+.tableFuel th, .tableFuel td{
+  border: 2px solid black;
+  text-align: center;
 }
 

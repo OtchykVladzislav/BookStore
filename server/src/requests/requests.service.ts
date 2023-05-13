@@ -5,6 +5,7 @@ import { CreateRequestDto } from './dto/create-request.dto';
 import { Request } from './requests.model';
 import { StatusRequestsService } from 'status_requests/status_requests.service';
 import { Status_Request } from 'status_requests/status_requests.model';
+import { User } from 'users/users.model';
 
 @Injectable()
 export class RequestsService {
@@ -41,22 +42,21 @@ export class RequestsService {
       return data;
   }
 
-    async add(dto: CreateRequestDto): Promise<Request> {
+    async add(dto: CreateRequestDto, id: number): Promise<Request> {
       const status = await this.statusRequestService.add()
       const data = this.requestRepository.create({...dto});
+      data.user = {id} as User
       data.status = status
       await this.requestRepository.save(data);
       return data;
     }
 
     async edit(id: number, dto: CreateRequestDto): Promise<boolean> {
-      const userId = 1;
       await this.requestRepository.update({ id }, { ...dto });
       return true;
     }
 
     async remove(id: number): Promise<boolean> {
-      const userId = 1;
       await this.requestRepository.delete(id);
       return true;
     }

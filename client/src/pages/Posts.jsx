@@ -31,14 +31,17 @@ export default function Posts(){
         }
     })
     useEffect(() => {
-        filter.query || filter.sort ? fetchPosts('filter') : fetchPosts('list')
-    }, [page, filter])
+        filter.sort ? fetchPosts('filter') : fetchPosts('list')
+    }, [page, filter.sort])
+
+    const searchItem = () => {
+        fetchPosts('filter')
+    }
 
     return (
         <article className="posts">
-            <PostFilter filter={filter} setFilter={setFilter}/>
-            {isPostsLoading? <MyLoader/> : <PostList array={posts}/>
-            }
+            <PostFilter callback={searchItem} filter={filter} setFilter={setFilter}/>
+            {isPostsLoading? <MyLoader/> : <PostList array={posts}/>}
             {countPage != 1 && <Pagination count={countPage} obj={page} setObj={setPage}/>}
         </article>
     )

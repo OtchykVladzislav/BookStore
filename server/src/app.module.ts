@@ -18,6 +18,9 @@ import { AuthModule } from 'auth/auth.module';
 import { RedisModule } from 'redis/redis.module';
 import { RolesModule } from 'roles/roles.module';
 import { CityModule } from './city/city.module';
+import { ImageUserModule } from './image_user/image_user.module';
+import { ImageGenreModule } from './image_genre/image_genre.module';
+import { ImageBookModule } from './image_book/image_book.module';
 
 @Module({
   imports: [
@@ -50,7 +53,10 @@ import { CityModule } from './city/city.module';
     OrdersModule,
     PayMethodModule,
     RolesModule,
-    CityModule
+    CityModule,
+    ImageUserModule,
+    ImageGenreModule,
+    ImageBookModule
   ],
   controllers: [AppController],
   providers: [AppService],

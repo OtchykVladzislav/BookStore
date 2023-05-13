@@ -1,6 +1,8 @@
 .account_password{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-family: "Arial";
     background: white;
     border: 4px solid #7cdacc;
@@ -9,11 +11,12 @@
     border-radius: 5px;
     font-size: 15px;
     font-weight: 700;
+    width: 500px;
   }
-  
-  .account_password input{
-    margin: 10px 0 10px 0;
-    width: 350px;
-    padding: 5px;
-    font-size: 18px;
-  }
+
+.account_password{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

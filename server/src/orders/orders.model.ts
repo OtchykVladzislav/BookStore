@@ -30,7 +30,7 @@ export class Order {
   @ManyToOne(() => City, (city) => city.orders)
   city: City;
 
-  @OneToOne(type => Status_Order, status => status.order, 
+  @OneToOne(() => Status_Order, status => status.order, 
     { eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   status: Status_Order

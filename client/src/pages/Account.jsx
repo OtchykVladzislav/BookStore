@@ -12,14 +12,12 @@ import Loader from "../UI/loader/MyLoader"
 
 const Account = () => {
     const [ user, setUser ] = useState({})
-    const token = useSelector(state => state.token)
     const dispatch = useDispatch()
-    const decode = jwtDecode(token)
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate()
 
     const [fetchProfile, isProfileLoading, profileError] = useFetching(async () => {
-        const obj = await RequestList.profile(decode.id);
+        const obj = await RequestList.profile();
         setUser({...obj.data})
     })
 
@@ -28,7 +26,6 @@ const Account = () => {
     }, [])
 
     const change = (password) => {
-        console.log(password)
         if(password.one === password.two && password.one && password.two){
             RequestList.newPassword({password: password.one})
             navigate('/')

@@ -11,7 +11,7 @@ export class StatusOrderService {
     ) {}
 
     async add(): Promise<Status_Order> {
-        const data = await this.statusOrderRepository.create({
+        const data = this.statusOrderRepository.create({
           status: false
         });
         return await this.statusOrderRepository.save(data);

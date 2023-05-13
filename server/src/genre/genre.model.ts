@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Book } from 'books/books.model';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from 'typeorm';
+import { Image_Genre } from 'image_genre/image_genre.model';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToOne, JoinColumn} from 'typeorm';
 
 @Entity('genres')
 export class Genre {
@@ -13,4 +14,9 @@ export class Genre {
   @ManyToMany(() => Book, (book) => book.genres)
   @JoinTable()
   books: Book[]
+
+  @OneToOne(() => Image_Genre, image => image.genre, 
+    { eager: true, onDelete: 'CASCADE' })
+  @JoinColumn()
+  image: Image_Genre
 }

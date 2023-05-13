@@ -1,11 +1,10 @@
-import classes from "./MyInput.module.css"
+import Input from 'rsuite/Input';
 
-const MyInput = ({...props}) => {
+const MyInput = ({change, ...props}) => {
     return(
-        <div className={classes.textInputWrapper}>
-            <input className={classes.textInput} onChange={e => props.func(e.target.value)} {...props}/>
-            {props.value && <p className={classes.textCross} onClick={() => props.func('')}>&#10539;</p>}
-        </div>
+        <>
+            <Input value={props.value} onChange={e => change(e)} {...props}/>
+        </>
     )
 }
 
