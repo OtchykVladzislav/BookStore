@@ -36,7 +36,8 @@ export class Request {
   @ManyToOne(() => City, (city) => city.requests)
   city: City;
 
-  @OneToOne(() => Status_Request)
+  @OneToOne(() => Status_Request, status => status.request, 
+    { eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   status: Status_Request
 }

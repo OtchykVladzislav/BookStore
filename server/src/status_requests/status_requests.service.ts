@@ -17,13 +17,18 @@ export class StatusRequestsService {
         return await this.statusRequestRepository.save(data);
       }
   
-      async edit(id: number): Promise<boolean> {
-        const data = await this.statusRequestRepository.findOne({
-          where: {
-            id: id,
-          }
-        });
-        await this.statusRequestRepository.update({ id }, { status: true });
-        return true;
-      }
+    async edit(id: number): Promise<boolean> {
+      const data = await this.statusRequestRepository.findOne({
+        where: {
+          id: id,
+        }
+      });
+      await this.statusRequestRepository.update({ id }, { status: true });
+      return true;
+    }
+
+    async delete(id: number): Promise<boolean>{
+      await this.statusRequestRepository.delete(id)
+      return true
+    }
 }

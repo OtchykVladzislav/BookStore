@@ -29,8 +29,8 @@ export class OrdersController {
     @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Delete('/:id')
-    remove(@Param('id') id: number) {
-        return this.ordersService.remove(id);
+    remove(@Req() req: any, @Param('id') id: number) {
+        return this.ordersService.remove(id, req.user);
     }
 
     @UseGuards(RolesGuard)
@@ -42,13 +42,13 @@ export class OrdersController {
         @Param('id') id: number,
         @Body() dto: CreateOrderDto,
     ) {
-        return this.ordersService.edit(id, dto);
+        return this.ordersService.edit(id, dto, req.user);
     }
 
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    add(@Body() dto: CreateOrderDto) {
-        return this.ordersService.add(dto);
+    add(@Req() req: any, @Body() dto: CreateOrderDto) {
+        return this.ordersService.add(dto, req.user.id);
     }
 }

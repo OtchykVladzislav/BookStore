@@ -6,7 +6,7 @@ export default function MyHeader({children, ...props}){
     return(
         <header className={classes.header}>
             <div className={classes.logo}>&#128211;</div>
-            <Link to={'/'}><div className={classes.title}>BookStore</div></Link>
+            <Link style={{textDecoration: 'none'}} to={'/'}><div className={classes.title}>BookStore</div></Link>
             {children}
         </header>
     )

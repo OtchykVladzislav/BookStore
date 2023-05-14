@@ -36,7 +36,6 @@ const Post = () => {
         obj.data.user.username = decode.username
         setComments([...comments, obj.data])
         setAccess(false)
-
     })
 
     const addToCart = () => {

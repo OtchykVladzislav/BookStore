@@ -1,13 +1,13 @@
 import MyButton from "../../UI/button/MyButton"
 
-const OrderItem = ({obj, func}) => {
+const OrderItem = ({obj}) => {
     return(
-        <div className="orderItem">
-            <div className="description">{obj.book.title}</div>
-            <div>{obj.book.price} р.</div>
-            <div>{new Date(obj.createAt).toLocaleDateString()}</div>
-            <MyButton onClick={() => func(obj)}>Оставить отзыв</MyButton>
-        </div>
+        <tr>
+            <td>{obj.number_order}</td>
+            <td>{obj.price} BYN</td>
+            <td>{new Date(obj.date).toLocaleString()}</td>
+            <td>{obj.status.status ? 'Оплачено': 'Не оплачено'}</td>
+        </tr>
     )
 }
 

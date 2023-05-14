@@ -31,16 +31,12 @@ export default class RequestList {
     }
 
     static async delById(id, str) {
-        const response = await axios.delete(`${link}/${str}/` + id, {
-            params: {
-                _collection: str
-            }
-        })
+        const response = await axios.delete(`${link}/${str}/` + id, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response;
     }
 
     static async putById(id, str, data) {
-        const response = await axios.put(`${link}/${str}/` + id, data)
+        const response = await axios.put(`${link}/${str}/` + id, data, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response;
     }
 

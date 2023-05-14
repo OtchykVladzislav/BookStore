@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { Book } from 'books/books.model';
 import { City } from 'city/city.model';
-import { Pay_Method } from 'pay_method/pay_method.model';
 import { Status_Order } from 'status_orders/status_orders.model';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable, CreateDateColumn, OneToMany} from 'typeorm';
 import { User } from 'users/users.model';
+import { OrderBook } from './orderBook.model';
 
 @Entity('orders')
 export class Order {
@@ -12,20 +12,36 @@ export class Order {
   id: number;
 
   @Column({nullable: false})
-  price: number; 
+  number_order: number;
 
   @Column({nullable: false})
+  price: number; 
+
+  @CreateDateColumn()
   date: Date; 
+
+  @Column({default: false})
+  is_card: boolean; 
 
   @ManyToOne(() => User, (user) => user.orders)
   user: User
 
-  @ManyToOne(() => Pay_Method, (pay_method) => pay_method.orders)
-  pay_method: Pay_Method
-
-  @ManyToMany(() => Book)
-  @JoinTable()
+  @ManyToMany(() => Book, book => book.orders)
+  @JoinTable({
+    name: 'order_book',
+    joinColumn: {
+      name: 'order_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'book_id',
+      referencedColumnName: 'id',
+    },
+  })
   books: Book[]
+
+  @OneToMany(() => OrderBook, order_book => order_book.order)
+  public order_book!: OrderBook[];
 
   @ManyToOne(() => City, (city) => city.orders)
   city: City;

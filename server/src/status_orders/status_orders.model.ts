@@ -10,6 +10,6 @@ export class Status_Order {
   @Column({nullable: false})
   status: boolean; 
 
-  @OneToOne(type => Order, order => order.status, { onDelete: "CASCADE" })
+  @OneToOne(() => Order, order => order.status, { onDelete: "CASCADE" })
   order: Order;
 }

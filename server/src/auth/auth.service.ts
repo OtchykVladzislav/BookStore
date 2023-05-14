@@ -29,9 +29,9 @@ export class AuthService {
     return this.generateTokens(user);
   }
 
-  async change_password(passwordDto: NewPasswordDto) {
+  async change_password(passwordDto: NewPasswordDto, id: number) {
     const hashPassword = await bcrypt.hash(passwordDto.password, 5);
-    await this.usersService.updatePassword(hashPassword);
+    await this.usersService.updatePassword(hashPassword, id);
     return this.deleteRefreshToken(1);
   }
 

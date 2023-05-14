@@ -1,0 +1,25 @@
+.link{
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.icon{
+    font-size: 25px;
+    text-decoration: none;
+}
+
+
+.count{
+    position: absolute;
+    top: -30%;
+    right: -25%;
+    background: yellow;
+    color: black;
+    padding: 7px 12px 7px 12px;
+    border-radius: 75%;
+    font-weight: bolder;
+    font-size: 14px;
+}

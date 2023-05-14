@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { RolesService } from 'roles/roles.service';
+import { Image_User } from 'image_user/image_user.model';
 
 export type user = User
 
@@ -55,7 +56,8 @@ export class UsersService {
     const user = await this.usersRepository.findOne({
       relations: {
           orders: true,
-          comments: true
+          comments: true,
+          requests: true
       },
       where: {
         id: id
@@ -64,9 +66,12 @@ export class UsersService {
     return {...user, password: 'hidden'};
   }
 
-  async updatePassword(password : string){
-    const userId = 1;
-    await this.usersRepository.update({ id: userId }, { password });
+  async updatePassword(password : string, id: number){
+    await this.usersRepository.update({ id }, { password });
     return true
+  }
+
+  async changeImage(id: number, image: Image_User){
+    await this.usersRepository.update({id}, {image})
   }
 }

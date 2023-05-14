@@ -8,4 +8,7 @@ export class Status_Request {
 
   @Column({nullable: false})
   status: boolean; 
+
+  @OneToOne(() => Request, request => request.status, { onDelete: "CASCADE" })
+  request: Request;
 }

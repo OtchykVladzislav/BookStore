@@ -30,8 +30,11 @@ export class RequestsController {
     @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Delete('/:id')
-    remove(@Param('id') id: number) {
-        return this.requestsService.remove(id);
+    remove(
+        @Param('id') id: number,
+        @Req() req: any
+    ) {
+        return this.requestsService.remove(id, req.user);
     }
 
     @UseGuards(RolesGuard)
@@ -43,7 +46,7 @@ export class RequestsController {
         @Param('id') id: number,
         @Body() dto: CreateRequestDto,
     ) {
-        return this.requestsService.edit(id, dto);
+        return this.requestsService.edit(id, dto, req.user);
     }
     
     @UseGuards(JwtAuthGuard)

@@ -1,0 +1,15 @@
+.number, .name, .expiry, .cvc{
+    padding: 5px;
+    border: 1px solid black;
+    margin-bottom: 5px;
+    font-size: 17px;
+    border-radius: 5px;
+}
+
+.number, .name{
+    width: 500px;
+}
+
+.expiry, .cvc{
+    width: 70px;
+}

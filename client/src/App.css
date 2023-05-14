@@ -22,6 +22,7 @@ a{
   box-shadow: 2px 2px 2px 2px black;
   font-size: 18px;
   padding: 0 10px 0 10px;
+  margin-bottom: 10px;
 }
 
 /*Header*/
@@ -387,24 +388,48 @@ a{
 }
 
 /*admin tables*/
-.tableFuel{
+.table{
   margin: 20px;
   font-size: 20px;
   background: white;
 }
 
-.tableFuel th{
+.table th{
   padding: 10px;
   background: #B99274;
   color: white;
 }
 
-.tableFuel td{
+.table td{
   padding: 15px;
 }
 
-.tableFuel th, .tableFuel td{
+.table th, .table td{
   border: 2px solid black;
   text-align: center;
+}
+
+.tables{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tables div{
+  margin: 10px;
+}
+
+.cross{
+  border-radius: 5px;
+  padding: 10px;
+  background: rgb(231, 42, 42);
+  cursor: pointer;
+}
+
+/*iconAccount*/
+
+.iconAccount{
+  cursor: pointer;
 }
 

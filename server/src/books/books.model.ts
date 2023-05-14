@@ -2,6 +2,8 @@
 import { Comment } from 'comment/comment.model';
 import { Genre } from 'genre/genre.model';
 import { Image_Book } from 'image_book/image_book.model';
+import { OrderBook } from 'orders/orderBook.model';
+import { Order } from 'orders/orders.model';
 import { Request } from 'requests/requests.model';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { User } from 'users/users.model';
@@ -32,6 +34,16 @@ export class Book {
   @ManyToMany(() => Genre, (genre) => genre.books)
   @JoinTable()
   genres: Genre[]
+
+  @ManyToMany(
+    () => Order,
+    order => order.books,
+    {onDelete: 'NO ACTION', onUpdate: 'NO ACTION',},
+  )
+  orders: Order[];
+
+  @OneToMany(() => OrderBook, order_book => order_book.book)
+  public order_book!: OrderBook[];
 
   @OneToMany(() => Comment, (comment) => comment.book)
   comments: Comment[]

@@ -13,7 +13,6 @@ import { RequestsModule } from './requests/requests.module';
 import { StatusRequestsModule } from './status_requests/status_requests.module';
 import { StatusOrdersModule } from 'status_orders/status_orders.module';
 import { OrdersModule } from './orders/orders.module';
-import { PayMethodModule } from './pay_method/pay_method.module';
 import { AuthModule } from 'auth/auth.module';
 import { RedisModule } from 'redis/redis.module';
 import { RolesModule } from 'roles/roles.module';
@@ -51,7 +50,6 @@ import { ImageBookModule } from './image_book/image_book.module';
     StatusRequestsModule,
     StatusOrdersModule,
     OrdersModule,
-    PayMethodModule,
     RolesModule,
     CityModule,
     ImageUserModule,

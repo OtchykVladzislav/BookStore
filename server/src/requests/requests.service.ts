@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException  } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { Request } from './requests.model';
 import { StatusRequestsService } from 'status_requests/status_requests.service';
-import { Status_Request } from 'status_requests/status_requests.model';
 import { User } from 'users/users.model';
 
 @Injectable()
@@ -51,13 +50,36 @@ export class RequestsService {
       return data;
     }
 
-    async edit(id: number, dto: CreateRequestDto): Promise<boolean> {
+    async edit(id: number, dto: CreateRequestDto, user: any): Promise<boolean> {
+      const data = await this.requestRepository.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          user: true,
+        },
+      });
+      if (user.id !== data.user.id && user.roleWeight != 3) {
+        throw new UnauthorizedException({ message: 'user has no rights' });
+      }
       await this.requestRepository.update({ id }, { ...dto });
       return true;
     }
 
-    async remove(id: number): Promise<boolean> {
-      await this.requestRepository.delete(id);
+    async remove(id: number, user: any): Promise<boolean> {
+      const data = await this.requestRepository.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          user: true,
+        },
+      });
+      await this.statusRequestService.delete(data.status.id)
+      if (user.id !== data.user.id && user.roleWeight != 3) {
+        throw new UnauthorizedException({ message: 'user has no rights' });
+      }
+      await this.requestRepository.remove(data);
       return true;
     }
 }

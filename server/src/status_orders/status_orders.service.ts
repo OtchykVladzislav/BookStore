@@ -15,15 +15,20 @@ export class StatusOrderService {
           status: false
         });
         return await this.statusOrderRepository.save(data);
-      }
-  
-      async edit(id: number): Promise<boolean> {
-        const data = await this.statusOrderRepository.findOne({
-          where: {
-            id: id,
-          }
-        });
-        await this.statusOrderRepository.update({ id }, { status: true });
-        return true;
-      }
+    }
+
+    async edit(id: number): Promise<boolean> {
+      const data = await this.statusOrderRepository.findOne({
+        where: {
+          id: id,
+        }
+      });
+      await this.statusOrderRepository.update({ id }, { status: true });
+      return true;
+    }
+
+    async delete(id: number): Promise<boolean>{
+      await this.statusOrderRepository.delete(id)
+      return true
+    }
 }

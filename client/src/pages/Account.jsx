@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +8,8 @@ import OrderItem from "../utils/order/OrderItem";
 import { useFetching } from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
 import Loader from "../UI/loader/MyLoader"
+import RequestItem from "../utils/request";
+import ChangeImage from "../form/change-image";
 
 const Account = () => {
     const [ user, setUser ] = useState({})
@@ -19,6 +20,12 @@ const Account = () => {
     const [fetchProfile, isProfileLoading, profileError] = useFetching(async () => {
         const obj = await RequestList.profile();
         setUser({...obj.data})
+    })
+
+    const [fetchDel, isDelLoading, delError] = useFetching(async (obj) => {
+        const list = user.requests.filter(e => e.id != obj.id)
+        await RequestList.delById(obj.id, 'requests');
+        setUser({...user, requests: list})
     })
 
     useEffect(() => {
@@ -35,14 +42,11 @@ const Account = () => {
     }
 
     const logout = () => {
+        navigate('/posts')
         RequestList.logout()
         localStorage.setItem('user', '')
         dispatch({type: 'DELETE_TOKEN'})
     }
-
-    const createComment = (obj) => {
-        navigate('/posts')
-    }  
 
     return(
         <article className="account">
@@ -62,9 +66,7 @@ const Account = () => {
                             <div>Номер телефона: {user.phone_number}</div>
                             <div>Почта: {user.email}</div>
                         </div>
-                        <div className="accountPicture">
-                            <img src="icon.svg"/>
-                        </div>
+                        <ChangeImage image={user.image} callback={() => logout()}/>
                     </div>
                     <div className="accountBonus">
                         <span>Бонусная программа</span>
@@ -73,9 +75,52 @@ const Account = () => {
                     </div>
                     <MyButton onClick={() => setVisible(true)}>Сменить пароль</MyButton>
                     <Link to='/'><MyButton onClick={logout}>Выйти</MyButton></Link>
-                    <div className="accountOrders">
-                        <span>История заказов</span>
-                        {!user.orders.length? "Нет заказов": user.orders.map((e,i) => <OrderItem key={i} obj={e} func={createComment}/>)}
+                    <div className="tables">
+                        <div className="accountOrders">
+                            <span>История запросов</span>
+                            {!user.requests.length? 
+                                "Нет запросов"
+                                :
+                                <table className="table" style={{fontSize: '15px'}}>
+                                    <thead>
+                                        <tr>
+                                            <th>Тираж</th>
+                                            <th>Кол-во страниц</th>
+                                            <th>Дата и время</th>
+                                            <th>Статус</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {user.requests.map((e,i) =>
+                                        <RequestItem key={i} obj={e} remove={fetchDel}/>
+                                    )}
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                        <div className="accountOrders">
+                            <span>История заказов</span>
+                            {!user.orders.length? 
+                                "Нет заказов"
+                                :
+                                <table className="table" style={{fontSize: '15px'}}>
+                                    <thead>
+                                        <tr>
+                                            <th>Номер заказа</th>
+                                            <th>Сумма</th>
+                                            <th>Дата и время</th>
+                                            <th>Статус</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {user.orders.map((e,i) =>
+                                        <OrderItem key={i} obj={e}/>
+                                    )}
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
                     </div>
                 </>
             }

@@ -3,9 +3,8 @@ import { useFetching } from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
 import { useEffect, useState } from "react";
 import MyInput from "../UI/input/MyInput";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import MyButtonTwo from "../UI/buttonTwo/MyButtonTwo";
 import MyButton from "../UI/button/MyButton";
 import CreditCard from "../form/methods/card";
 
@@ -20,13 +19,17 @@ const Cart = () => {
     const [allPrice, setAllPrice] = useState(0)
     const [step, setStep] = useState(0);
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const onChange = nextStep => {
         setStep(nextStep < 0 ? 0 : nextStep > 3 ? 3 : nextStep);
     };
 
 
-    const onNext = () => onChange(step + 1);
+    const onNext = () => {
+        if(step == 2 && !form.city) return;
+        onChange(step + 1);
+    }
     const onPrevious = () => onChange(step - 1);
 
     const minusBook = (i) => {
@@ -35,7 +38,10 @@ const Cart = () => {
         if(arr[i].count == 0){
             arr.splice(i, 1)
         }
-        if(arr.length == 0) navigate('/posts')
+        if(arr.length == 0){
+            dispatch({type: 'NULL_CART'})
+            navigate('/posts')
+        }
         setBooks([...arr])
     }
 
@@ -60,6 +66,11 @@ const Cart = () => {
         setCities([...list.data.map(item => ({ label: `${item.name}, ${item.adress}`, value: item.id }))])
     })
 
+    const [fetchAdd, isAddLoading, addError] = useFetching(async () => {
+        const obj = {is_card: isCard, books: [...books.map(e => {return {id: e.id, count: e.count}})], price: allPrice, city: form.city}
+        await RequestList.addElem('orders', obj)
+    })
+
     const calculatePrice = () => {
         let sum = 0;
         books.map(e => sum += (e.price * e.count));
@@ -73,8 +84,6 @@ const Cart = () => {
     }, []) 
 
     useEffect(() => calculatePrice(), [bonus, books])
-
-console.log(isCard)
 
     return(
         <article>
@@ -90,7 +99,7 @@ console.log(isCard)
                 {books.map((e, i)=> {return <div className="bookItem">
                     <div>
                         <p>{e.name}</p>
-                        <p>{e.price} BYN</p>
+                        <p>{e.price} BYN * {e.count} = {e.price * e.count} BYN</p>
                     </div>
                     <ButtonGroup style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                         <Button onClick={() => minusBook(i)} disabled={e.count === 0}>-</Button>
@@ -98,6 +107,7 @@ console.log(isCard)
                         <Button onClick={() => plusBook(i)}>+</Button>
                     </ButtonGroup>
                 </div>})}
+                <MyButton onClick={() => {navigate('/posts'); dispatch({type: 'NULL_CART'})}}>Очистить корзину</MyButton>
             </div>}
             {step == 1 && <div className="stepsCart">
                 {user.bonus? <MyInput type='number' placeholder={'Введите сколько хотите потратить'} value={bonus} change={number => setBonus(number)} />: <p style={{fontSize: '18px'}}>У вас нет бонусов</p>}
@@ -112,20 +122,16 @@ console.log(isCard)
                     data={cities}/>
             </div>}
             {step == 3 && <div className="stepsCart">
-                <RadioGroup name="radioList" inline appearance="picker" value={isCard} onChange={e => setIsCard(JSON.parse(e))}>
+                <RadioGroup name="radioList" inline appearance="picker" style={{marginBottom: '10px'}} value={isCard} onChange={e => setIsCard(JSON.parse(e))}>
                     <Radio value={true}>Оплата картой</Radio>
                     <Radio value={false}>Оплата наличными</Radio>
                 </RadioGroup>
-                {isCard && <CreditCard />}
-                <h3>Итого: <span>{allPrice} BYN</span></h3><><MyButton>Сделать заказ</MyButton></>
+                {isCard ? <CreditCard callback={() => {fetchAdd(); navigate('/posts'); dispatch({type: 'NULL_CART'})}}/> : <MyButton onClick={() => {navigate('/posts');fetchAdd(); dispatch({type: 'NULL_CART'})}}>Сделать заказ</MyButton>}
+                <h3>Итого: <span>{allPrice} BYN</span></h3>
             </div>}
             {books.length != 0 && <ButtonGroup>
-                <Button onClick={onPrevious} disabled={step === 0}>
-                Предыдущая
-                </Button>
-                <Button onClick={onNext} disabled={step === 3}>
-                Следующая
-                </Button>
+                <Button onClick={onPrevious} disabled={step === 0}>Предыдущая</Button>
+                <Button onClick={onNext} disabled={step === 3}>Следующая</Button>
             </ButtonGroup>}
         </article>
     )
