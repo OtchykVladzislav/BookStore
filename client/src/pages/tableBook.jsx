@@ -65,7 +65,7 @@ const TableBook = () => {
     return (
         <article style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
             <MyModal visible={visible} setVisible={setVisible}>
-                {isEdit ? null : <ChangeImageBook obj={params} data={data} setData={setData} visible={visible} setVisible={setVisible}/>}
+                {isEdit ? null : <ChangeImageBook obj={params} data={data} str={'image_book'} setData={setData} visible={visible} setVisible={setVisible}/>}
             </MyModal>
             <InputGroup inside style={{ margin: '10px', width: '100%' }}>
                 <MyInput

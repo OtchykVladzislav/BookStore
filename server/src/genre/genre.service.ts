@@ -19,8 +19,7 @@ export class GenresService {
   async createGenre(dto: CreateGenreDto): Promise<Genre>{
     const genre = this.genresRepository.create({name: dto.name});
     const save = await this.genresRepository.save(genre)
-    const image = await this.imageGenreService.add(dto.image, save.id)
-    await this.changeImage(save.id, image)
+    await this.imageGenreService.add(dto.image, save.id)
     return await this.genresRepository.findOne({where: {id: save.id},relations: {image: true}});
   }
 

@@ -7,17 +7,16 @@ import MyInput from '../../UI/input/MyInput'
 import MyButtonTwo from '../../UI/buttonTwo/MyButtonTwo'
 import { Message, Uploader, useToaster } from 'rsuite'
 
-const ChangeImageBook = ({obj, visible, setVisible}) => {
+const ChangeImageBook = ({obj, str, visible, setVisible}) => {
     const toaster = useToaster();
     const [form, setFormValue] = useState({});
 
     const [fetchAdd, isAddLoading, addError, setAddError] = useFetching(async () => {
-        console.log(obj)
         if(!obj.image) {
-            await RequestList.addElem('image_book', form)
+            await RequestList.addElem(str, form)
             return;
         }
-        await RequestList.putById(obj.image.id, 'image_book', form)
+        await RequestList.putById(obj.image.id, str, form)
         toaster.push(<Message type="success">Картинка измениться когда перезайдете</Message>);
     })
 

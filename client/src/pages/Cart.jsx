@@ -27,6 +27,7 @@ const Cart = () => {
 
 
     const onNext = () => {
+        if(step == 1 && user.bonus <= bonus) return;
         if(step == 2 && !form.city) return;
         onChange(step + 1);
     }
@@ -68,6 +69,7 @@ const Cart = () => {
 
     const [fetchAdd, isAddLoading, addError] = useFetching(async () => {
         const obj = {is_card: isCard, books: [...books.map(e => {return {id: e.id, count: e.count}})], price: allPrice, city: form.city}
+        if(user.bonus != 0 && bonus != 0) await RequestList.addElem(`users/del_bonus/${user.id}`, {bonus: user.bonus - bonus})
         await RequestList.addElem('orders', obj)
     })
 

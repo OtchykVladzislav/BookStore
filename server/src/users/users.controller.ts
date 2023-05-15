@@ -41,4 +41,10 @@ export class UsersController {
     getUser(@Req() req: any, @Param('id') id: number){
         return this.usersService.getUserById(req.user.id)
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('/del_bonus/:id')
+    changeStolen(@Param('id') id: number, @Body() req: any){
+        return this.usersService.delBonus(id, req.bonus)
+    }
 }

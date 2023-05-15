@@ -50,7 +50,7 @@ export default function AppRouter({isAuth}){
             }
             <Route
                 path="*"
-                element={<Navigate to="/error" replace />}
+                element={<Navigate to={"/error"} replace />}
             />
         </Routes>
     )

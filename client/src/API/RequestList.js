@@ -15,7 +15,6 @@ export default class RequestList {
     }
 
     static async filterItems(str, query, sort, limit, page) {
-        console.log(str)
         const response = await axios.get(`${link}/${str}/search`, {
             params: {
                 query: query,

@@ -4,6 +4,24 @@ import RequestList from '../../API/RequestList';
 import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import { useBase64 } from '../../hooks/useArrayBufferToBase64';
 import ImageIcon from '@rsuite/icons/Image';
+import CheckIcon from '@rsuite/icons/Check';
+import { useState } from 'react';
+import ChangeImageBook from '../../form/change-image-book';
+import MyModal from '../../UI/modal/MyModal';
+
+const check = (e, i, str, arr, func) => {
+    const list = arr
+    if(str == 'status_orders'){
+        RequestList.putById(e.status.id, str, {price: e.price});
+        list[i].status.status = true;
+        func([...list])
+        return;
+    }
+    RequestList.putById(e.status.id, str, {});
+    list[i].status.status = true;
+    func([...list])
+}
+
 
 const remove = (id, str, arr, func) => {
     RequestList.delById(id, str);
@@ -41,7 +59,7 @@ export const Books = ({data, setData, callback}) => {
                             <span onClick={() => callback(e, 'change')} style={{color: 'white'}} className='change_image'>
                                 <ImageIcon style={{fontSize: '20px'}} />
                             </span>
-                            <span onClick={() => remove(e.id, 'users', arr, setData)} style={{color: 'white'}} className='cross'>
+                            <span onClick={() => remove(e.id, 'books', arr, setData)} style={{color: 'white'}} className='cross'>
                                 <TrashIcon style={{fontSize: '20px'}} />
                             </span>
                         </td>
@@ -78,7 +96,10 @@ export const Requests = ({data, setData}) => {
                         <td>{new Date(e.createdAt).toLocaleString()}</td>
                         <td>{e.status.status ? 'Оплачено': 'Не оплачено'}</td>
                         <td>
-                            <span onClick={() => remove(e.id, 'users', arr, setData)} style={{color: 'white'}} className='cross'>
+                            {!e.status.status && <span onClick={() => check(e, i, 'status_requests', arr, setData)} style={{color: 'white', marginRight: '10px'}} className='edit'>
+                                <CheckIcon style={{fontSize: '20px'}} />
+                            </span>}
+                            <span onClick={() => remove(e.id, 'requests', arr, setData)} style={{color: 'white'}} className='cross'>
                                 <TrashIcon style={{fontSize: '20px'}} />
                             </span>
                         </td>
@@ -115,9 +136,12 @@ export const Orders = ({data, setData}) => {
                         <td>{e.is_card ? 'Да': 'Нет'}</td>
                         <td>{e.price} BYN</td>
                         <td>{new Date(e.date).toLocaleString()}</td>
-                        <td>{e.status.status ? 'Оплачено': 'Не оплачено'}</td>
+                        <td>{e.status.status ? 'Завершено': 'Не завершено'}</td>
                         <td>
-                            <span onClick={() => remove(e.id, 'users', arr, setData)} style={{color: 'white'}} className='cross'>
+                            {!e.status.status && <span onClick={() => check(e, i, 'status_orders', arr, setData)} style={{color: 'white', marginRight: '10px'}} className='edit'>
+                                <CheckIcon style={{fontSize: '20px'}} />
+                            </span>}
+                            <span onClick={() => remove(e.id, 'odrers', arr, setData)} style={{color: 'white'}} className='cross'>
                                 <TrashIcon style={{fontSize: '20px'}} />
                             </span>
                         </td>
@@ -129,7 +153,7 @@ export const Orders = ({data, setData}) => {
 }
 
 export const Users = ({data, setData}) => {
-    console.log(data)
+    
     return(
         <>
             <thead>
@@ -165,8 +189,14 @@ export const Users = ({data, setData}) => {
 }
 
 export const Genre = ({data, setData}) => {
+    const [visible, setVisible] = useState(false)
+    const [params, setParams] = useState({})
+
     return(
         <>
+            <MyModal visible={visible} setVisible={setVisible}>
+                <ChangeImageBook obj={params} data={data} str={'image_genre'} setData={setData} visible={visible} setVisible={setVisible}/>
+            </MyModal>
             <thead>
                 <tr>
                     <th>id</th>
@@ -182,6 +212,9 @@ export const Genre = ({data, setData}) => {
                         <td>{e.image? <img style={{width: '100px', height: '100px'}} src={useBase64(e.image.picByte.data, e.image.type)} /> : <PageIcon />}</td>
                         <td>{e.name}</td>
                         <td>
+                            <span onClick={() => {setParams(e); setVisible(true)}} style={{color: 'white', marginRight: '10px'}} className='change_image'>
+                                <ImageIcon style={{fontSize: '20px'}} />
+                            </span>
                             <span onClick={() => remove(e.id, 'genres', arr, setData)} style={{color: 'white'}} className='cross'>
                                 <TrashIcon style={{fontSize: '20px'}} />
                             </span>

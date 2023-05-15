@@ -37,7 +37,6 @@ import { ImageBookModule } from './image_book/image_book.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    AppModule,
     RedisModule,
     AuthModule,
     UsersModule,

@@ -35,7 +35,7 @@ const AdminTables = () => {
                 return;
             case 'filter':
                 setProccess(true)
-                const searchList = await RequestList.filterItems(item, filter.query, filter.sort, limit, page);
+                const searchList = await RequestList.filterItems(item, query, limit, page);
                 setData([...searchList.data])
                 setProccess(false)
                 return;
@@ -73,12 +73,12 @@ const AdminTables = () => {
     }
 
     const searchItem = () => {
-        fetchData('filter')
+        fetchData('filter', active)
     }
 
 
     useEffect(() => {
-        query ? fetchData('filter') : fetchData('list')
+        query ? fetchData('filter', active) : fetchData('list', active)
     }, [page])
 
     useEffect(() => {

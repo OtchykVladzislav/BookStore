@@ -78,7 +78,6 @@ const TableOrder = () => {
                 { value: 'numberDecrease', label: 'По цене ↓' }]} 
             />
             {proccess ? <MyLoader/> : <>
-                <PlusIcon className="edit" style={{fontSize: '40px', margin: '10px'}} onClick={() => setVisible(true)}/>
                 <div style={{ fontSize: 14 }}>
                     <table className="table" style={{ fontSize: 14 }}>
                         <Orders data={data} setData={setData}/>

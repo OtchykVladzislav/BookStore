@@ -88,14 +88,13 @@ export class BooksService {
       })
       const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]
       if(arr.length - 1 >= skip + Number(limit)){
-        return [arr.slice(skip, skip + Number(limit)), arr.length != 0 ? arr.length  : 1 ];
+        return [[...arr.slice(skip, skip + Number(limit))], arr.length != 0 ? arr.length  : 1 ];
       }
-      return [arr.slice(skip), arr.length != 0 ? arr.length  : 1 ];
+      return [[...arr.slice(skip)], arr.length != 0 ? arr.length  : 1 ];
     }
 
-    async add(dto: CreateBookDto): Promise<Book> {
-      const userId = 1
-      const data = await this.booksRepository.create({
+    async add(dto: CreateBookDto, userId: number): Promise<Book> {
+      const data = this.booksRepository.create({
         ...dto,
         user: { id: userId } as User,
       });
@@ -103,8 +102,7 @@ export class BooksService {
       return data;
     }
 
-    async edit(id: number, dto: CreateBookDto): Promise<boolean> {
-      const userId = 1;
+    async edit(id: number, dto: CreateBookDto, userId: number): Promise<boolean> {
       const newsId = await this.booksRepository.findOne({
         where: {
           id: userId,
@@ -119,12 +117,6 @@ export class BooksService {
     }
 
     async remove(id: number): Promise<boolean> {
-      const userId = 1;
-      const dataId = await this.booksRepository.findOne({
-        where: {
-          id: id,
-        }
-      });
       await this.booksRepository.delete(id);
       return true;
     }

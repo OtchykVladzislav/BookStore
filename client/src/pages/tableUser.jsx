@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useFetching } from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
-import NavAdmin from "../UI/nav_admin";
 import { InputGroup, SelectPicker,Pagination } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MyInput from '../UI/input/MyInput';
-import { Books, Users } from "../utils/table_fields";
+import { Users } from "../utils/table_fields";
 import MyLoader from "../UI/loader/MyLoader";
 import MyModal from "../UI/modal/MyModal";
 import PlusIcon from '@rsuite/icons/Plus';
@@ -78,7 +77,6 @@ const TableUser = () => {
                 { value: 'stringDecrease', label: 'По никнейму ↓' }]} 
             />
             {proccess ? <MyLoader/> : <>
-                <PlusIcon className="edit" style={{fontSize: '40px', margin: '10px'}} onClick={() => setVisible(true)}/>
                 <div style={{ fontSize: 14 }}>
                     <table className="table" style={{ fontSize: 14 }}>
                         <Users data={data} setData={setData}/>

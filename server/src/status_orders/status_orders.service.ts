@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Status_Order } from './status_orders.model';
+import { UsersService } from 'users/users.service';
 
 @Injectable()
 export class StatusOrderService {
     constructor(
         @InjectRepository(Status_Order)
-        private statusOrderRepository: Repository<Status_Order>
+        private statusOrderRepository: Repository<Status_Order>,
+        private userService: UsersService
     ) {}
 
     async add(): Promise<Status_Order> {
@@ -17,13 +19,11 @@ export class StatusOrderService {
         return await this.statusOrderRepository.save(data);
     }
 
-    async edit(id: number): Promise<boolean> {
-      const data = await this.statusOrderRepository.findOne({
-        where: {
-          id: id,
-        }
-      });
+    async edit(id: number, user_id: number, price: number): Promise<boolean> {
+      const part = (price * 3)/100
+      const user = await this.userService.getUserById(user_id)
       await this.statusOrderRepository.update({ id }, { status: true });
+      await this.userService.addBonus(user_id, user.bonus + part)
       return true;
     }
 

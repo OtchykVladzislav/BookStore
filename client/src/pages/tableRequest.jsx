@@ -78,7 +78,6 @@ const TableRequest = () => {
                 { value: 'numberDecrease', label: 'По тиражу ↓' }]} 
             />
             {proccess ? <MyLoader/> : <>
-                <PlusIcon className="edit" style={{fontSize: '40px', margin: '10px'}} onClick={() => setVisible(true)}/>
                 <div style={{ fontSize: 14 }}>
                     <table className="table" style={{ fontSize: 14 }}>
                         <Requests data={data} setData={setData}/>

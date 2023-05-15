@@ -4,7 +4,7 @@ import { RolesGuard } from 'roles/roles.guards';
 import { JwtAuthGuard } from 'auth/jwt.auth.guard';
 import { Roles } from 'roles/roles.decorator';
 
-@Controller('status-requests')
+@Controller('status_requests')
 export class StatusRequestsController {
     constructor(private statusRequestService: StatusRequestsService) { }
 
@@ -13,7 +13,6 @@ export class StatusRequestsController {
     @UseGuards(JwtAuthGuard)
     @Put('/:id')
     edit(
-        @Req() req: any,
         @Param('id') id: number,
     ) {
         return this.statusRequestService.edit(id);

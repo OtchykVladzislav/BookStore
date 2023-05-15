@@ -18,11 +18,6 @@ export class StatusRequestsService {
       }
   
     async edit(id: number): Promise<boolean> {
-      const data = await this.statusRequestRepository.findOne({
-        where: {
-          id: id,
-        }
-      });
       await this.statusRequestRepository.update({ id }, { status: true });
       return true;
     }

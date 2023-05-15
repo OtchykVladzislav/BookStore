@@ -33,7 +33,7 @@ export class User {
   @Column({unique: true, default: "vlad@mail.ru" })
   email: string;
 
-  @Column({default: 0})
+  @Column({default: 0, type: 'float'})
   bonus: number;
 
   @OneToMany(() => Book, (book) => book.user)

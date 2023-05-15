@@ -101,4 +101,12 @@ export class UsersService {
   async changeImage(id: number, image: Image_User){
     await this.usersRepository.update({id}, {image})
   }
+
+  async addBonus(id: number, bonus: number){
+    await this.usersRepository.update({id}, {bonus})
+  }
+
+  async delBonus(id: number, bonus: number){
+    await this.usersRepository.update({id}, {bonus})
+  }
 }
