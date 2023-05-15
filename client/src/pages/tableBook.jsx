@@ -1,74 +1,122 @@
 import { useEffect, useState } from "react";
-import MyModal from "../UI/modal/MyModal"
 import { useFetching } from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
-import PostFilter from "../utils/post/PostFilter";
+import NavAdmin from "../UI/nav_admin";
+import { InputGroup, SelectPicker,Pagination } from 'rsuite';
+import SearchIcon from '@rsuite/icons/Search';
+import MyInput from '../UI/input/MyInput';
+import { Books } from "../utils/table_fields";
+import MyLoader from "../UI/loader/MyLoader";
+import MyModal from "../UI/modal/MyModal";
+import PlusIcon from '@rsuite/icons/Plus';
+import ChangeImageBook from "../form/change-image-book/index"
 
 const TableBook = () => {
-    const [filter, setFilter] = useState({sort: '', query: ''});
+    const [data, setData] = useState([])
+    const [filter, setFilter] = useState({ sort: '', query: '' });
     const [page, setPage] = useState(1)
-    const limit = 9
-    const [countPage, setCountPage] = useState(1)
+    const [limit, setLimit] = useState(10)
+    const [count, setCount] = useState(1)
+    const [visible, setVisible] = useState(false)
+    const [proccess, setProccess] = useState(false)
+    const [params, setParams] = useState({})
+    const [isEdit, setIsEdit] = useState(true)
 
-    const [fetchPosts, isPostsLoading, postError] = useFetching(async (str) => {
-        switch(str){
+    const handleChangeLimit = dataKey => {
+        setPage(1);
+        setLimit(dataKey);
+    };
+
+    const [fetchData, isDataLoading, dataError] = useFetching(async (str) => {
+        switch (str) {
             case 'list':
-                const list = await RequestList.getAll('books', limit,  page);
-                setPosts([...list.data[0]])
-                const countList = Math.ceil(list.data[1]/limit)
-                setCountPage(countList)
-                break;
+                setProccess(true)
+                const list = await RequestList.getAll('books', limit, page);
+                setData([...list.data[0]])
+                setCount(list.data[1])
+                setProccess(false)
+                return;
             case 'filter':
+                setProccess(true)
                 const searchList = await RequestList.filterItems('books', filter.query, filter.sort, limit, page);
-                setPosts([...searchList.data[0]])
-                const countSearchList = Math.ceil(searchList.data[1]/limit)
-                setCountPage(countSearchList)
-                break;
+                setData([...searchList.data[0]])
+                setCount(searchList.data[1])
+                setProccess(false)
+                return;
         }
     })
-    useEffect(() => {
-        filter.sort ? fetchPosts('filter') : fetchPosts('list')
-    }, [page, filter.sort])
 
-    const searchItem = () => {
-        fetchPosts('filter')
+    const change = (obj, str) => {
+        str == 'edit'? setIsEdit(true) : setIsEdit(false)
+        setParams({...obj})
+        setVisible(true)
     }
 
-    console.log(list)
+    const searchItem = () => {
+        setPage(1)
+        fetchData('filter')
+    }
 
-    return(
-        <article className="post">
-            <h1>Таблица книг</h1>
-            <PostFilter callback={searchItem} filter={filter} setFilter={setFilter}/>
-            <table className="tableFuel">
-                <thead>
-                    <tr>
-                        <th>Вид нефтепродукта</th>
-                        <th>Резервуар</th>
-                        <th>Объём</th>
-                        <th>Масса</th>
-                        <th>АЗС</th>
-                        <th>Стоимость</th>
-                        <th>Дата и время</th>
-                        <th>Номер заказа</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {list.map((e, i) => 
-                        <tr key={i}>
-                            <td>{e}</td>
-                            <td>{e}</td>
-                            <td>{e}</td>
-                            <td>{e}</td>
-                            <td>{e}</td>
-                            <td>{e.cost}</td>
-                            <td>{new Date(e).toLocaleDateString()}</td>
-                            <td>{e}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-            {countPage != 1 && <Pagination count={countPage} obj={page} setObj={setPage}/>}
+
+    useEffect(() => {
+        filter.sort ? fetchData('filter') : fetchData('list')
+    }, [page, filter.sort])
+
+    return (
+        <article style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
+            <MyModal visible={visible} setVisible={setVisible}>
+                {isEdit ? null : <ChangeImageBook obj={params} data={data} setData={setData} visible={visible} setVisible={setVisible}/>}
+            </MyModal>
+            <InputGroup inside style={{ margin: '10px', width: '100%' }}>
+                <MyInput
+                    type='text'
+                    value={filter.query}
+                    change={text => setFilter({ ...filter, query: text })}
+                    placeholder="Поиск по заголовку..." />
+                <InputGroup.Button onClick={searchItem}>
+                    <SearchIcon />
+                </InputGroup.Button>
+            </InputGroup>
+            <SelectPicker
+                style={{ width: '20%' }}
+                searchable={false}
+                value={filter.sort}
+                onChange={selectedSort => setFilter({ ...filter, sort: selectedSort })}
+                placeholder="Сортировка"
+                data={[{ value: 'stringIncrease', label: 'По названию ↑' },
+                { value: 'stringDecrease', label: 'По названию ↓' },
+                { value: 'numberIncrease', label: 'По цене ↑' },
+                { value: 'numberDecrease', label: 'По цене ↓' }]} 
+            />
+            {proccess ? <MyLoader/> : <>
+                <PlusIcon className="edit" style={{fontSize: '40px', margin: '10px'}} onClick={() => setVisible(true)}/>
+                <div style={{ fontSize: 14 }}>
+                    <table className="table" style={{ fontSize: 14 }}>
+                        <Books callback={change} data={data} setData={setData}/>
+                    </table>
+                </div>
+                <div style={{ width: '100%', color: 'white' }}>
+                    <Pagination
+                        style={{ fontSize: 15 }}
+                        prev
+                        next
+                        first
+                        last
+                        ellipsis
+                        boundaryLinks
+                        maxButtons={7}
+                        size="xs"
+                        layout={['total', '-', 'limit', '|', 'pager', 'skip']}
+                        total={count}
+                        limitOptions={[10, 30, 50]}
+                        limit={limit}
+                        activePage={page}
+                        onChangePage={setPage}
+                        onChangeLimit={handleChangeLimit}
+                    />
+                </div>
+            </>
+            }
         </article>
     )
 }

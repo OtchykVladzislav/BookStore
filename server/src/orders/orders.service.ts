@@ -19,20 +19,63 @@ export class OrdersService {
         private statusOrderService: StatusOrderService
     ) {}
 
-    async findAll(): Promise<Order[]> {
-        const data = await this.orderRepository.find({
-            relations: {
-                order_book: true,
-                books: true,
-                user: true,
-                status: true,
-                city: true
-            }
-        })
-        return data;
+    sortArr(str: string, array: Order[]): Order[]{
+      switch(str){
+        case 'numberIncrease': return [...array].sort((a,b) => a["price"] - b["price"])
+        case 'numberDecrease': return [...array].sort((a,b) => b["price"] - a["price"])
+        default : return array
+      }
     }
 
+    async findAll(limit: string, page: string): Promise<[Order[], number]> {
+      const skip = (Number(limit) * Number(page)) - Number(limit);
+      const [data, count] = await this.orderRepository.findAndCount({
+        relations: {
+          books: true,
+          user: true,
+          status: true,
+          city: true
+        },
+        take: Number(limit),
+        skip: skip,
+      })
+      return [data, count];
+    }
+
+    async filterItems(query: string, sort: string,limit: string, page: string): Promise<[Order[], number]> {
+      const skip = Number(limit) * Number(page);
+      const data = await this.orderRepository.find({
+        relations: {
+          books: true,
+          user: true,
+          status: true,
+          city: true
+        }
+      })
+      const arr = [...this.sortArr(sort, data).filter(e => `${e.number_order}`.includes(query))]
+      if(arr.length - 1 >= skip + Number(limit)){
+        return [arr.slice(skip, skip + Number(limit)), arr.length != 0 ? arr.length  : 1 ];
+      }
+      return [arr.slice(skip), arr.length != 0 ? arr.length  : 1 ];
+    }
+
+    async findByUser(id: number): Promise<Order[]> {
+      const data = await this.orderRepository.find({
+          where: {
+            user: { id }
+          },
+          relations: {
+            books: true,
+            user: true,
+            status: true,
+            city: true
+          }
+      })
+      return data;
+  }
+
     async findOne(id: number): Promise<Order> {
+      const order_book = await this.orderBookRepository.find({where: {order_id: id}})
       const data = await this.orderRepository.findOne({
         where: {
           id
@@ -44,7 +87,7 @@ export class OrdersService {
             city: true
         }
       });
-      return data;
+      return {...data, order_book};
   }
 
     async add(dto: CreateOrderDto, id: number): Promise<boolean> {
@@ -56,7 +99,7 @@ export class OrdersService {
       data.status = status
       data.books = [...dto.books.map(e => {return {id: e.id} as Book})]
       const obj = await this.orderRepository.save(data);
-      await this.orderBookRepository.save([...dto.books.map(e => {return {order_id: obj.id, book_id: e.id, count: e.count}})])
+      await this.orderBookRepository.save([...dto.books.map(e => {return {order_id: obj.id, book_id: e.id, count: e.count, orderId: obj.id, bookId: e.id}})])
       return true;
     }
 

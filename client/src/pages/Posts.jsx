@@ -3,9 +3,9 @@ import PostFilter from "../utils/post/PostFilter";
 import Pagination from "../utils/Pagination";
 import MyLoader from "../UI/loader/MyLoader";
 import PostList from "../utils/post/PostList";
-import PostGenre from "../utils/post/PostGenre";
 import {useFetching} from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
+import { useBase64 } from "../hooks/useArrayBufferToBase64";
 
 export default function Posts(){
     const [posts, setPosts] = useState([])
@@ -41,7 +41,7 @@ export default function Posts(){
     return (
         <article className="posts">
             <PostFilter callback={searchItem} filter={filter} setFilter={setFilter}/>
-            {isPostsLoading? <MyLoader/> : <PostList array={posts}/>}
+            {isPostsLoading? <MyLoader/> : <PostList array={posts} callback={() => {setPage(1); fetchPosts('list')}}/>}
             {countPage != 1 && <Pagination count={countPage} obj={page} setObj={setPage}/>}
         </article>
     )

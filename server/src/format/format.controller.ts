@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards, Query } from '@nestjs/common';
 import { CreateFormatDto } from './dto/create-format.dto';
 import { FormatService } from './format.service';
 import { Roles } from 'roles/roles.decorator';
@@ -9,11 +9,16 @@ import { RolesGuard } from 'roles/roles.guards';
 export class FormatController {
     constructor(private formatsService: FormatService) { }
 
+    
     @Get()
     getAll(){
         return this.formatsService.getAllFormats()
     }
 
+    @Get('/search')
+    filterItems(@Query('query') query: string) {
+        return this.formatsService.filterByName(query);
+    }
 
     @UseGuards(RolesGuard)
     @Roles(3)

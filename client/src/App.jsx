@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { BrowserRouter, Link} from 'react-router-dom'
+import { BrowserRouter, Link, useNavigate} from 'react-router-dom'
 import './App.css'
 import Registration from './form/registration/index'
 import MyButton from './UI/button/MyButton'
@@ -13,10 +13,11 @@ import 'rsuite/dist/rsuite.min.css';
 import Login from './form/login/index'
 import IconCart from './UI/icon_cart'
 import jwtDecode from 'jwt-decode'
-import { Avatar } from 'rsuite'
+import { Avatar, Nav } from 'rsuite'
 import { useFetching } from './hooks/useFetching'
 import RequestList from './API/RequestList'
 import { useBase64 } from './hooks/useArrayBufferToBase64'
+import GearIcon from '@rsuite/icons/Gear';
 
 function App() {
   const token = useSelector(state => state.token.token)
@@ -45,7 +46,16 @@ function App() {
       <BrowserRouter>
         <MyHeader>
           {token?
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '150px'}}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '200px'}}>
+              {decode.roleWeight == 3 && 
+                <Nav className='gearButton'><Nav.Menu icon={<GearIcon />}>
+                    <Link to='/admin/user'><Nav.Item>Users</Nav.Item></Link>
+                    <Link to='/admin/order'><Nav.Item>Orders</Nav.Item></Link>
+                    <Link to='/admin/request'><Nav.Item>Requests</Nav.Item></Link>
+                    <Link to='/admin/book'><Nav.Item>Books</Nav.Item></Link>
+                    <Link to='/admin'><Nav.Item>All other tables</Nav.Item></Link>
+                </Nav.Menu></Nav>
+              }
               {cart.length != 0 && <IconCart />}
               {!isProfileLoading && <Link to={'/account'}>
                 <Avatar

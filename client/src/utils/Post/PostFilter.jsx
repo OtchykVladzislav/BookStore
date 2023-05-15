@@ -23,11 +23,11 @@ const PostFilter = ({callback, filter, setFilter}) =>{
                 onChange={selectedSort => setFilter({...filter, sort: selectedSort})}
                 placeholder = "Сортировка"
                 data={[
-                    {value: 'titleIncrease', label: 'По названию ↑'},
-                    {value: 'titleDecrease', label: 'По названию ↓'},
-                    {value: 'priceIncrease', label: 'По цене ↑'},
-                    {value: 'priceDecrease', label: 'По цене ↓'}
-                ]}/>
+                    { value: 'stringIncrease', label: 'По названию ↑' },
+                    { value: 'stringDecrease', label: 'По названию ↓' },
+                    { value: 'numberIncrease', label: 'По цене ↑' },
+                    { value: 'numberDecrease', label: 'По цене ↓' }
+            ]}/>
         </>
     )
 }

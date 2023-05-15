@@ -4,29 +4,31 @@ const link = 'http://localhost:4000'
 
 export default class RequestList {
     static async getAll(str, limit, page) {
+        console.log(str)
         const response = await axios.get(`${link}/${str}`, {
             params: {
                 limit,
                 page 
-            }
+            }, headers: {Authorization: 'Bearer ' + localStorage.getItem('user')} 
         })
         return response;
     }
 
     static async filterItems(str, query, sort, limit, page) {
+        console.log(str)
         const response = await axios.get(`${link}/${str}/search`, {
             params: {
                 query: query,
                 sort: sort,
                 limit: limit,
                 page: page
-            }
+            }, headers: {Authorization: 'Bearer ' + localStorage.getItem('user')} 
         })
         return response;
     }
 
     static async getById(id,str) {
-        const response = await axios.get(`${link}/${str}/` + id)
+        const response = await axios.get(`${link}/${str}/` + id, { headers: {Authorization: 'Bearer ' + localStorage.getItem('user')}  })
         return response;
     }
 

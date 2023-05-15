@@ -1,11 +1,12 @@
 import "../App.css"
+import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 
 const Authors = () => {
     return(
         <article>
             <div className={"card-client"}>
                 <div className="user-picture">
-                    <img src="icon.svg"/>
+                    <AvatarIcon style={{fontSize: 80 }} />
                 </div>
                 <p className="name-client"> Unknown
                     <span>Developer

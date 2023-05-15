@@ -24,16 +24,16 @@ export class Request {
   @ManyToOne(() => User, (user) => user.requests)
   user: User
 
-  @ManyToOne(() => Format, (format) => format.requests)
+  @ManyToOne(() => Format, (format) => format.requests, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
   format: Format
 
-  @ManyToOne(() => Type, (type) => type.requests)
+  @ManyToOne(() => Type, (type) => type.requests, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
   type: Type
 
   @ManyToOne(() => Book, (book) => book.requests)
   book: Book
 
-  @ManyToOne(() => City, (city) => city.requests)
+  @ManyToOne(() => City, (city) => city.requests, { onDelete: 'CASCADE' , onUpdate: 'CASCADE'})
   city: City;
 
   @OneToOne(() => Status_Request, status => status.request, 

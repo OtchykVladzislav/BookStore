@@ -1,4 +1,4 @@
-import { Controller, Param, Get, Delete, Req, Body, Put, Post, UseGuards } from '@nestjs/common';
+import { Controller, Param, Get, Delete, Req, Body, Put, Post, UseGuards, Query } from '@nestjs/common';
 import { RequestsService } from './requests.service';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { JwtAuthGuard } from 'auth/jwt.auth.guard';
@@ -13,13 +13,18 @@ export class RequestsController {
     @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Get('/')
-    getAll() {
-        return this.requestsService.findAll();
+    getAll(@Query('limit') limit: string, @Query('page') page: string) {
+        return this.requestsService.findAll(limit, page);
     }
-
 
     @UseGuards(RolesGuard)
     @Roles(3)
+    @UseGuards(JwtAuthGuard)
+    @Get('/search')
+    filterItems(@Query('query') query: string, @Query('sort') sort: string, @Query('limit') limit: string, @Query('page') page: string) {
+        return this.requestsService.filterItems(query, sort, limit, page);
+    }
+    
     @UseGuards(JwtAuthGuard)
     @Get('/:id')
     getOne(@Param('id') id: number) {

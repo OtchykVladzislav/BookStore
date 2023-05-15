@@ -10,6 +10,7 @@ import { AuthModule } from 'auth/auth.module';
     TypeOrmModule.forFeature([Book]),
     AuthModule
   ],
+  exports: [BooksService],
   controllers: [BooksController],
   providers: [BooksService]
 })

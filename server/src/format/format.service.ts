@@ -23,6 +23,12 @@ export class FormatService {
         const data = await this.formatsRepository.find();
         return data;
       }
+
+
+      async filterByName(query: string) {
+        const data = await this.formatsRepository.find();
+        return data.filter(e => e.name.includes(query));
+      }
     
       async getFormatByName(name: string) {
         const data = await this.formatsRepository.findOne({

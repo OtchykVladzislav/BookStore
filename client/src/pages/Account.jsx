@@ -10,12 +10,16 @@ import RequestList from "../API/RequestList";
 import Loader from "../UI/loader/MyLoader"
 import RequestItem from "../utils/request";
 import ChangeImage from "../form/change-image";
+import InfoRequest from "../form/info-request";
+import InfoOrder from "../form/info-order";
 
 const Account = () => {
     const [ user, setUser ] = useState({})
     const dispatch = useDispatch()
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate()
+    const [typeModal, setTypeModal] = useState('new_password')
+    const [obj, setObj] = useState('')
 
     const [fetchProfile, isProfileLoading, profileError] = useFetching(async () => {
         const obj = await RequestList.profile();
@@ -48,10 +52,27 @@ const Account = () => {
         dispatch({type: 'DELETE_TOKEN'})
     }
 
+    const setInfo = (obj,str) => {
+        setObj(obj.id)
+        setTypeModal(str)
+        setVisible(true)
+    }
+
+    const chooseModal = () => {
+        switch (typeModal) {
+            case 'new_password':
+                return <NewPassword callback={change} visible={visible} setVisible={setVisible}/>
+            case 'order':
+                return <InfoOrder id={obj}/>
+            case 'request':
+                return <InfoRequest id={obj}/>
+        }
+    }
+
     return(
         <article className="account">
             <MyModal visible={visible} setVisible={setVisible}>
-                <NewPassword callback={change} visible={visible} setVisible={setVisible}/>
+                {chooseModal()}
             </MyModal>
             {isProfileLoading?
                 <Loader />
@@ -73,7 +94,7 @@ const Account = () => {
                         <div>Количество бонусов: {user.bonus} баллов.</div>
                         <span style={{fontSize:"10px"}}>С каждой покупки 3%. 1 балл = 1 рублю</span>
                     </div>
-                    <MyButton onClick={() => setVisible(true)}>Сменить пароль</MyButton>
+                    <MyButton onClick={() => {setTypeModal('new_password'); setVisible(true)}}>Сменить пароль</MyButton>
                     <Link to='/'><MyButton onClick={logout}>Выйти</MyButton></Link>
                     <div className="tables">
                         <div className="accountOrders">
@@ -88,12 +109,13 @@ const Account = () => {
                                             <th>Кол-во страниц</th>
                                             <th>Дата и время</th>
                                             <th>Статус</th>
+                                            <th>Сводка</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     {user.requests.map((e,i) =>
-                                        <RequestItem key={i} obj={e} remove={fetchDel}/>
+                                        <RequestItem key={i} obj={e} remove={fetchDel} callback={setInfo}/>
                                     )}
                                     </tbody>
                                 </table>
@@ -111,11 +133,12 @@ const Account = () => {
                                             <th>Сумма</th>
                                             <th>Дата и время</th>
                                             <th>Статус</th>
+                                            <th>Сводка</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     {user.orders.map((e,i) =>
-                                        <OrderItem key={i} obj={e}/>
+                                        <OrderItem key={i} obj={e} callback={setInfo}/>
                                     )}
                                     </tbody>
                                 </table>

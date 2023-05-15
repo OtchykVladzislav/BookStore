@@ -9,14 +9,12 @@ import { ImageGenreModule } from 'image_genre/image_genre.module';
 
 @Module({
   imports: [
+    forwardRef(() => ImageGenreModule),
     TypeOrmModule.forFeature([Genre]),
-    ImageGenreModule,
     AuthModule
   ],
+  exports: [GenresService],
   providers: [GenresService],
-  exports: [
-    GenresService
-  ],
   controllers: [GenresController],
 })
 

@@ -1,0 +1,27 @@
+.block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border-radius: 5px;
+    padding: 20px;
+    width: 700px;
+    position: relative;
+    outline: auto;
+}
+
+.line{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    outline: auto;
+    font-style: italic;
+    margin: 10px;
+    border: 2px solid white;
+    padding: 7px;
+    background: rgb(230, 229, 229);
+}

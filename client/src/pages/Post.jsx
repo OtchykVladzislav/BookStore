@@ -8,6 +8,7 @@ import RequestList from "../API/RequestList";
 import MyLoader from "../UI/loader/MyLoader";
 import CreateComment from "../form/create-comment";
 import jwtDecode from "jwt-decode";
+import PageIcon from '@rsuite/icons/Page';
 
 
 const Post = () => {
@@ -48,6 +49,11 @@ const Post = () => {
         fetchAddComment(comment)
     }
 
+    const remove = (id) => {
+        RequestList.delById(id, 'comments');
+        setComments([...comments.filter(e => e.id != id)])
+    }
+
     useEffect(() => {
         if(token) setDecode(jwtDecode(token))
         fetchComment()
@@ -60,13 +66,13 @@ const Post = () => {
                 <>
                     <div className="postTitle">{post.name}</div>
                     <div className="postInfo">
-                        <img className="postImage" src={`../${'book1'}.png`}/>
+                        {post.image? <img className={"postImage"} style={{width: '100%'}} src={useBase64(post.image.picByte.data, post.image.type)} /> : <PageIcon className={"postImage"}/>} 
                         <div className="postText">
                             <div>Жанры: {post.genres.map(e => { return e.name }).join(',')}</div>
                             <div>Дата публикации: {new Date(post.publish_date).toLocaleDateString()}</div>
                             <div>Автор: {post.author}</div>
                             <div className="postPrice">{post.price} BYN</div>
-                            {!token ? <div>Войдите в аккаунт, чтобы купить</div> : <MyButton onClick={() => addToCart()}>Добавить в корзину</MyButton>}
+                            {!token ? <div>Войдите в аккаунт, чтобы купить</div> : post.stolen ? <div className="warning">Товар закончился</div> : <MyButton onClick={() => addToCart()}>Добавить в корзину</MyButton>}
 
                         </div>
                     </div>
@@ -76,7 +82,7 @@ const Post = () => {
                     </div>
                     <div className="postComments">
                         {access && <CreateComment callback={add}/>}
-                        {!comments.length? "Нет отзывов": comments.map((e,i) => <CommentItem key={i} obj={e}/>)}
+                        {!comments.length? "Нет отзывов": comments.map((e,i) => <CommentItem key={i} role={decode.roleWeight} callback={remove} obj={e}/>)}
                     </div>
                 </>
             }

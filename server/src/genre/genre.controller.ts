@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { GenresService} from './genre.service';
-import { Body, Controller, Get, Post, Delete, Param, UseGuards} from '@nestjs/common';
+import { Body, Controller, Get, Post, Delete, Param, UseGuards, Query} from '@nestjs/common';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { RolesGuard } from 'roles/roles.guards';
 import { JwtAuthGuard } from 'auth/jwt.auth.guard';
@@ -15,6 +15,11 @@ export class GenresController {
     @Get()
     getAll(){
         return this.genresService.getAllGenres()
+    }
+
+    @Get('/search')
+    filterItems(@Query('query') query: string) {
+        return this.genresService.filterByName(query);
     }
 
     @Get('/:id')

@@ -12,7 +12,7 @@ export class RolesService {
   ) {}
 
   async createRole(dto: CreateRoleDto) {
-    const role = await this.rolesRepository.create(dto);
+    const role = this.rolesRepository.create(dto);
     await this.rolesRepository.save(role);
     return role;
   }
@@ -20,6 +20,11 @@ export class RolesService {
   async getAllRoles() {
     const roles = await this.rolesRepository.find();
     return roles;
+  }
+
+  async filterByName(query: string) {
+    const data = await this.rolesRepository.find();
+    return data.filter(e => e.name.includes(query));
   }
 
   async getRoleByName(name: string) {

@@ -4,11 +4,13 @@ import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import RequestList from "../../API/RequestList";
 import {useFetching} from "../../hooks/useFetching"
 import { useBase64 } from "../../hooks/useArrayBufferToBase64";
-
+import classes from './style.module.css'
+import EditIcon from '@rsuite/icons/Edit';
 
 const ChangeImage = ({image, callback}) => {
     const toaster = useToaster();
     const [fileInfo, setFileInfo] = useState('');
+    const [zIndex, setZIndex] = useState(false)
 
     const [fetchAdd, isAddLoading, addError] = useFetching(async (e) => {
         callback()
@@ -53,12 +55,14 @@ const ChangeImage = ({image, callback}) => {
                 uploadImage(file[file.length - 1].blobFile)
                 toaster.push(<Message type="success">Картинка изменена зайдите еще раз</Message>);
             }}
+            
         >
-            <button style={{ width: 150, height: 150 }}>
+            <button className={classes.change} onMouseEnter={() => setZIndex(true)} onMouseLeave={() => setZIndex(false)} style={{ width: 150, height: 150 }}>
+                <div className={classes.modal} style={{zIndex: `${zIndex ? 25: 20}`, margin: '0'}}><EditIcon /></div>
                 {fileInfo ? (
-                    <img src={fileInfo} width="100%" height="100%" />
+                    <img className={classes.image} style={{zIndex: `${zIndex ? 20: 25}`}} src={fileInfo} width="100%" height="100%" />
                     ) : (
-                    <AvatarIcon style={{ fontSize: 80 }} />
+                    <AvatarIcon className={classes.image} style={{zIndex: `${zIndex ? 20: 25}`,  fontSize: 80 }} />
                 )}
             </button>
         </Uploader>

@@ -3,6 +3,12 @@ a{
   color: black;
 }
 
+.gearButton{
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
 .stepsCart{
   padding: 10px;
   background: white;
@@ -74,18 +80,49 @@ a{
     flex-wrap: wrap;
 }
 
+.postStolen{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(131, 126, 126, .7);
+  z-index: 20;
+}
+
+.textRotate{
+  color: white;
+  transform: rotate(45deg);
+  font-size: 70px;
+}
+
+.buttonStolen{
+  position: absolute;
+  top: -5%;
+  background: red;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .item{
-    display: flex;
-    width: max-content;
-    height: max-content;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 15px;
-    font-family: "Arial";
-    background: #7cdacc;
-    border: 4px solid #7cdacc;
-    box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+  text-align: center;
+  display: flex;
+  width: max-content;
+  height: max-content;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+  font-family: "Arial";
+  background: #7cdacc;
+  border: 4px solid #7cdacc;
+  box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+  position: relative;
+  z-index: 20;
 }
 
 .infoPicture{
@@ -282,9 +319,15 @@ a{
 }
 
 .postImage{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 250px;
   height: 250px;
   margin: 20px;
+  position: relative;
+  background: white;
+  color: black;
 }
 
 .postText{
@@ -424,6 +467,20 @@ a{
   border-radius: 5px;
   padding: 10px;
   background: rgb(231, 42, 42);
+  cursor: pointer;
+}
+
+.edit{
+  border-radius: 5px;
+  padding: 10px;
+  background: rgb(85, 240, 124);
+  cursor: pointer;
+}
+
+.change_image{
+  border-radius: 5px;
+  padding: 10px;
+  background: rgb(85, 147, 240);
   cursor: pointer;
 }
 

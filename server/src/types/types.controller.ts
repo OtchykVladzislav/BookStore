@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards, Query } from '@nestjs/common';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { TypesService } from './types.service';
 import { RolesGuard } from 'roles/roles.guards';
@@ -14,6 +14,11 @@ export class TypesController {
     @Get()
     getAll(){
         return this.typesService.getAllTypes()
+    }
+
+    @Get('/search')
+    filterItems(@Query('query') query: string) {
+        return this.typesService.filterByName(query);
     }
 
 

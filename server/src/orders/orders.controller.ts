@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Delete, Put, Req, Body, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Put, Req, Body, Post, UseGuards, Query } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from 'auth/jwt.auth.guard';
@@ -13,12 +13,18 @@ export class OrdersController {
     @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Get('/')
-    getAll() {
-        return this.ordersService.findAll();
+    getAll(@Query('limit') limit: string, @Query('page') page: string) {
+        return this.ordersService.findAll(limit, page);
     }
 
     @UseGuards(RolesGuard)
     @Roles(3)
+    @UseGuards(JwtAuthGuard)
+    @Get('/search')
+    filterItems(@Query('query') query: string, @Query('sort') sort: string, @Query('limit') limit: string, @Query('page') page: string) {
+        return this.ordersService.filterItems(query, sort, limit, page);
+    }
+
     @UseGuards(JwtAuthGuard)
     @Get('/:id')
     getOne(@Param('id') id: number) {

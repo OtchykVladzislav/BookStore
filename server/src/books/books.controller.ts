@@ -26,6 +26,12 @@ export class BooksController {
         return this.booksService.filterItems(query, sort, limit, page);
     }
 
+    @Get('/stolen/:id')
+    changeStolen(@Param('id') id: number){
+        return this.booksService.stolenFalse(id)
+    }
+
+
     @Get('/genre/:id')
     getAllByGenre(@Param('id') id: number, @Query('limit') limit: string, @Query('page') page: string) {
         return this.booksService.findAllBooksByGenre(id, limit, page);

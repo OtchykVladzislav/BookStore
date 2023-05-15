@@ -3,6 +3,7 @@ import RequestList from "../API/RequestList";
 import { useFetching } from "../hooks/useFetching";
 import GenresItem from "../utils/genre";
 
+
 const Genres = () => {
     const [genres, setGenres] = useState([])
 
@@ -16,7 +17,7 @@ const Genres = () => {
     },[])
 
     return(
-        <article style={{ flexWrap: 'wrap', flexDirection: 'row'}}>
+        <article style={{ width: '1000px',flexWrap: 'wrap', flexDirection: 'row'}}>
             {genres.map((e, i) => <GenresItem key={i} obj={e}/>)}
         </article>
     )

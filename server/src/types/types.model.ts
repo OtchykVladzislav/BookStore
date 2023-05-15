@@ -14,6 +14,6 @@ export class Type {
   @ManyToOne(() => User, (user) => user.types)
   user: User
 
-  @OneToMany(() => Request, (request) => request.type )
+  @OneToMany(() => Request, (request) => request.type)
   requests: Request[]
 }

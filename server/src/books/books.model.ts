@@ -28,6 +28,9 @@ export class Book {
   @Column({nullable: false})
   publish_date: Date;
 
+  @Column({default: false})
+  stolen: boolean;
+
   @ManyToOne(() => User, (user) => user.books)
   user: User
 
@@ -43,7 +46,7 @@ export class Book {
   orders: Order[];
 
   @OneToMany(() => OrderBook, order_book => order_book.book)
-  public order_book!: OrderBook[];
+  order_book: OrderBook[];
 
   @OneToMany(() => Comment, (comment) => comment.book)
   comments: Comment[]

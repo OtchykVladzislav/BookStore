@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from 'users/users.model';
 import { Book } from './books.model';
 import { CreateBookDto } from './dto/create-book.dto';
-import { Genre } from 'genre/genre.model';
+import { Image_Book } from 'image_book/image_book.model';
 
 @Injectable()
 export class BooksService {
@@ -15,10 +15,10 @@ export class BooksService {
     
     sortArr(str: string, array: Book[]): Book[]{
       switch(str){
-        case 'titleIncrease': return [...array].sort((a,b) => a["name"].localeCompare(b["name"]))
-        case 'titleDecrease': return [...array].sort((a,b) => b["name"].localeCompare(a["name"]))
-        case 'priceIncrease': return [...array].sort((a,b) => a["price"] - b["price"])
-        case 'priceDecrease': return [...array].sort((a,b) => b["price"] - a["price"])
+        case 'stringIncrease': return [...array].sort((a,b) => a["name"].localeCompare(b["name"]))
+        case 'stringDecrease': return [...array].sort((a,b) => b["name"].localeCompare(a["name"]))
+        case 'numberIncrease': return [...array].sort((a,b) => a["price"] - b["price"])
+        case 'numberDecrease': return [...array].sort((a,b) => b["price"] - a["price"])
         default : return array
       }
     }
@@ -86,8 +86,11 @@ export class BooksService {
           genres: {id}
         },
       })
-      const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]/*.slice(skip, skip + Number(limit))*/
-      return [arr, arr.length != 0 ? arr.length : 1 ];
+      const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]
+      if(arr.length - 1 >= skip + Number(limit)){
+        return [arr.slice(skip, skip + Number(limit)), arr.length != 0 ? arr.length  : 1 ];
+      }
+      return [arr.slice(skip), arr.length != 0 ? arr.length  : 1 ];
     }
 
     async add(dto: CreateBookDto): Promise<Book> {
@@ -138,4 +141,14 @@ export class BooksService {
       }
       return arr;
     }
+
+    async changeImage(id: number, image: Image_Book){
+      await this.booksRepository.update({id}, {image})
+    }
+
+    async stolenFalse(id: number){
+      await this.booksRepository.update({id}, {stolen: true})
+    }
 }
+
+

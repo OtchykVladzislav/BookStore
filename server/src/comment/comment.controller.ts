@@ -17,8 +17,9 @@ export class CommentsController {
     getOne(@Param('id') id: number) {
         return this.commentsService.findOne(id);
     }
-
     
+    @UseGuards(RolesGuard)
+    @Roles(2, 3)
     @UseGuards(JwtAuthGuard)
     @Delete('/:id')
     remove(

@@ -26,6 +26,11 @@ export class TypesService {
     return data;
   }
 
+  async filterByName(query: string) {
+    const data = await this.typesRepository.find();
+    return data.filter(e => e.name.includes(query));
+  }
+
   async getTypeByName(name: string) {
     const data = await this.typesRepository.findOne({
       where: {

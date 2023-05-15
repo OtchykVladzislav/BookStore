@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { UsersService } from './users.service';
-import { Body, Controller, Get, Param, Post, UseGuards, Req} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, Req, Query} from '@nestjs/common';
 import { JwtAuthGuard } from 'auth/jwt.auth.guard';
 import { RolesGuard } from 'roles/roles.guards';
 import { Roles } from 'roles/roles.decorator';
@@ -16,8 +16,16 @@ export class UsersController {
     @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Get()
-    getAll(){
-        return this.usersService.getAllUsers()
+    getAll(@Query('limit') limit: string, @Query('page') page: string){
+        return this.usersService.getAllUsers(limit, page)
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(3)
+    @UseGuards(JwtAuthGuard)
+    @Get('/search')
+    filterItems(@Query('query') query: string, @Query('sort') sort: string, @Query('limit') limit: string, @Query('page') page: string) {
+        return this.usersService.filterItems(query, sort, limit, page);
     }
 
     @UseGuards(RolesGuard)

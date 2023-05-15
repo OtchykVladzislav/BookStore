@@ -11,13 +11,16 @@ export class ImageGenreService {
         private imageGenreRepository: Repository<Image_Genre>
     ) {}
 
-    async add(dto: CreateImageGenreDto): Promise<Image_Genre> {
-        const data = this.imageGenreRepository.create({...dto});
-        return await this.imageGenreRepository.save(data);
+    async add(dto: CreateImageGenreDto, id: number): Promise<Image_Genre> {
+        const data = this.imageGenreRepository.create({name: dto.name, type: dto.type});
+        data.picByte = Buffer.from(dto.picByte, 'base64')
+        const result = await this.imageGenreRepository.save(data);
+        return result
       }
   
     async edit(id: number, dto: CreateImageGenreDto): Promise<boolean> {
-        await this.imageGenreRepository.update({ id }, { ...dto });
+        const buffer = Buffer.from(dto.picByte, 'base64')
+        await this.imageGenreRepository.update({ id }, {name: dto.name, type: dto.type, picByte: buffer});
         return true;
     }
 

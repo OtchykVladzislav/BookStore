@@ -41,7 +41,7 @@ export class Order {
   books: Book[]
 
   @OneToMany(() => OrderBook, order_book => order_book.order)
-  public order_book!: OrderBook[];
+  order_book: OrderBook[];
 
   @ManyToOne(() => City, (city) => city.orders)
   city: City;

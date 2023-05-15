@@ -4,6 +4,7 @@
     padding: 10px;
     border-radius: 5px;
     min-width: 25vw;
+    position: relative;
   }
   
   .commentsItem .user{
@@ -34,4 +35,13 @@
     height: 1.5rem;
     overflow: visible;
     fill: #ffc73a;
+  }
+
+  .delete{
+    position: absolute;
+    border-radius: 5px;
+    padding: 10px;
+    background: rgb(231, 42, 42);
+    cursor: pointer;
+    right: 5%;
   }

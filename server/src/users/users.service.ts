@@ -19,6 +19,14 @@ export class UsersService {
     private rolesService: RolesService,
   ) { }
 
+  sortArr(str: string, array: User[]): User[]{
+    switch(str){
+      case 'stringIncrease': return [...array].sort((a,b) => a["username"].localeCompare(b["username"]))
+      case 'stringDecrease': return [...array].sort((a,b) => b["username"].localeCompare(a["username"]))
+      default : return array
+    }
+  }
+
   async createUser(dto: CreateUserDto) {
     const hashPassword = await bcrypt.hash(dto.password, 5);
     const role = await this.rolesService.getRoleByName('user');
@@ -31,13 +39,32 @@ export class UsersService {
     return user;
   }
 
-  async getAllUsers() {
-    const users = await this.usersRepository.find({
-      relations:{
-        role: true
+  
+
+  async getAllUsers(limit: string, page: string): Promise<[User[], number]> {
+    const skip = (Number(limit) * Number(page)) - Number(limit);
+    const [data, count] = await this.usersRepository.findAndCount({
+      relations: {
+        role: true,
+      },
+      take: Number(limit),
+      skip: skip,
+    })
+    return [data, count];
+  }
+
+  async filterItems(query: string, sort: string,limit: string, page: string): Promise<[User[], number]> {
+    const skip = Number(limit) * Number(page);
+    const data = await this.usersRepository.find({
+      relations: {
+        role: true,
       }
-    });
-    return users;
+    })
+    const arr = [...this.sortArr(sort, data).filter(e => e.username.includes(query))]
+    if(arr.length - 1 >= skip + Number(limit)){
+      return [arr.slice(skip, skip + Number(limit)), arr.length != 0 ? arr.length  : 1 ];
+    }
+    return [arr.slice(skip), arr.length != 0 ? arr.length  : 1 ];
   }
 
   async getUserByLogin(username: string) {
