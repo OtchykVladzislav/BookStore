@@ -10,7 +10,7 @@ export default function AppRouter({isAuth}){
     const cart = useSelector(state => state.cart)
     const [decode, setDecode] = useState('')
 
-    useEffect(() =>  setDecode(jwtDecode(isAuth)), [isAuth])
+    useEffect(() =>{ if(isAuth) setDecode(jwtDecode(isAuth))}, [isAuth])
 
     return(
         <Routes>
