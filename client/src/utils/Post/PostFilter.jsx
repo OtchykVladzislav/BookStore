@@ -17,6 +17,7 @@ const PostFilter = ({callback, filter, setFilter}) =>{
                 </InputGroup.Button>
             </InputGroup>
             <SelectPicker 
+                menuStyle={{ zIndex: 25}}
                 style={{width: '20%'}}
                 searchable={false}
                 value={filter.sort}

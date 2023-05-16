@@ -24,7 +24,7 @@ const CreateFormat = ({data, setData, visible, setVisible}) => {
     }
 
     useEffect(() => {
-        setFormValue({name: '', adress: ''})
+        setFormValue({name: ''})
         setAddError(false)
     }, [visible])
 

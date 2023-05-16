@@ -10,6 +10,9 @@
     width: 500px;
 }
 
-.expiry, .cvc{
-    width: 70px;
+.dateAndCvc{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

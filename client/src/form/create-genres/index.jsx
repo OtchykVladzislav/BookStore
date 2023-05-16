@@ -11,7 +11,7 @@ const CreateGenre = ({data, setData, visible, setVisible}) => {
     const [form, setFormValue] = useState({name: '', image: {}});
 
     const [fetchAdd, isAddLoading, addError, setAddError] = useFetching(async () => {
-        let obj = await RequestList.addElem('genres', form);
+        let obj = await RequestList.addElem('image_genre/create_genre', form);
         const list = data
         list.unshift(obj.data)
         return setData([...list])

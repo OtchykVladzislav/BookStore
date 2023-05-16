@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Radio, RadioGroup, SelectPicker, Steps } from "rsuite"
+import { Button, ButtonGroup, InputNumber, Radio, RadioGroup, SelectPicker, Steps } from "rsuite"
 import { useFetching } from "../hooks/useFetching";
 import RequestList from "../API/RequestList";
 import { useEffect, useState } from "react";
@@ -112,7 +112,7 @@ const Cart = () => {
                 <MyButton onClick={() => {navigate('/posts'); dispatch({type: 'NULL_CART'})}}>Очистить корзину</MyButton>
             </div>}
             {step == 1 && <div className="stepsCart">
-                {user.bonus? <MyInput type='number' placeholder={'Введите сколько хотите потратить'} value={bonus} change={number => setBonus(number)} />: <p style={{fontSize: '18px'}}>У вас нет бонусов</p>}
+                {user.bonus? <InputNumber min={1} max={100} step={10} placeholder={'Введите сколько хотите потратить'} value={bonus} onChange={number => setBonus(number)} />: <p style={{fontSize: '18px'}}>У вас нет бонусов</p>}
             </div>}
             {step == 2 && <div className="stepsCart">
                 <p style={{fontSize: '18px'}}>Выберите магазин, чтобы забрать книги.</p>

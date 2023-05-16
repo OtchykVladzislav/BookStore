@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { ImageBookController } from './image_book.controller';
 import { ImageBookService } from './image_book.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,9 +8,10 @@ import { AuthModule } from 'auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Image_Book]),
-    BooksModule,
+    forwardRef(() => BooksModule),
     AuthModule
   ],
+  exports: [ImageBookService],
   controllers: [ImageBookController],
   providers: [ImageBookService]
 })

@@ -44,7 +44,7 @@ const CreateRole = ({data, setData, visible, setVisible}) => {
             </div>
             <div>
                 <label>Важность(min: 1, max: 3)</label>
-                <MyInput type="number" className={classes.password_box} value={form.weight} change={selected => setFormValue({...form, weight: selected})} />
+                <InputNumber max={3} min={1} className={classes.password_box} value={form.weight} change={selected => setFormValue({...form, weight: selected})} />
             </div>
             <MyButtonTwo disabled={!form.name || !form.description || !form.weight} onClick={() => handleSubmit()}>
                 Добавить

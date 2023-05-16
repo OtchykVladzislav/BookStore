@@ -7,6 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { RolesService } from 'roles/roles.service';
 import { Image_User } from 'image_user/image_user.model';
+import { Role } from 'roles/roles.model';
 
 export type user = User
 
@@ -54,17 +55,16 @@ export class UsersService {
   }
 
   async filterItems(query: string, sort: string,limit: string, page: string): Promise<[User[], number]> {
-    const skip = Number(limit) * Number(page);
+    const skip = Number(limit) * Number(page)
     const data = await this.usersRepository.find({
       relations: {
         role: true,
       }
     })
     const arr = [...this.sortArr(sort, data).filter(e => e.username.includes(query))]
-    if(arr.length - 1 >= skip + Number(limit)){
-      return [arr.slice(skip, skip + Number(limit)), arr.length != 0 ? arr.length  : 1 ];
-    }
-    return [arr.slice(skip), arr.length != 0 ? arr.length  : 1 ];
+    if(arr.length >= skip + Number(limit) && page != '1') return [arr.slice(skip, skip + Number(limit)), arr.length];
+    if(page == '1') return [arr, arr.length];
+    return [arr.slice(skip), arr.length];
   }
 
   async getUserByLogin(username: string) {
@@ -109,4 +109,10 @@ export class UsersService {
   async delBonus(id: number, bonus: number){
     await this.usersRepository.update({id}, {bonus})
   }
+
+  async updateRole(id: number, role: Role){
+    await this.usersRepository.update({ id }, { role });
+    return true
+  }
+
 }

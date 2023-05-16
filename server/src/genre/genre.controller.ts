@@ -32,7 +32,7 @@ export class GenresController {
     @UseGuards(JwtAuthGuard)
     @Post()
     addGenre(@Body() dto: CreateGenreDto){
-        return this.genresService.createGenre(dto)
+        return this.genresService.createGenre(dto.name)
     }
 
     @UseGuards(RolesGuard)

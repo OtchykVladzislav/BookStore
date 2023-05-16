@@ -7,7 +7,7 @@ import MyInput from '../UI/input/MyInput';
 import { Users } from "../utils/table_fields";
 import MyLoader from "../UI/loader/MyLoader";
 import MyModal from "../UI/modal/MyModal";
-import PlusIcon from '@rsuite/icons/Plus';
+import ChangeRole from "../form/change-role";
 
 
 const TableUser = () => {
@@ -18,6 +18,7 @@ const TableUser = () => {
     const [count, setCount] = useState(1)
     const [visible, setVisible] = useState(false)
     const [proccess, setProccess] = useState(false)
+    const [params, setParams] = useState({})
 
     const handleChangeLimit = dataKey => {
         setPage(1);
@@ -36,6 +37,7 @@ const TableUser = () => {
             case 'filter':
                 setProccess(true)
                 const searchList = await RequestList.filterItems('users', filter.query, filter.sort, limit, page);
+                console.log(searchList)
                 setData([...searchList.data[0]])
                 setCount(searchList.data[1])
                 setProccess(false)
@@ -45,9 +47,13 @@ const TableUser = () => {
 
     const searchItem = () => {
         setPage(1)
-        fetchData('filter')
+        filter.query ? fetchData('filter') : fetchData('list')
     }
 
+    const change = (obj) => {
+        setParams({...obj})
+        setVisible(true)
+    }
 
     useEffect(() => {
         filter.sort ? fetchData('filter') : fetchData('list')
@@ -56,6 +62,7 @@ const TableUser = () => {
     return (
         <article style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
             <MyModal visible={visible} setVisible={setVisible}>
+                <ChangeRole obj={params} data={data} setData={setData} visible={visible} setVisible={setVisible}/>
             </MyModal>
             <InputGroup inside style={{ margin: '10px', width: '100%' }}>
                 <MyInput
@@ -68,6 +75,7 @@ const TableUser = () => {
                 </InputGroup.Button>
             </InputGroup>
             <SelectPicker
+                menuStyle={{ zIndex: 25}}
                 style={{ width: '20%' }}
                 searchable={false}
                 value={filter.sort}
@@ -79,7 +87,7 @@ const TableUser = () => {
             {proccess ? <MyLoader/> : <>
                 <div style={{ fontSize: 14 }}>
                     <table className="table" style={{ fontSize: 14 }}>
-                        <Users data={data} setData={setData}/>
+                        <Users callback={change} data={data} setData={setData}/>
                     </table>
                 </div>
                 <div style={{ width: '100%', color: 'white' }}>

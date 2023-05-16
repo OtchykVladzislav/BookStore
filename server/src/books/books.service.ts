@@ -47,9 +47,11 @@ export class BooksService {
           genres: true,
         }
       })
-      const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]/*.slice(skip, skip + Number(limit))*/
-      return [arr, arr.length != 0 ? arr.length : 1 ];
-  }
+      const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]
+      if(arr.length >= skip + Number(limit) && page != '1') return [arr.slice(skip, skip + Number(limit)), arr.length];
+      if(page == '1') return [arr, arr.length];
+      return [arr.slice(skip), arr.length];
+    }
 
     async findOne(id: number): Promise<Book> {
       const data = await this.booksRepository.findOne({
@@ -87,19 +89,22 @@ export class BooksService {
         },
       })
       const arr = [...this.sortArr(sort, data).filter(e => e.name.includes(query))]
-      if(arr.length - 1 >= skip + Number(limit)){
-        return [[...arr.slice(skip, skip + Number(limit))], arr.length != 0 ? arr.length  : 1 ];
-      }
-      return [[...arr.slice(skip)], arr.length != 0 ? arr.length  : 1 ];
+      if(arr.length >= skip + Number(limit) && page != '1') return [arr.slice(skip, skip + Number(limit)), arr.length];
+      if(page == '1') return [arr, arr.length];
+      return [arr.slice(skip), arr.length];
     }
 
     async add(dto: CreateBookDto, userId: number): Promise<Book> {
       const data = this.booksRepository.create({
-        ...dto,
+        name: dto.name,
+        author: dto.author,
+        description: dto.description,
+        price: dto.price,
+        publish_date: dto.publish_date,
+        genres: dto.genres,
         user: { id: userId } as User,
       });
-      await this.booksRepository.save(data);
-      return data;
+      return await this.booksRepository.save(data);
     }
 
     async edit(id: number, dto: CreateBookDto, userId: number): Promise<boolean> {
@@ -112,7 +117,15 @@ export class BooksService {
           user: true,
         },
       });
-      await this.booksRepository.update({ id }, { ...dto });
+      await this.booksRepository.update({ id }, {
+        name: dto.name,
+        author: dto.author,
+        description: dto.description,
+        price: dto.price,
+        publish_date: dto.publish_date,
+        genres: dto.genres,
+        user: { id: userId } as User,
+      });
       return true;
     }
 

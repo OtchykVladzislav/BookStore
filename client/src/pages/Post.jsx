@@ -9,6 +9,7 @@ import MyLoader from "../UI/loader/MyLoader";
 import CreateComment from "../form/create-comment";
 import jwtDecode from "jwt-decode";
 import PageIcon from '@rsuite/icons/Page';
+import { useBase64 } from "../hooks/useArrayBufferToBase64";
 
 
 const Post = () => {
@@ -66,7 +67,7 @@ const Post = () => {
                 <>
                     <div className="postTitle">{post.name}</div>
                     <div className="postInfo">
-                        {post.image? <img className={"postImage"} style={{width: '100%'}} src={useBase64(post.image.picByte.data, post.image.type)} /> : <PageIcon className={"postImage"}/>} 
+                        {post.image? <img className={"postImage"} style={{width: '45%'}} src={useBase64(post.image.picByte.data, post.image.type)} /> : <PageIcon className={"postImage"}/>} 
                         <div className="postText">
                             <div>Жанры: {post.genres.map(e => { return e.name }).join(',')}</div>
                             <div>Дата публикации: {new Date(post.publish_date).toLocaleDateString()}</div>

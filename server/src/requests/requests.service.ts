@@ -48,10 +48,9 @@ export class RequestsService {
         }
       })
       const arr = [...this.sortArr(sort, data).filter(e => e.user.username.includes(query))]
-      if(arr.length - 1 >= skip + Number(limit)){
-        return [arr.slice(skip, skip + Number(limit)), arr.length != 0 ? arr.length  : 1 ];
-      }
-      return [arr.slice(skip), arr.length != 0 ? arr.length  : 1 ];
+      if(arr.length >= skip + Number(limit) && page != '1') return [arr.slice(skip, skip + Number(limit)), arr.length];
+      if(page == '1') return [arr, arr.length];
+      return [arr.slice(skip), arr.length];
     }
 
 

@@ -4,7 +4,6 @@ const link = 'http://localhost:4000'
 
 export default class RequestList {
     static async getAll(str, limit, page) {
-        console.log(str)
         const response = await axios.get(`${link}/${str}`, {
             params: {
                 limit,
@@ -15,6 +14,7 @@ export default class RequestList {
     }
 
     static async filterItems(str, query, sort, limit, page) {
+        console.log(query)
         const response = await axios.get(`${link}/${str}/search`, {
             params: {
                 query: query,

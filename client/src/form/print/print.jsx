@@ -3,7 +3,7 @@ import RequestList from '../../API/RequestList'
 import { useFetching } from '../../hooks/useFetching'
 import MyButtonTwo from "../../UI/buttonTwo/MyButtonTwo"
 import MyLoader from '../../UI/loader/MyLoader'
-import { SelectPicker } from 'rsuite'
+import { InputNumber, SelectPicker } from 'rsuite'
 import classes from './style.module.css'
 import MyInput from '../../UI/input/MyInput'
 
@@ -47,13 +47,6 @@ const Print = ({func, ...props}) => {
         return !request.book || !request.city || !request.type || !request.format || !request.pages || !request.count_copies
     }
 
-
-    const validate = (value) => {
-        if(+value < 0) return setRequest({...request, count_copies: 1})
-        if(+value > 20) return setRequest({...request, count_copies:20})
-        return setRequest({...request, count_copies: +value})
-    }
-
     return(
         <div className={classes.print}>
             {isTypeLoading || isFormatLoading || isBookLoading || isCityLoading?
@@ -83,9 +76,9 @@ const Print = ({func, ...props}) => {
                         placeholder = "Формат"
                         data={formats}/>
                     <label>Ориентировочное количество страниц</label>
-                    <MyInput type="text" value={request.pages} onChange={text => setRequest({...request, pages: text})} style={{width:'30%'}} placeholder='n-кол.страниц'/>
+                    <InputNumber max={1000} min={1} value={request.pages} onChange={text => setRequest({...request, pages: text})} style={{width:'30%'}} placeholder='n-кол.страниц'/>
                     <label>Тираж</label>
-                    <MyInput type="number" value={request.count_copies} onChange={text => validate(text)} style={{width:'30%'}} min={1} max={20}/>
+                    <InputNumber max={20} min={1} value={request.count_copies} onChange={text => setRequest({...request, count_copies: text})} style={{width:'30%'}}/>
                     <label>Адрес</label>
                     <SelectPicker
                         style={{ width: '70%' }} 

@@ -13,7 +13,8 @@ const ChangeImageBook = ({obj, str, visible, setVisible}) => {
 
     const [fetchAdd, isAddLoading, addError, setAddError] = useFetching(async () => {
         if(!obj.image) {
-            await RequestList.addElem(str, form)
+            await RequestList.addElem(str + `/${obj.id}`, form)
+            toaster.push(<Message type="success">Картинка добавлена когда перезайдете</Message>);
             return;
         }
         await RequestList.putById(obj.image.id, str, form)
@@ -21,7 +22,7 @@ const ChangeImageBook = ({obj, str, visible, setVisible}) => {
     })
 
     const handleSubmit = () => {
-        if(form != {}){
+        if(form.name){
             fetchAdd()
             setVisible(false)
         }
@@ -69,7 +70,7 @@ const ChangeImageBook = ({obj, str, visible, setVisible}) => {
                 />
                 <span>{form.name}</span>
             </div>
-            <MyButtonTwo disabled={form == {}} onClick={() => handleSubmit()}>
+            <MyButtonTwo disabled={!form.name} onClick={() => handleSubmit()}>
                 Обновить
             </MyButtonTwo>
         </div>

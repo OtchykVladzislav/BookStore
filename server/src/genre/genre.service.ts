@@ -12,15 +12,12 @@ export class GenresService {
 
   constructor(
     @InjectRepository(Genre)
-    private genresRepository: Repository<Genre>,
-    private imageGenreService: ImageGenreService
+    private genresRepository: Repository<Genre>
   ) { }
 
-  async createGenre(dto: CreateGenreDto): Promise<Genre>{
-    const genre = this.genresRepository.create({name: dto.name});
-    const save = await this.genresRepository.save(genre)
-    await this.imageGenreService.add(dto.image, save.id)
-    return await this.genresRepository.findOne({where: {id: save.id},relations: {image: true}});
+  async createGenre(name: string): Promise<Genre>{
+    const genre = this.genresRepository.create({name});
+    return await this.genresRepository.save(genre)
   }
 
   async getAllGenres() {

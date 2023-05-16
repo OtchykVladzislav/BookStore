@@ -6,11 +6,12 @@ import { Genre } from './genre.model';
 import { GenresService } from './genre.service';
 import { AuthModule } from 'auth/auth.module';
 import { ImageGenreModule } from 'image_genre/image_genre.module';
+import { Image_Genre } from 'image_genre/image_genre.model';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Genre, Image_Genre]),
     forwardRef(() => ImageGenreModule),
-    TypeOrmModule.forFeature([Genre]),
     AuthModule
   ],
   exports: [GenresService],

@@ -4,6 +4,9 @@ import Cards from 'react-credit-cards-2';
 import classes from './style.module.css'
 import MyButton from "../../../UI/button/MyButton";
 import MyLoader from "../../../UI/loader/MyLoader";
+import { InputNumber, MaskedInput } from "rsuite";
+import { maskCVC, maskCreditCard, maskDate } from "../../../utils/valid";
+import MyInput from "../../../UI/input/MyInput";
 
 
 const CreditCard = ({callback}) => {
@@ -16,13 +19,12 @@ const CreditCard = ({callback}) => {
       });
     const [cardSuccess, setCardSuccess] = useState(false)
     
-    const handleInputChange = (evt) => {
-        const { name, value } = evt.target;
-        setState((prev) => ({ ...prev, [name]: value }));
+    const handleInputChange = (str, e) => {
+        setState((prev) => ({ ...prev, [str]: e }));
     }
     
-    const handleInputFocus = (evt) => {
-        setState((prev) => ({ ...prev, focus: evt.target.name }));
+    const handleInputFocus = (str) => {
+        setState((prev) => ({ ...prev, focus: str }));
     }
 
     const send = () => {
@@ -49,42 +51,51 @@ const CreditCard = ({callback}) => {
                 focused={state.focus}
             />
             <form  style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',marginTop: '10px'}}>
-                <input
+                <MaskedInput
+                    style={{width: '30%'}}
                     className={classes.number}
-                    type="number"
                     name="number"
-                    placeholder="Card Number"
+                    placeholder="4242 4242 4242 4242"
+                    keepCharPositions={true}
+                    mask={maskCreditCard}
+                    placeholderChar={'_'}
                     value={state.number}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
+                    onChange={e => handleInputChange('number', e)}
+                    onFocus={() => handleInputFocus('number')}
                 />
-                <input
+                <MyInput
+                    style={{width: '30%'}}
                     className={classes.name}
-                    type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Anonymous"
                     value={state.name}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
+                    onChange={e => handleInputChange('name', e)}
+                    onFocus={() => handleInputFocus('name')}
                 />
                 <div className={classes.dateAndCvc}>
-                    <input
+                    <MaskedInput
+                        style={{width: '17%'}}
                         className={classes.expiry}
-                        type="text"
                         name="expiry"
-                        placeholder="Expiry"
+                        placeholder="08/23"
+                        keepCharPositions={true}
+                        mask={maskDate}
+                        placeholderChar={'_'}
                         value={state.expiry}
-                        onChange={handleInputChange}
-                        onFocus={handleInputFocus}
+                        onChange={e => handleInputChange('expiry', e)}
+                        onFocus={() => handleInputFocus('expiry')}
                     />
-                    <input
+                    <MaskedInput
+                        style={{width: '17%'}}
                         className={classes.cvc}
-                        type="number"
                         name="cvc"
-                        placeholder="CVC"
+                        placeholder="111"
+                        keepCharPositions={true}
+                        mask={maskCVC}
+                        placeholderChar={'_'}
                         value={state.cvc}
-                        onChange={handleInputChange}
-                        onFocus={handleInputFocus}
+                        onChange={e => handleInputChange('cvc', e)}
+                        onFocus={() => handleInputFocus('cvc')}
                     />
                 </div>
             </form>

@@ -4,7 +4,7 @@ import { Format } from "format/format.model";
 import { Type } from "types/types.model";
 
 export class CreateRequestDto {
-    readonly pages: string; 
+    readonly pages: number; 
     readonly count_copies: number; 
     readonly createdAt: Date;
     readonly format: Format;

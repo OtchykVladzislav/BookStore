@@ -73,7 +73,7 @@ const AdminTables = () => {
     }
 
     const searchItem = () => {
-        fetchData('filter', active)
+        query ? fetchData('filter', active) : fetchData('list', active)
     }
 
 

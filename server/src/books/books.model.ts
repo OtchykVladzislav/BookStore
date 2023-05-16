@@ -22,7 +22,7 @@ export class Book {
   @Column({type: 'text'})
   description: string;
 
-  @Column({nullable: false, type: 'float'})
+  @Column({nullable: false})
   price: number;
 
   @Column({nullable: false})

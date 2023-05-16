@@ -13,12 +13,15 @@ const ChangeImage = ({image, callback}) => {
     const [zIndex, setZIndex] = useState(false)
 
     const [fetchAdd, isAddLoading, addError] = useFetching(async (e) => {
-        callback()
         if(!image.id) {
             await RequestList.addElem('image_user', e)
+            toaster.push(<Message type="success">Картинка добавлена когда перезайдете</Message>);
+            callback()
             return;
         }
         await RequestList.putById(image.id, 'image_user', e)
+        toaster.push(<Message type="success">Картинка измениться когда перезайдете</Message>);
+        callback()
     })
 
     const convertBase64 = (file) => {
@@ -53,7 +56,6 @@ const ChangeImage = ({image, callback}) => {
             listType='picture'
             onChange={file => {
                 uploadImage(file[file.length - 1].blobFile)
-                toaster.push(<Message type="success">Картинка изменена зайдите еще раз</Message>);
             }}
             
         >

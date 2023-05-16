@@ -12,8 +12,8 @@ export class Request {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable: false})
-  pages: string; 
+  @Column({default: 10})
+  pages: number; 
 
   @Column({nullable: false})
   count_copies: number; 

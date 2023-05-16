@@ -46,7 +46,7 @@ const TableOrder = () => {
 
     const searchItem = () => {
         setPage(1)
-        fetchData('filter')
+        filter.query ? fetchData('filter') : fetchData('list')
     }
 
 
@@ -56,8 +56,6 @@ const TableOrder = () => {
 
     return (
         <article style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
-            <MyModal visible={visible} setVisible={setVisible}>
-            </MyModal>
             <InputGroup inside style={{ margin: '10px', width: '100%' }}>
                 <MyInput
                     type='text'
@@ -69,6 +67,7 @@ const TableOrder = () => {
                 </InputGroup.Button>
             </InputGroup>
             <SelectPicker
+                menuStyle={{ zIndex: 25}}
                 style={{ width: '20%' }}
                 searchable={false}
                 value={filter.sort}

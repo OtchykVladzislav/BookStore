@@ -26,6 +26,9 @@ export class BooksController {
         return this.booksService.filterItems(query, sort, limit, page);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(2, 3)
+    @UseGuards(JwtAuthGuard)
     @Get('/stolen/:id')
     changeStolen(@Param('id') id: number){
         return this.booksService.stolenFalse(id)
@@ -70,14 +73,14 @@ export class BooksController {
         @Param('id') id: number,
         @Body() dto: CreateBookDto,
     ) {
-        return this.booksService.edit(id, dto);
+        return this.booksService.edit(id, dto, req.user.id);
     }
     
     @UseGuards(RolesGuard)
     @Roles(3)
     @UseGuards(JwtAuthGuard)
     @Post()
-    add(@Body() dto: CreateBookDto) {
-        return this.booksService.add(dto);
+    add(@Req() req: any, @Body() dto: CreateBookDto) {
+        return this.booksService.add(dto, req.user.id);
     }
 }
