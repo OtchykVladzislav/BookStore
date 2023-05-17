@@ -46,7 +46,7 @@ const ChangeImage = ({image, callback}) => {
     };
 
     useEffect(() => {
-        setFileInfo(useBase64(image.picByte.data, image.type))
+        if(image) setFileInfo(useBase64(image.picByte.data, image.type))
     }, [])
 
     return (
