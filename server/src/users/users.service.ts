@@ -29,15 +29,8 @@ export class UsersService {
   }
 
   async createUser(dto: CreateUserDto) {
-    const hashPassword = await bcrypt.hash(dto.password, 5);
-    const role = await this.rolesService.getRoleByName('user');
-    const user = await this.usersRepository.create({
-      ...dto,
-      password: hashPassword,
-      role
-    });
-    await this.usersRepository.save(user)
-    return user;
+    const user = this.usersRepository.create({...dto});
+    return await this.usersRepository.save(user)
   }
 
   
