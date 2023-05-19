@@ -91,7 +91,7 @@ const TableBook = () => {
                 { value: 'numberDecrease', label: 'По цене ↓' }]} 
             />
             {proccess ? <MyLoader/> : <>
-                <PlusIcon className="edit" style={{fontSize: '40px', margin: '10px'}} onClick={() => setVisible(true)}/>
+                <PlusIcon className="edit" style={{fontSize: '40px', margin: '10px'}} onClick={() => {change({}, 'edit');setVisible(true)}}/>
                 <div style={{ fontSize: 14 }}>
                     <table className="table" style={{ fontSize: 14 }}>
                         <Books callback={change} data={data} setData={setData}/>

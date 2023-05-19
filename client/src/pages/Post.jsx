@@ -82,7 +82,7 @@ const Post = () => {
                         {post.description}
                     </div>
                     <div className="postComments">
-                        {access && <CreateComment callback={add}/>}
+                        {access && token && <CreateComment callback={add}/>}
                         {!comments.length? "Нет отзывов": comments.map((e,i) => <CommentItem key={i} role={decode.roleWeight} callback={remove} obj={e}/>)}
                     </div>
                 </>

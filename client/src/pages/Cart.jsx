@@ -26,7 +26,7 @@ const Cart = () => {
 
 
     const onNext = () => {
-        if(step == 1 && user.bonus <= bonus) return;
+        if(step == 1 && user.bonus != 0 &&  user.bonus <= bonus) return;
         if(step == 2 && !form.city) return;
         onChange(step + 1);
     }

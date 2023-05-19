@@ -5,6 +5,7 @@ import { useFetching } from '../../hooks/useFetching'
 import Alert from '../../UI/alert'
 import MyInput from '../../UI/input/MyInput'
 import MyButtonTwo from '../../UI/buttonTwo/MyButtonTwo'
+import { InputNumber } from 'rsuite'
 
 const CreateRole = ({data, setData, visible, setVisible}) => {
     const [form, setFormValue] = useState({name: '', description: '', weight: ''});
@@ -44,7 +45,7 @@ const CreateRole = ({data, setData, visible, setVisible}) => {
             </div>
             <div>
                 <label>Важность(min: 1, max: 3)</label>
-                <InputNumber max={3} min={1} className={classes.password_box} value={form.weight} change={selected => setFormValue({...form, weight: selected})} />
+                <InputNumber max={3} min={1} className={classes.password_box} value={form.weight} onChange={selected => setFormValue({...form, weight: selected})} />
             </div>
             <MyButtonTwo disabled={!form.name || !form.description || !form.weight} onClick={() => handleSubmit()}>
                 Добавить
