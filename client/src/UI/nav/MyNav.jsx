@@ -5,7 +5,7 @@ import classes from "./MyNav.module.css"
 const MyNav = ({isAuth}) => {
     return(
         <nav className={classes.nav}>
-            <Link to={'/genres'}><MyButton>Жанры</MyButton></Link>
+            <Link to={'/genres'}><MyButton>Категории</MyButton></Link>
             <Link to={'/posts'}><MyButton>Все книги</MyButton></Link>
             {isAuth && <Link to={'/printbook'}><MyButton>Печать</MyButton></Link>}
             <Link to={'/authors'}><MyButton>Авторы</MyButton></Link>

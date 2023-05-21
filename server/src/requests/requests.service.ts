@@ -86,12 +86,13 @@ export class RequestsService {
   }
 
     async add(dto: CreateRequestDto, id: number): Promise<Request> {
+      let book : any;
       const status = await this.statusRequestService.add()
-      const data = this.requestRepository.create({...dto});
+      dto.book ? book = dto.book : book = null
+      const data = this.requestRepository.create({...dto, book: book});
       data.user = {id} as User
       data.status = status
-      await this.requestRepository.save(data);
-      return data;
+      return await this.requestRepository.save(data);
     }
 
     async edit(id: number, dto: CreateRequestDto, user: any): Promise<boolean> {

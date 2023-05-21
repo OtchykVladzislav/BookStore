@@ -90,7 +90,7 @@ export const Requests = ({data, setData}) => {
                 {data.map((e, i, arr) =>
                     <tr key={i}>
                         <td>{e.id}</td>
-                        <td>{e.book.name + ', ' + e.book.author}</td>
+                        {e.book? <td>{e.book.name + ', ' + e.book.author}</td> : <td>Обычная распечатка</td>}
                         <td>{e.city.name + ', ' + e.city.adress} </td>
                         <td>{e.pages} стр.</td>
                         <td>{e.count_copies}</td>

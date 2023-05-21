@@ -64,7 +64,7 @@ const TableBook = () => {
     }, [page, filter.sort])
 
     return (
-        <article style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
+        <article style={{ display: 'flex', position: 'relative',flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
             <MyModal visible={visible} setVisible={setVisible}>
                 {isEdit ? <CreateBook data={data} setData={setData} visible={visible} setVisible={setVisible}/>  : <ChangeImageBook obj={params} data={data} str={'image_book'} setData={setData} visible={visible} setVisible={setVisible}/>}
             </MyModal>
@@ -99,7 +99,7 @@ const TableBook = () => {
                 </div>
                 <div style={{ width: '100%', color: 'white' }}>
                     <Pagination
-                        style={{ fontSize: 15 }}
+                        style={{ fontSize: 15, position: 'absolute', bottom: 0, left: '10%', width: '80%', margin: '15px' }}
                         prev
                         next
                         first

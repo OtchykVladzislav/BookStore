@@ -29,7 +29,8 @@ function App() {
 
   const [fetchProfile, isProfileLoading, profileError] = useFetching(async () => {
     const obj = await RequestList.profile();
-    if(obj.data.image) setImage(useBase64(obj.data.image.picByte.data, obj.data.image.type))
+    if(obj.data.image) return setImage(useBase64(obj.data.image.picByte.data, obj.data.image.type))
+    return setImage('')
   })
 
   useEffect(() => {
@@ -49,22 +50,25 @@ function App() {
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '200px'}}>
               {decode.roleWeight == 3 && 
                 <Nav className='gearButton'><Nav.Menu icon={<GearIcon />}>
-                    <Link to='/admin/user'><Nav.Item>Users</Nav.Item></Link>
-                    <Link to='/admin/order'><Nav.Item>Orders</Nav.Item></Link>
-                    <Link to='/admin/request'><Nav.Item>Requests</Nav.Item></Link>
-                    <Link to='/admin/book'><Nav.Item>Books</Nav.Item></Link>
-                    <Link to='/admin'><Nav.Item>All other tables</Nav.Item></Link>
+                    <Link to='/admin/user'><Nav.Item>Пользователи</Nav.Item></Link>
+                    <Link to='/admin/order'><Nav.Item>Заказы</Nav.Item></Link>
+                    <Link to='/admin/request'><Nav.Item>Запросы</Nav.Item></Link>
+                    <Link to='/admin/book'><Nav.Item>Книги</Nav.Item></Link>
+                    <Link to='/admin'><Nav.Item>Все остальные таблицы</Nav.Item></Link>
                 </Nav.Menu></Nav>
               }
-              {cart.length != 0 && <IconCart />}
               {!isProfileLoading && <Link to={'/account'}>
-                <Avatar
-                  size="lg"
-                  circle
-                  src={image ? image : 'icon.svg'}
-                  alt={`@${decode.username}`}
-                />
+                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '5%', marginRight: '5%', color: 'white', marginLeft: '10px', fontSize: 20}}>
+                  <span style={{marginRight: '10px'}}>{decode.username}</span>
+                  <Avatar 
+                    size="lg"
+                    circle
+                    src={image ? image : 'icon.svg'}
+                    alt={`@${decode.username}`}
+                  />
+                </div>
               </Link>}
+              {cart.length != 0 && <IconCart />}
             </div>
             :
             <div>

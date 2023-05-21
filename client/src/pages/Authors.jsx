@@ -8,8 +8,8 @@ const Authors = () => {
                 <div className="user-picture">
                     <AvatarIcon style={{fontSize: 80 }} />
                 </div>
-                <p className="name-client"> Unknown
-                    <span>Developer
+                <p className="name-client"> Жава скрипт
+                    <span>разработчик
                     </span>
                 </p>
                 <div className="social-media">

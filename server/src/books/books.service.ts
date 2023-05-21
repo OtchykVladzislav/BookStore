@@ -6,6 +6,15 @@ import { Book } from './books.model';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Image_Book } from 'image_book/image_book.model';
 
+/*
+a.sort(function(x, y) {
+        // true values first
+        return (x === y)? 0 : x? -1 : 1;
+        // false values first
+        // return (x === y)? 0 : x? 1 : -1;
+    });
+     */
+
 @Injectable()
 export class BooksService {
     constructor(

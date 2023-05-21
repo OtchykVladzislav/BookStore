@@ -55,7 +55,7 @@ const TableOrder = () => {
     }, [page, filter.sort])
 
     return (
-        <article style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
+        <article style={{ display: 'flex', position: 'relative',flexDirection: 'column', justifyContent: 'flex-start',alignItems: 'center', background: '#191615', padding: '0 20px 40px 20px', }} className="post">
             <InputGroup inside style={{ margin: '10px', width: '100%' }}>
                 <MyInput
                     type='text'
@@ -84,7 +84,7 @@ const TableOrder = () => {
                 </div>
                 <div style={{ width: '100%', color: 'white' }}>
                     <Pagination
-                        style={{ fontSize: 15 }}
+                        style={{ fontSize: 15, position: 'absolute', bottom: 0, left: '10%', width: '80%', margin: '15px' }}
                         prev
                         next
                         first

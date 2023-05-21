@@ -50,6 +50,7 @@ const Account = () => {
         RequestList.logout()
         localStorage.setItem('user', '')
         dispatch({type: 'DELETE_TOKEN'})
+        dispatch({type: 'NULL_CART'})
     }
 
     const setInfo = (obj,str) => {
@@ -129,7 +130,7 @@ const Account = () => {
                                 <table className="table" style={{fontSize: '15px'}}>
                                     <thead>
                                         <tr>
-                                            <th>Номер заказа</th>
+                                            <th>Название слота</th>
                                             <th>Сумма</th>
                                             <th>Дата и время</th>
                                             <th>Статус</th>

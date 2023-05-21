@@ -60,7 +60,7 @@ const ChangeImage = ({image, callback}) => {
             
         >
             <button className={classes.change} onMouseEnter={() => setZIndex(true)} onMouseLeave={() => setZIndex(false)} style={{ width: 150, height: 150 }}>
-                <div className={classes.modal} style={{zIndex: `${zIndex ? 25: 20}`, margin: '0'}}><EditIcon /></div>
+                <div className={classes.modal} style={{display: `${zIndex ? 'flex': 'none'}`, zIndex: `${zIndex ? 25 : 20}`, margin: '0'}}><EditIcon /></div>
                 {fileInfo ? (
                     <img className={classes.image} style={{zIndex: `${zIndex ? 20: 25}`}} src={fileInfo} width="100%" height="100%" />
                     ) : (

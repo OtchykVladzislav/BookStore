@@ -3,7 +3,7 @@ import RequestList from '../../API/RequestList'
 import { useFetching } from '../../hooks/useFetching'
 import MyButtonTwo from "../../UI/buttonTwo/MyButtonTwo"
 import MyLoader from '../../UI/loader/MyLoader'
-import { InputNumber, SelectPicker } from 'rsuite'
+import { InputNumber, SelectPicker, Radio, RadioGroup } from 'rsuite'
 import classes from './style.module.css'
 import MyInput from '../../UI/input/MyInput'
 
@@ -13,6 +13,7 @@ const Print = ({func, ...props}) => {
     const [books, setBooks] = useState([])
     const [cities, setCities] = useState([])
     const [request, setRequest] = useState({book: '', city: '', type: '', format: '', pages: '', count_copies: 1})
+    const [printBook, setPrintBook] = useState(true)
 
     const [fetchType, isTypeLoading, typeError] = useFetching(async () => {
         const obj = await RequestList.getAll('types');
@@ -44,7 +45,7 @@ const Print = ({func, ...props}) => {
 
 
     const checkValid = () => {
-        return !request.book || !request.city || !request.type || !request.format || !request.pages || !request.count_copies
+        return (printBook && !request.book) || !request.city || !request.type || !request.format || !request.pages || !request.count_copies
     }
 
     return(
@@ -53,14 +54,18 @@ const Print = ({func, ...props}) => {
                 <MyLoader/>
                 :
                 <>
-                    <label>Книга</label>
+                    <RadioGroup name="radioList" inline appearance="picker" value={printBook} onChange={e => {setPrintBook(JSON.parse(e)); setRequest({...request, book: ''})}}>
+                        <Radio value={true}>Распечатка книги</Radio>
+                        <Radio value={false}>Обычная распечатка</Radio>
+                    </RadioGroup>
+                    {printBook && <><label>Книга</label>
                     <SelectPicker      
                         data={books} 
                         value={request.book} 
                         onChange={text => setRequest({...request, book: text})} 
                         placeholder={'Книги...'}
                         style={{ width: '70%' }} 
-                    />
+                    /></>}
                     <label>Тип печати</label>
                     <SelectPicker
                         style={{ width: '70%' }} 

@@ -14,7 +14,7 @@ const PostItem = ({obj, weight, callback}) => {
                 <div className="genre">{obj.genres.map(e => { return e.name }).join(',')}</div>
             </div>
             {!obj.stolen && weight >= 2 && <div style={{zIndex: 25}} onClick={() => callback(obj)} className='buttonStolen'>Товар закончился</div>}
-            {obj.stolen && <div className="postStolen"><span className='textRotate'>Продан</span></div>}
+            {obj.stolen && <div className="postStolen"><span className='textRotate'>Продано</span></div>}
         </div>
     )
 }
