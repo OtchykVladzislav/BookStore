@@ -1,3 +1,3 @@
 export class NewPasswordDto {
-    readonly password: string;
-  }
+  readonly password: string;
+}

@@ -8,6 +8,9 @@ import * as bcrypt from 'bcrypt';
 import { RolesService } from 'roles/roles.service';
 import { Image_User } from 'image_user/image_user.model';
 import { Role } from 'roles/roles.model';
+import { NewPhoneNumberDto } from 'users/dto/new-phone-number.dto';
+import { NewEmailDto } from 'users/dto/new-email.dto';
+import { NewInfoDto } from 'users/dto/new-info.dto';
 
 export type user = User
 
@@ -89,6 +92,18 @@ export class UsersService {
   async updatePassword(password : string, id: number){
     await this.usersRepository.update({ id }, { password });
     return true
+  }
+
+  async changeInfo(id: number, dto: NewInfoDto){
+    await this.usersRepository.update({id}, {...dto})
+  }
+
+  async changeEmail(id: number, dto: NewEmailDto){
+    await this.usersRepository.update({id}, {...dto})
+  }
+
+  async changePhoneNumber(id: number, dto: NewPhoneNumberDto){
+    await this.usersRepository.update({id}, {...dto})
   }
 
   async changeImage(id: number, image: Image_User){

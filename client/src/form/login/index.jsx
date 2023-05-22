@@ -15,7 +15,6 @@ const Login = ({visible, setVisible}) => {
     const [token, setToken] = useState('')
 
     const [fetchLogin, isLoginLoading, loginError, setLoginError] = useFetching(async () => {
-        console.log(form)
         const obj = await RequestList.login(form);
         return setToken(obj.data.acsess_token)
     })

@@ -12,6 +12,10 @@ import RequestItem from "../utils/request";
 import ChangeImage from "../form/change-image";
 import InfoRequest from "../form/info-request";
 import InfoOrder from "../form/info-order";
+import EditIcon from '@rsuite/icons/Edit';
+import NewInfo from "../form/new_info";
+import NewPhoneNumber from "../form/new_phone_number";
+import NewEmail from "../form/new_email";
 
 const Account = () => {
     const [ user, setUser ] = useState({})
@@ -36,7 +40,7 @@ const Account = () => {
         fetchProfile()
     }, [])
 
-    const change = (password) => {
+    const changePassword = (password) => {
         if(password.one === password.two && password.one && password.two){
             RequestList.newPassword({password: password.one})
             navigate('/')
@@ -62,11 +66,17 @@ const Account = () => {
     const chooseModal = () => {
         switch (typeModal) {
             case 'new_password':
-                return <NewPassword callback={change} visible={visible} setVisible={setVisible}/>
+                return <NewPassword callback={changePassword} visible={visible} setVisible={setVisible}/>
             case 'order':
                 return <InfoOrder id={obj}/>
             case 'request':
                 return <InfoRequest id={obj}/>
+            case 'new_info':
+                return <NewInfo user={user} setUser={setUser} visible={visible} setVisible={setVisible}/>
+            case 'new_phone_number':
+                return <NewPhoneNumber user={user} setUser={setUser} visible={visible} setVisible={setVisible}/>
+            case 'new_email':
+                return <NewEmail user={user} setUser={setUser} visible={visible} setVisible={setVisible}/>
         }
     }
 
@@ -85,8 +95,9 @@ const Account = () => {
                             <div>Никнейм: {user.username}</div>
                             <div>Имя: {user.firstName}</div>
                             <div>Фамилия: {user.lastName}</div>
-                            <div>Номер телефона: {user.phone_number}</div>
-                            <div>Почта: {user.email}</div>
+                            <MyButton onClick={() => {setTypeModal('new_info'); setVisible(true)}}>Сменить имя и фамилию</MyButton>
+                            <div>Номер телефона: {user.phone_number} <EditIcon style={{cursor: 'pointer'}} onClick={() => {setTypeModal('new_phone_number'); setVisible(true)}}/></div>
+                            <div>Почта: {user.email} <EditIcon style={{cursor: 'pointer'}} onClick={() => {setTypeModal('new_email'); setVisible(true)}}/></div>
                         </div>
                         <ChangeImage image={user.image} callback={() => logout()}/>
                     </div>

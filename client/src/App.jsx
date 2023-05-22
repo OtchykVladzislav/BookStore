@@ -10,6 +10,7 @@ import MyModal from './UI/modal/MyModal'
 import MyNav from './UI/nav/MyNav'
 import AppRouter from './utils/AppRouter'
 import 'rsuite/dist/rsuite.min.css';
+import 'react-phone-number-input/style.css'
 import Login from './form/login/index'
 import IconCart from './UI/icon_cart'
 import jwtDecode from 'jwt-decode'
@@ -58,9 +59,10 @@ function App() {
                 </Nav.Menu></Nav>
               }
               {!isProfileLoading && <Link to={'/account'}>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '5%', marginRight: '5%', color: 'white', marginLeft: '10px', fontSize: 20}}>
+                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '5%', marginRight: '5%', color: 'white', fontSize: 20}}>
                   <span style={{marginRight: '10px'}}>{decode.username}</span>
                   <Avatar 
+                    style={{width: '70px'}}
                     size="lg"
                     circle
                     src={image ? image : 'icon.svg'}

@@ -1,0 +1,22 @@
+.account_password{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial";
+    background: white;
+    border: 4px solid #7cdacc;
+    box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 700;
+    width: 500px;
+  }
+
+.account_password{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

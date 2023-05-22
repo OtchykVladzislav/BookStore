@@ -6,6 +6,9 @@ import { RolesGuard } from 'roles/roles.guards';
 import { Roles } from 'roles/roles.decorator';
 import { CreateUserDto } from 'users/dto/create-user.dto';
 import { Role } from 'roles/roles.model';
+import { NewInfoDto } from 'users/dto/new-info.dto';
+import { NewEmailDto } from 'users/dto/new-email.dto';
+import { NewPhoneNumberDto } from 'users/dto/new-phone-number.dto';
 
 
 @Controller('users')
@@ -47,6 +50,24 @@ export class UsersController {
     @Post('/del_bonus/:id')
     changeStolen(@Param('id') id: number, @Body() req: any){
         return this.usersService.delBonus(id, req.bonus)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('info/:id')
+    changeInfo(@Param('id') id: number, @Body() dto: NewInfoDto){
+        return this.usersService.changeInfo(id, dto)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('email/:id')
+    changeEmail(@Param('id') id: number, @Body() dto: NewEmailDto){
+        return this.usersService.changeEmail(id, dto)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('phone_number/:id')
+    changePhoneNumber(@Param('id') id: number, @Body() dto: NewPhoneNumberDto){
+        return this.usersService.changePhoneNumber(id, dto)
     }
 
     @UseGuards(RolesGuard)
