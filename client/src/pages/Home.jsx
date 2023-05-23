@@ -5,8 +5,7 @@ const Home = () => {
         <article className="welcome">
             Добро пожаловать!!!
             <div>
-                <img style={{width: '35%', height: '35%'}} src="прейскурант_первая.webp" />
-                <img style={{width: '35%', height: '35%'}} src="прейскурант_вторая.webp" />
+                <img style={{width: '100%', height: '100%'}} src="прейскурант.jpg" />
             </div>
         </article>
     )
