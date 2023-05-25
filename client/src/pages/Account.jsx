@@ -16,6 +16,8 @@ import EditIcon from '@rsuite/icons/Edit';
 import NewInfo from "../form/new_info";
 import NewPhoneNumber from "../form/new_phone_number";
 import NewEmail from "../form/new_email";
+import HelpOutlineIcon from '@rsuite/icons/HelpOutline';
+import BonusInfo from "../form/bonus-info";
 
 const Account = () => {
     const [ user, setUser ] = useState({})
@@ -77,6 +79,8 @@ const Account = () => {
                 return <NewPhoneNumber user={user} setUser={setUser} visible={visible} setVisible={setVisible}/>
             case 'new_email':
                 return <NewEmail user={user} setUser={setUser} visible={visible} setVisible={setVisible}/>
+            case 'bonus_info':
+                return <BonusInfo visible={visible} setVisible={setVisible}/>
         }
     }
 
@@ -102,7 +106,7 @@ const Account = () => {
                         <ChangeImage image={user.image} callback={() => logout()}/>
                     </div>
                     <div className="accountBonus">
-                        <span>Бонусная программа</span>
+                        <span>Бонусная программа <HelpOutlineIcon style={{cursor: 'pointer'}} onClick={() => {setTypeModal('bonus_info'); setVisible(true)}}/></span>
                         <div>Количество бонусов: {user.bonus} баллов.</div>
                         <span style={{fontSize:"10px"}}>С каждой покупки 3%. 1 балл = 1 рублю</span>
                     </div>
@@ -117,7 +121,7 @@ const Account = () => {
                                 <table className="table" style={{fontSize: '15px'}}>
                                     <thead>
                                         <tr>
-                                            <th>Тираж</th>
+                                            <th>Кол-во копий</th>
                                             <th>Кол-во страниц</th>
                                             <th>Дата и время</th>
                                             <th>Статус</th>

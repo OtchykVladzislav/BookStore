@@ -1,5 +1,5 @@
 import { Route, Routes,Navigate } from "react-router-dom"
-import { adminRoutes, privateRoutes, publicRoutes } from "../router/index"
+import { adminRoutes, managerRoutes, privateRoutes, publicRoutes } from "../router/index"
 import { useSelector } from "react-redux"
 import Cart from "../pages/Cart"
 import jwtDecode from "jwt-decode"
@@ -12,11 +12,12 @@ export default function AppRouter({isAuth}){
         let token;
         if(isAuth) {
             token = jwtDecode(isAuth)
-            console.log(token)
             switch(token.roleWeight){
                 case 1:
-                case 2:
                     arr = [...privateRoutes, ...publicRoutes]
+                    break;
+                case 2:
+                    arr = [...managerRoutes, ...privateRoutes, ...publicRoutes]
                     break;
                 case 3:
                     arr = [...adminRoutes ,...privateRoutes, ...publicRoutes]

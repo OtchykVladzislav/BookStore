@@ -5,15 +5,15 @@ import MyButtonTwo from "../../UI/buttonTwo/MyButtonTwo"
 import MyLoader from '../../UI/loader/MyLoader'
 import { InputNumber, SelectPicker, Radio, RadioGroup } from 'rsuite'
 import classes from './style.module.css'
-import MyInput from '../../UI/input/MyInput'
 
 const Print = ({func, ...props}) => {
     const [formats, setFormats] = useState([])
     const [types, setTypes] = useState([])
     const [books, setBooks] = useState([])
     const [cities, setCities] = useState([])
-    const [request, setRequest] = useState({book: '', city: '', type: '', format: '', pages: '', count_copies: 1})
-    const [printBook, setPrintBook] = useState(true)
+    const [request, setRequest] = useState({book: '', city: '', type: '', format: '', pages: 5, count_copies: 1})
+    const [price, setPrice] = useState(0)
+    const [printBook, setPrintBook] = useState(false)
 
     const [fetchType, isTypeLoading, typeError] = useFetching(async () => {
         const obj = await RequestList.getAll('types');
@@ -48,6 +48,11 @@ const Print = ({func, ...props}) => {
         return (printBook && !request.book) || !request.city || !request.type || !request.format || !request.pages || !request.count_copies
     }
 
+    useEffect(() => {
+        const sum = request.pages * request.count_copies
+        setPrice((sum * (Math.random() * Math.random())).toFixed(2))
+    }, [request.format, request.type, request.pages, request.count_copies])
+
     return(
         <div className={classes.print}>
             {isTypeLoading || isFormatLoading || isBookLoading || isCityLoading?
@@ -55,7 +60,6 @@ const Print = ({func, ...props}) => {
                 :
                 <>
                     <RadioGroup name="radioList" inline appearance="picker" value={printBook} onChange={e => {setPrintBook(JSON.parse(e)); setRequest({...request, book: ''})}}>
-                        <Radio value={true}>Распечатка книги</Radio>
                         <Radio value={false}>Обычная распечатка</Radio>
                     </RadioGroup>
                     {printBook && <><label>Книга</label>
@@ -82,7 +86,7 @@ const Print = ({func, ...props}) => {
                         data={formats}/>
                     <label>Ориентировочное количество страниц</label>
                     <InputNumber max={1000} min={1} value={request.pages} onChange={text => setRequest({...request, pages: text})} style={{width:'30%'}} placeholder='n-кол.страниц'/>
-                    <label>Тираж</label>
+                    <label>Количество копий</label>
                     <InputNumber max={20} min={1} value={request.count_copies} onChange={text => setRequest({...request, count_copies: text})} style={{width:'30%'}}/>
                     <label>Адрес</label>
                     <SelectPicker
@@ -91,6 +95,7 @@ const Print = ({func, ...props}) => {
                         onChange={selectedSort => setRequest({...request, city: selectedSort})}
                         placeholder = "Город"
                         data={cities}/>
+                    {price != 0 && request.format && request.type && request.pages && request.count_copies && <div>Ориентировачная цена ~{price}</div>}
                     <MyButtonTwo disabled={checkValid()} style={{marginTop: '5%'}} onClick={() => func(request)}>Запрос</MyButtonTwo>
                 </>
             }

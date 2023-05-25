@@ -8,6 +8,25 @@
     padding: 18px;
     font-size: 20px;
     font-family: "Arial";
-    color: rgba(255,255,255,0.6);
     font-weight: 500;
+}
+
+.footer a{
+    color: white;
+    font-size: 35px;
+   
+}
+
+
+.block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 15px;
+    color: white;
+}
+
+.social_media{
+    margin-right:5%;
 }

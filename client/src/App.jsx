@@ -49,9 +49,13 @@ function App() {
         <MyHeader>
           {token?
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: '200px'}}>
-              {decode.roleWeight == 3 && 
+              {decode.roleWeight == 3 &&
                 <Nav className='gearButton'><Nav.Menu icon={<GearIcon />}>
                     <Link to='/admin/user'><Nav.Item>Пользователи</Nav.Item></Link>
+                </Nav.Menu></Nav>
+              }
+              {decode.roleWeight == 2 &&
+                <Nav className='gearButton'><Nav.Menu icon={<GearIcon />}>
                     <Link to='/admin/order'><Nav.Item>Заказы</Nav.Item></Link>
                     <Link to='/admin/request'><Nav.Item>Запросы</Nav.Item></Link>
                     <Link to='/admin/book'><Nav.Item>Книги</Nav.Item></Link>

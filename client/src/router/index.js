@@ -15,6 +15,9 @@ import TableUser from "../pages/TableUser"
 
 export const adminRoutes = [
     {path: '/admin/user', component: TableUser, exact: true},
+]
+
+export const managerRoutes = [
     {path: '/admin/book', component: TableBook, exact: true},
     {path: '/admin/order', component: TableOrder, exact: true},
     {path: '/admin/request', component: TableRequest, exact: true},

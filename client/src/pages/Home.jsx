@@ -5,7 +5,7 @@ const Home = () => {
         <article className="welcome">
             Добро пожаловать!!!
             <div>
-                <img style={{width: '100%', height: '100%'}} src="прейскурант.jpg" />
+                <img style={{width: '50%', height: '50%', outline: 'auto'}} src="прейскурант.jpg" />
             </div>
         </article>
     )
